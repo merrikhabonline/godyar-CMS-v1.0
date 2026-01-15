@@ -1,0 +1,1 @@
+ALTER TABLE categories ADD COLUMN is_members_only BOOLEAN NOT NULL DEFAULT false; ALTER TABLE news ADD COLUMN is_members_only BOOLEAN NOT NULL DEFAULT false; CREATE INDEX idx_categories_members_only ON categories (is_members_only); CREATE INDEX idx_news_members_only ON news (is_members_only);

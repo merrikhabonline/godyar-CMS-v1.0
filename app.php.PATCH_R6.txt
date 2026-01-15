@@ -1,0 +1,46 @@
+<?php
+declare(strict_types=1);
+
+/**
+ * app.php — Front Controller (routing)
+ *
+ * NOTE (R6 patch):
+ * - Adds a safety fallback so /ar, /en, /fr are treated as homepage even if
+ *   lang stripping didn't run for any reason.
+ * - Keeps "no redirect" behavior to avoid loops.
+ *
+ * How to apply:
+ * - In your existing public_html/app.php, after you compute $requestPath
+ *   (right after basePrefix normalization), insert the block titled:
+ *   "R6 safety fallback".
+ */
+
+/* ... your existing app.php content ... */
+
+// Normalize path
+$basePrefix  = godyar_route_base_prefix();
+$requestPath = godyar_request_path();
+
+if ($basePrefix !== '' && function_exists('str_starts_with') && str_starts_with($requestPath, $basePrefix . '/')) {
+    $requestPath = substr($requestPath, strlen($basePrefix));
+}
+$requestPath = '/' . ltrim($requestPath, '/');
+
+/**
+ * R6 safety fallback:
+ * If /ar or /en or /fr reached here (strip didn't happen), treat it as homepage.
+ */
+if (preg_match('#^/(ar|en|fr)/?$#', $requestPath, $m)) {
+    $_GET['lang'] = $_GET['lang'] ?? (string)$m[1];
+    $_COOKIE['lang'] = $_COOKIE['lang'] ?? (string)$m[1];
+    require __DIR__ . '/index.php';
+    exit;
+}
+
+// Homepage support
+if ($requestPath === '/' || $requestPath === '') {
+    require __DIR__ . '/index.php';
+    exit;
+}
+
+/* ... keep the rest of your routing table ... */

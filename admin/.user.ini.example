@@ -1,0 +1,11 @@
+auto_prepend_file=../includes/hotfix_prepend.php
+
+display_errors=0
+display_startup_errors=0
+log_errors=1
+;error_log=/home/YOUR_USERNAME/logs/php_errors.log
+session.use_strict_mode=1
+session.use_only_cookies=1
+session.cookie_httponly=1
+session.cookie_samesite=Lax
+;session.save_path=/home/YOUR_USERNAME/godyar/storage/sessions

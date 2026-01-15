@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS user_bookmarks ( id INT NOT NULL AUTO_INCREMENT, user_id INT NOT NULL, news_id INT NOT NULL, created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (id), UNIQUE KEY uniq_user_news (user_id, news_id), KEY idx_user_id (user_id), KEY idx_news_id (news_id) );
