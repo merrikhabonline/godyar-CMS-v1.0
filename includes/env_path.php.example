@@ -1,0 +1,14 @@
+<?php
+/**
+ * env_path.php (example)
+ * Copy to: /includes/env_path.php  (DO NOT commit)
+ *
+ * Use this when SetEnv in .htaccess is not passed to PHP (common with PHP-FPM).
+ * Put your absolute path to the .env file (outside the web root).
+ */
+
+$envFile = '/home/YOUR_USERNAME/godyar_private/.env';
+
+$_SERVER['ENV_FILE'] = $envFile;
+$_ENV['ENV_FILE'] = $envFile;
+putenv('ENV_FILE=' . $envFile);

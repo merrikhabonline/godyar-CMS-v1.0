@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS settings_snapshots ( id INT NOT NULL AUTO_INCREMENT, created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, created_by INT DEFAULT NULL, data_json LONGTEXT NOT NULL, PRIMARY KEY (id), KEY idx_created_at (created_at) );

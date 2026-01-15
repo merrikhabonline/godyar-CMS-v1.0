@@ -1,0 +1,17 @@
+Godyar Hotfix - Admin 500 & Opinion Authors Column (2026-01-14)
+
+What this fixes:
+1) HTTP 500 on /admin due to missing includes/auth.php on case-sensitive hosting.
+   - Adds /includes/auth.php compatibility shim that loads the canonical Auth.php.
+
+2) Frontend/Home Opinion Authors error: Unknown column 'specialization'
+   - Adds a runtime SQL patch to create/alter opinion_authors table to include `specialization`.
+
+How to apply:
+A) Upload and overwrite:
+   - /includes/auth.php
+
+B) Run the SQL once (via phpMyAdmin / MySQL):
+   - install/sql/2026_01_14_runtime_patch_opinion_authors.sql
+
+After applying, clear PHP OPcache if enabled (or just wait for cache TTL / touch files).

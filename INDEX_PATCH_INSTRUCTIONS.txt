@@ -1,0 +1,12 @@
+Index.php patch (optional)
+
+If you cannot modify .htaccess, you can include language_prefix_router.php early.
+
+Example (public_html/index.php):
+
+<?php
+require_once __DIR__ . '/language_prefix_router.php';
+require_once __DIR__ . '/includes/bootstrap.php';
+...
+
+If your project uses a different public entrypoint, include it there instead.

@@ -1,0 +1,11 @@
+# --- Godyar PWA/Manifest Fix (append to your existing .htaccess) ---
+AddType application/manifest+json .webmanifest
+AddType application/json .json
+
+# If you use a "route everything to index.php" rewrite,
+# exclude these paths to prevent wrong MIME types:
+# RewriteCond %{REQUEST_URI} !^/assets/ [NC]
+# RewriteCond %{REQUEST_URI} !^/admin/ [NC]
+# RewriteCond %{REQUEST_URI} !^/manifest\.webmanifest$ [NC]
+# RewriteCond %{REQUEST_URI} !^/favicon\.ico$ [NC]
+# RewriteRule ^ index.php [L]

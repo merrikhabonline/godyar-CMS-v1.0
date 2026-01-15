@@ -1,0 +1,247 @@
+# =========================================================
+# Godyar CMS — Front Controller & Pretty URLs (NO-LOOP) — IMPROVED
+# Apache / LiteSpeed
+#
+# Goals:
+# - Prevent redirect loops for /ar /en /fr
+# - Keep admin + static assets working
+# - Prefer PHP dynamic security headers (CSP) from /includes/bootstrap.php
+# - Improve compatibility for ACME/.well-known and common hosts
+# =========================================================
+
+RewriteEngine On
+RewriteBase /
+
+# ---------------------------------------------------------
+# Hardening: deny sensitive files (defense-in-depth)
+# ---------------------------------------------------------
+<FilesMatch "(^\.env$|\.ini$|\.log$|\.sql$|\.bak|\.bak_|\.swp$|\.dist$)">
+  Require all denied
+</FilesMatch>
+
+Options -Indexes
+
+
+# ---------------------------------------------------------
+# MIME + Charset
+# ---------------------------------------------------------
+<IfModule mod_mime.c>
+  AddDefaultCharset UTF-8
+  AddCharset UTF-8 .css .js .json .webmanifest
+  AddType application/javascript .js
+  AddType application/manifest+json .webmanifest
+</IfModule>
+
+# ---------------------------------------------------------
+# Security Headers
+# NOTE:
+# - CSP is already set dynamically by PHP in /includes/bootstrap.php (nonce / templates).
+# - DO NOT set CSP here to avoid duplicated/contradicting policies.
+# ---------------------------------------------------------
+<IfModule mod_headers.c>
+  Header always unset X-Powered-By
+  Header unset X-Powered-By
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  Header always set X-XSS-Protection "1; mode=block"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  # (CSP intentionally omitted)
+</IfModule>
+
+Options -Indexes
+ServerSignature Off
+
+# ---------------------------------------------------------
+# Production env
+# ---------------------------------------------------------
+SetEnv APP_ENV production
+
+# ---------------------------------------------------------
+# Allow ACME / well-known (SSL validation) and other well-known endpoints
+# ---------------------------------------------------------
+RewriteRule ^\.well-known/ - [L,NC]
+
+# ---------------------------------------------------------
+# Favicon & PWA icons (adjust if your paths differ)
+# ---------------------------------------------------------
+RewriteRule ^favicon\.ico$ /assets/icons/favicon.ico [L,NC]
+RewriteRule ^apple-touch-icon\.png$ /assets/icons/apple-touch-icon.png [L,NC]
+RewriteRule ^favicon-16x16\.png$ /assets/icons/favicon-16x16.png [L,NC]
+RewriteRule ^favicon-32x32\.png$ /assets/icons/favicon-32x32.png [L,NC]
+
+# ---------------------------------------------------------
+# PWA manifest handling
+# - Prefer dynamic /manifest.php if it exists
+# - Otherwise serve static /manifest.webmanifest
+# ---------------------------------------------------------
+RewriteCond %{DOCUMENT_ROOT}/manifest.php -f
+RewriteRule ^manifest\.webmanifest$ /manifest.php [L,QSA,NC]
+RewriteRule ^manifest\.webmanifest$ - [L,NC]
+
+RewriteCond %{DOCUMENT_ROOT}/manifest.php -f
+RewriteRule ^(ar|en|fr)/manifest\.webmanifest$ /manifest.php?lang=$1 [L,QSA,NC]
+RewriteRule ^(ar|en|fr)/manifest\.webmanifest$ /manifest.webmanifest [L,NC]
+
+RewriteCond %{DOCUMENT_ROOT}/manifest.php -f
+RewriteRule ^(ar|en|fr)/manifest\.json$ /manifest.php?lang=$1 [L,QSA,NC]
+RewriteCond %{DOCUMENT_ROOT}/manifest.php -f
+RewriteRule ^(ar|en|fr)/manifest\.php$ /manifest.php?lang=$1 [L,QSA,NC]
+
+# ---------------------------------------------------------
+# SEO endpoints
+# ---------------------------------------------------------
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+RewriteRule ^rss\.xml$ rss.php [L]
+RewriteRule ^robots\.txt$ robots.php [L]
+RewriteRule ^indexnow-key\.txt$ indexnow_key.php [L]
+RewriteRule ^og/news/([0-9]+)\.png$ og_news.php?id=$1 [L,QSA]
+
+# ---------------------------------------------------------
+# Canonical redirects (.php -> extensionless)
+# ---------------------------------------------------------
+RewriteCond %{THE_REQUEST} \s/+((login|register|profile|logout)\.php)[\s?] [NC]
+RewriteRule ^(login|register|profile|logout)\.php$ /$1 [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+admin/login\.php[\s?] [NC]
+RewriteRule ^admin/login\.php$ /admin/login [R=301,L]
+
+# Quick routes
+RewriteRule ^login$ /login.php [L,QSA]
+RewriteRule ^register$ /register.php [L,QSA]
+RewriteRule ^profile$ /profile.php [L,QSA]
+RewriteRule ^logout$ /logout.php [L,QSA]
+RewriteRule ^admin/login$ /admin/login.php [L,QSA]
+
+# ---------------------------------------------------------
+# Block sensitive extensions
+# ---------------------------------------------------------
+<IfModule mod_authz_core.c>
+  <FilesMatch "\.(log|ini|env|sql|bak|old|swp)$">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+
+# ---------------------------------------------------------
+# Block non-public dirs (defense-in-depth)
+# ---------------------------------------------------------
+RewriteCond %{REQUEST_URI} ^/install/ [NC]
+RewriteCond %{DOCUMENT_ROOT}/install/install.lock !-f
+RewriteRule ^install(/|$) - [L]
+
+RewriteCond %{REQUEST_URI} ^/install/ [NC]
+RewriteCond %{DOCUMENT_ROOT}/install/install.lock -f
+RewriteRule ^install/ - [F,L]
+
+RewriteRule ^_dev_tools/ - [F,L]
+RewriteRule ^logs/ - [F,L]
+RewriteRule ^storage/ - [F,L]
+RewriteRule ^includes/ - [F,L]
+RewriteRule ^vendor/ - [F,L]
+RewriteRule ^src/ - [F,L]
+RewriteRule ^config/ - [F,L]
+RewriteRule ^migrations/ - [F,L]
+RewriteRule ^frontend/ - [F,L]
+RewriteRule ^cron/ - [F,L]
+
+# Legacy removed dirs
+RewriteRule ^pages_static/ - [G,L]
+
+# ---------------------------------------------------------
+# Allow static dirs to pass (no routing)
+# ---------------------------------------------------------
+RewriteRule ^(assets|icons|splash|screenshots|uploads)/ - [L,NC]
+
+# Allow admin to pass (directory + files under it)
+RewriteRule ^admin(/|$) - [L,NC]
+
+# ---------------------------------------------------------
+# Do not rewrite real files
+# (We intentionally do NOT use -d to avoid breaking /ar/... prefixes.)
+# ---------------------------------------------------------
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# ---------------------------------------------------------
+# Normalize optional language prefix for static/admin paths
+# (Internal rewrite; no redirects)
+# ---------------------------------------------------------
+RewriteRule ^(ar|en|fr)/(assets|icons|splash|screenshots|uploads)/(.*)$ /$2/$3 [L,NC]
+RewriteRule ^(ar|en|fr)/admin(/.*)?$ /admin$2 [L,NC]
+
+# ---------------------------------------------------------
+# Default front controller
+# IMPORTANT:
+# - Do NOT rewrite /ar to app.php?lang=ar (prevents loops)
+# - Language prefixes are handled inside PHP (app.php) by stripping prefix without redirect.
+# ---------------------------------------------------------
+RewriteRule ^ app.php [L,QSA]
+
+# =========================================================
+# Performance: cache static assets + compression
+# =========================================================
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Manifest / JSON
+  ExpiresByType application/manifest+json "access plus 1 week"
+  ExpiresByType application/json "access plus 1 week"
+  ExpiresDefault "access plus 7 days"
+
+  # CSS/JS
+  ExpiresByType text/css "access plus 30 days"
+  ExpiresByType text/javascript "access plus 30 days"
+  ExpiresByType application/javascript "access plus 30 days"
+
+  # Images
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType image/vnd.microsoft.icon "access plus 1 year"
+  ExpiresByType image/avif "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/jpg  "access plus 1 year"
+  ExpiresByType image/png  "access plus 1 year"
+  ExpiresByType image/gif  "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+
+  # Fonts
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff  "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+  ExpiresByType application/font-woff  "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Static assets (long cache)
+  <FilesMatch "\.(css|js|mjs|png|jpe?g|gif|svg|webp|avif|ico|woff2?|ttf|otf)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # HTML/PHP (no cache)
+  <FilesMatch "\.(html|php)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+
+  # Compression caches
+  Header set Vary "Accept-Encoding"
+
+  # PWA: update quickly
+  <FilesMatch "^(sw|service-worker)\.js$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  </FilesMatch>
+  <FilesMatch "^manifest\.webmanifest$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# Gzip
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json application/xml image/svg+xml
+</IfModule>
+
+# Brotli (if supported)
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/javascript application/javascript application/x-javascript application/json application/xml image/svg+xml
+</IfModule>

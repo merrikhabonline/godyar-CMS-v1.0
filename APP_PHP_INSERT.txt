@@ -1,0 +1,12 @@
+File: public_html/app.php
+
+Insert this line at the very top (before bootstrap/router):
+
+require_once __DIR__ . '/language_prefix_router.php';
+
+Example:
+
+<?php
+require_once __DIR__ . '/language_prefix_router.php';
+require_once __DIR__ . '/includes/bootstrap.php';
+...

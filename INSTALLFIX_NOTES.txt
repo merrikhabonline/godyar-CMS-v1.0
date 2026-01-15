@@ -1,0 +1,27 @@
+Godyar CMS v1.1.9 - Install Fix Pack (Jan 14, 2026)
+
+هدف هذه الحزمة: إزالة كل ما يعيق التثبيت على MariaDB/MySQL مع مُشغّل SQL حساس للتعليقات/التنسيق.
+
+أهم الإصلاحات:
+1) إصلاح كل ملفات migrations (*.sql) في المسارات:
+   - /database/migrations
+   - /admin/db/migrations
+   - /migrations
+   - وكل مجلدات postgresql الموافقة
+   وذلك عبر:
+   - إزالة أي تعليقات '--' كانت تحتوي SQL في نفس السطر (كانت تُعلّق CREATE/ALTER بالكامل وتؤدي إلى Statement: ')' ).
+   - إزالة التعليقات inline داخل السطور حتى لا تُسقط أجزاء من الاستعلام.
+   - تحويل محتوى كل ملف إلى سطر واحد (whitespace-collapsed) لتفادي أي مُشغّل ينفّذ سطرًا بسطر.
+
+2) تحديث schema_core.sql:
+   - إضافة جدول opinion_authors (المطلوب للواجهة والصفحة الرئيسية).
+   - إضافة جدول comments (لتفادي أعطال صفحات/مزايا التعليقات).
+   - إضافة العمود opinion_author_id في news مع فهرس.
+   - إصلاح DEFAULT false في حقول INT إلى 0 (sort_order و view_count).
+
+3) Auth.php:
+   - جعل hasAnyRole method متوافقًا مع الاستدعاء الساكن: public static.
+
+ملاحظات:
+- ملفات PostgreSQL تم تنظيفها كذلك لتفادي نفس نمط التعليقات.
+- هذه الحزمة لا تغيّر بياناتك؛ كل CREATE TABLE في المهاجرات يستخدم IF NOT EXISTS حيث يلزم.

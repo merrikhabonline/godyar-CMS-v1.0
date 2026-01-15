@@ -1,0 +1,23 @@
+\
+# ============================================================
+# Godyar CMS - Language Prefix Routes Fix
+# Fix 404 for /ar, /en, /fr (and /ar/..., /en/..., /fr/...)
+# Apache .htaccess snippet (place near the TOP, before other rewrites)
+# ============================================================
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# 1) If request is exactly /ar or /en or /fr (with optional trailing slash)
+RewriteRule ^(ar|en|fr)/?$ index.php?lang=$1 [L,QSA]
+
+# 2) If request begins with /ar/... or /en/... or /fr/...
+#    Pass the remaining path as "path" to the front controller.
+RewriteRule ^(ar|en|fr)/(.*)$ index.php?lang=$1&path=$2 [L,QSA]
+</IfModule>
+
+# Notes:
+# - Keep your existing rewrite rules below this block.
+# - If your CMS already uses a different parameter name, change:
+#     lang -> locale   (or whatever your code expects)
+#     path -> route    (or whatever your router expects)
