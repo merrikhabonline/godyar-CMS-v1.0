@@ -1,1 +1,24 @@
+# The version property is mandatory and must be set to 1.
 version = 1
+
+# Specify the analyzers to run. You can add multiple [[analyzers]] tables.
+# The "name" should be the shortcode for the language/tool (e.g., "python", "go", "rust", "javascript").
+[[analyzers]]
+name = "<analyzer-name>"
+enabled = true
+
+# [analyzers.meta] is an optional section for analyzer-specific configurations
+# such as the root directory for imports, etc.
+
+# You can add global exclude patterns for files not to be analyzed (e.g., migrations, generated code).
+# exclude_patterns = ["migrations/*.py", "docs/**/*"]
+
+# You can add test file patterns to help reduce false positives.
+# test_patterns = ["**/*_test.go", "**/tests/**/*.py"]
+
+# Add more analyzers as needed
+# [[analyzers]]
+# name = "go"
+# enabled = true
+# [analyzers.meta]
+# import_root = "://github.com"
