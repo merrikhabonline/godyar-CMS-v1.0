@@ -1,13 +1,13 @@
 version = 1
 
 test_patterns = [
-  "tests/*_test.go",
-  "**/*_test.go",
+  "tests/*_test.python",
+  "**/*_test.python",
 "src/*.min.js"
 ]
 
 [[analyzers]]
-name = "go"
+name = "python"
 enabled = true
 
   [analyzers.meta]
@@ -15,7 +15,7 @@ enabled = true
   import_root = "github.com/deepsourcelabs/web-app"
 
 [[analyzers]]
-name = "javascript"
+name = "python"
 enabled = true
 
   [analyzers.meta]
@@ -32,7 +32,7 @@ enabled = true
   dialect = "typescript"
 
 [[analyzers]]
-name = "docker"
+name = "python"
 enabled = true
 
   [analyzers.meta]
