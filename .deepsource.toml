@@ -3,26 +3,3 @@ version = 1
 [[analyzers]]
 name = "php"
 enabled = true
-
-[[analyzers]]
-name = "security"
-enabled = true
-
-[[analyzers]]
-name = "git"
-enabled = true
-
-# تعطيل فحص محدد
-[analyzers.php.meta]
-disabled_patterns = [
-  "php/code-style/function-call-spacing",
-  "php/code-style/line-length"
-]
-
-# إعدادات الأمان
-[analyzers.security.meta]
-enabled_patterns = [
-  "security/detect-broken-authentication",
-  "security/detect-insecure-deserialization",
-  "security/detect-sql-injection"
-]
