@@ -37,7 +37,7 @@ if ($isDirect) {
 function gdy_queue_token_path(): string {
     $dir = dirname(__DIR__, 3) . '/cache/queue';
     if (!is_dir($dir)) {
-        @mkdir($dir, 0775, true);
+        gdy_mkdir($dir, 0775, true);
     }
     return $dir . '/token.txt';
 }
@@ -45,12 +45,12 @@ function gdy_queue_token_path(): string {
 function gdy_queue_get_token(): string {
     $p = gdy_queue_token_path();
     if (!is_file($p)) return '';
-    return trim((string)@file_get_contents($p));
+    return trim((string)gdy_file_get_contents($p));
 }
 
 function gdy_queue_rotate_token(): string {
     $token = bin2hex(random_bytes(16));
-    @file_put_contents(gdy_queue_token_path(), $token, LOCK_EX);
+    gdy_file_put_contents(gdy_queue_token_path(), $token, LOCK_EX);
     return $token;
 }
 

@@ -55,12 +55,12 @@ if ($action === 'apply' && $canApply) {
     // 1) Backup existing DB.php
     $backupDir = $root . '/storage/backups';
     if (!is_dir($backupDir)) {
-        @mkdir($backupDir, 0755, true);
+        gdy_mkdir($backupDir, 0755, true);
     }
     $ts = date('Ymd_His');
     $src = $root . '/includes/classes/DB.php';
     $backupFile = $backupDir . '/DB.php.bak_' . $ts;
-    if (@copy($src, $backupFile)) {
+    if (gdy_copy($src, $backupFile)) {
         $backedUp = $backupFile;
     }
 
@@ -83,13 +83,13 @@ if ($action === 'apply' && $canApply) {
     ];
     foreach ($toRemove as $f) {
         if (is_file($f)) {
-            if (@unlink($f)) $removed[] = basename($f);
+            if (gdy_unlink($f)) $removed[] = basename($f);
         }
     }
 
     // 4) Create lock file
     if ($written) {
-        @file_put_contents($lockFile, "upgraded_at=" . date('c') . "\n", LOCK_EX);
+        gdy_file_put_contents($lockFile, "upgraded_at=" . date('c') . "\n", LOCK_EX);
     }
 }
 

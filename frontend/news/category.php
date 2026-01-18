@@ -4,7 +4,7 @@ declare(strict_types=1);
 // تحويل إلى الصفحة الحديثة frontend/category.php
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 $slug = isset($_GET['slug']) ? (string)$_GET['slug'] : '';

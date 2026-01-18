@@ -38,7 +38,7 @@ if (!function_exists('gdy_ads_dt')) {
     function gdy_ads_dt(?string $v): ?string {
         $v = trim((string)$v);
         if ($v === '') return null;
-        $ts = @strtotime($v);
+        $ts = gdy_strtotime($v);
         if ($ts === false) return null;
         return date('Y-m-d H:i:s', $ts);
     }
@@ -75,7 +75,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Ads Edit] Auth error: ' . $e->getMessage());
+    error_log('[Godyar Ads Edit] Auth error: ' . $e->getMessage());
     header('Location: ../login.php');
     exit;
 }
@@ -106,7 +106,7 @@ try {
         exit;
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Ads Edit] Fetch error: ' . $e->getMessage());
+    error_log('[Godyar Ads Edit] Fetch error: ' . $e->getMessage());
     header('Location: index.php?error=1');
     exit;
 }
@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             verify_csrf();
         } catch (Throwable $e) {
-            @error_log('[Godyar Ads Edit] CSRF error: ' . $e->getMessage());
+            error_log('[Godyar Ads Edit] CSRF error: ' . $e->getMessage());
             $_SESSION['error_message'] = __('t_3dde9f5e86', 'انتهت صلاحية الجلسة، يرجى إعادة المحاولة.');
             header('Location: edit.php?id=' . $id);
             exit;
@@ -210,7 +210,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         } catch (Throwable $e) {
             $errors[] = __('t_18a2b72a1b', 'حدث خطأ أثناء الحفظ، الرجاء المحاولة لاحقاً.');
-            @error_log('[Godyar Ads Edit] Update error: ' . $e->getMessage());
+            error_log('[Godyar Ads Edit] Update error: ' . $e->getMessage());
         }
     }
 }

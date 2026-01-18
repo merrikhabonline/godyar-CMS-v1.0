@@ -53,7 +53,7 @@ final class FeedImportService
 
                 // Hash is based on normalized link; if missing, fall back to a stable fingerprint
                 $hashBase = ($link !== '') ? $link : ($title . '|' . $date . '|' . (string)($feed['id'] ?? '0'));
-                $hash = sha1($hashBase);
+                $hash = hash('sha256', $hashBase);
 
                 // 1) Already imported by hash?
                 if ($this->hasImported($hash)) { $skipped++; continue; }
@@ -274,7 +274,7 @@ final class FeedImportService
         $url = trim($url);
         if ($url === '') return '';
 
-        $parts = @parse_url($url);
+        $parts = gdy_parse_url($url);
         if (!is_array($parts) || empty($parts['host'])) {
             // best-effort: remove whitespace only
             return preg_replace('/\s+/', '', $url);
@@ -383,7 +383,7 @@ final class FeedImportService
         if (!$this->slugExists($slug)) return $slug;
 
         $base = $slug;
-        $suffix = substr(sha1($seed !== '' ? $seed : ($base . microtime(true))), 0, 6);
+        $suffix = substr(hash('sha256', $seed !== '' ? $seed : ($base . microtime(true))), 0, 6);
         $try = $base . '-' . $suffix;
         if (!$this->slugExists($try)) return $try;
 
@@ -462,7 +462,7 @@ final class FeedImportService
         curl_close($ch);
 
         if (!$resp || $status >= 400) {
-            @error_log('[FeedImportService] OpenAI error status ' . $status . ' resp: ' . (string)$resp);
+            error_log('[FeedImportService] OpenAI error status ' . $status . ' resp: ' . (string)$resp);
             return null;
         }
         $data = json_decode((string)$resp, true);

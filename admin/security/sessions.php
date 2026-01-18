@@ -29,7 +29,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
                 admin_audit_db('logout_all_devices');
             }
 
-            @session_destroy();
+            session_destroy();
             header('Location: /admin/login.php?msg=logged_out_all');
             exit;
         }
@@ -38,7 +38,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
             if (function_exists('admin_audit_db')) {
                 admin_audit_db('logout_current_device');
             }
-            @session_destroy();
+            session_destroy();
             header('Location: /admin/login.php?msg=logged_out');
             exit;
         }

@@ -27,7 +27,7 @@ if (!function_exists('settings_get')) {
             $v = $stmt->fetchColumn();
             return ($v === false) ? $default : $v;
         } catch (Throwable $e) {
-            @error_log('[settings_get] ' . $e->getMessage());
+            error_log('[settings_get] ' . $e->getMessage());
             return $default;
         }
     }
@@ -65,7 +65,7 @@ if (!function_exists('settings_save')) {
             if ($pdo->inTransaction()) {
                 $pdo->rollBack();
             }
-            @error_log('[settings_save] ' . $e->getMessage());
+            error_log('[settings_save] ' . $e->getMessage());
         }
     }
 }

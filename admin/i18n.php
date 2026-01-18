@@ -8,7 +8,7 @@ declare(strict_types=1);
  */
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 if (!function_exists('gdy_set_cookie_rfc')) {
@@ -33,7 +33,7 @@ $__ADMIN_DIR = __DIR__;
 $__LANG_DIR  = $__ADMIN_DIR . '/lang';
 $__CACHE_DIR = $__ADMIN_DIR . '/cache';
 if (!is_dir($__CACHE_DIR)) {
-    @mkdir($__CACHE_DIR, 0775, true);
+    gdy_mkdir($__CACHE_DIR, 0775, true);
 }
 
 if (!function_exists('gdy_current_lang')) {
@@ -79,7 +79,7 @@ if (empty($GLOBALS['GDY_DICTS'])) {
                     $GLOBALS['GDY_DICTS'][$__l] = $arr;
                 }
             } catch (Throwable $e) {
-                @error_log('[Admin i18n] Failed loading ' . $__file . ': ' . $e->getMessage());
+                error_log('[Admin i18n] Failed loading ' . $__file . ': ' . $e->getMessage());
             }
         } else {
             $GLOBALS['GDY_DICTS'][$__l] = [];
@@ -93,7 +93,7 @@ if (!isset($GLOBALS['GDY_UI_CACHE'])) {
     $GLOBALS['GDY_UI_CACHE'] = [];
     if (is_file($__UI_CACHE_FILE)) {
         try {
-            $raw = @file_get_contents($__UI_CACHE_FILE);
+            $raw = gdy_file_get_contents($__UI_CACHE_FILE);
             $j = json_decode((string)$raw, true);
             if (is_array($j)) $GLOBALS['GDY_UI_CACHE'] = $j;
         } catch (Throwable $e) {
@@ -161,15 +161,15 @@ if (!function_exists('__')) {
 
         // try write (best effort)
         try {
-            $fp = @fopen($__UI_CACHE_FILE = (__DIR__ . '/cache/ui_translations.json'), 'c+');
+            $fp = gdy_fopen($__UI_CACHE_FILE = (__DIR__ . '/cache/ui_translations.json'), 'c+');
             if ($fp) {
-                @flock($fp, LOCK_EX);
-                @ftruncate($fp, 0);
-                @rewind($fp);
-                @fwrite($fp, json_encode($cache, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_PRETTY_PRINT));
-                @fflush($fp);
-                @flock($fp, LOCK_UN);
-                @fclose($fp);
+                flock($fp, LOCK_EX);
+                ftruncate($fp, 0);
+                rewind($fp);
+                fwrite($fp, json_encode($cache, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_PRETTY_PRINT));
+                fflush($fp);
+                flock($fp, LOCK_UN);
+                gdy_fclose($fp);
             }
         } catch (Throwable $e) {
             // ignore
@@ -228,7 +228,7 @@ if (!function_exists('gdy_openai_translate_ui')) {
         curl_close($ch);
 
         if ($res === false || $http < 200 || $http >= 300) {
-            @error_log('[Admin i18n] OpenAI translate failed HTTP ' . $http . ' err=' . $err);
+            error_log('[Admin i18n] OpenAI translate failed HTTP ' . $http . ' err=' . $err);
             return '';
         }
 

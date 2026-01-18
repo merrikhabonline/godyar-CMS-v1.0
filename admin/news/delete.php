@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../includes/indexnow.php';
 use Godyar\Auth;
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // 🔐 التحقق من تسجيل الدخول
@@ -31,7 +31,7 @@ Auth::requirePermission('posts.delete');
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar News] Auth check error in delete.php: ' . $e->getMessage());
+    error_log('[Godyar News] Auth check error in delete.php: ' . $e->getMessage());
     if (empty($_SESSION['user']) || (($_SESSION['user']['role'] ?? '') === 'guest')) {
         header('Location: ../login.php');
         exit;
@@ -50,7 +50,7 @@ if (in_array($role, ['writer','author'], true)) {
 // 🔌 الاتصال بقاعدة البيانات
 $pdo = gdy_pdo_safe();
 if (!$pdo instanceof PDO) {
-    @error_log('[Godyar News] delete.php: PDO not available');
+    error_log('[Godyar News] delete.php: PDO not available');
     header('Location: index.php?error=db');
     exit;
 }
@@ -86,12 +86,12 @@ try {
 
     // لو لسبب ما ما تأثر أي سطر نحاول حذف نهائي كخطة B
     if ($stmtDel->rowCount() === 0) {
-        @error_log('[Godyar News] delete.php: soft delete affected 0 rows for id=' . $news['id']);
+        error_log('[Godyar News] delete.php: soft delete affected 0 rows for id=' . $news['id']);
         $stmtHard = $pdo->prepare("DELETE FROM news WHERE id = :id LIMIT 1");
         $stmtHard->execute([':id' => (int)$news['id']]);
 
         if ($stmtHard->rowCount() === 0) {
-            @error_log('[Godyar News] delete.php: hard delete also affected 0 rows for id=' . $news['id']);
+            error_log('[Godyar News] delete.php: hard delete also affected 0 rows for id=' . $news['id']);
             header('Location: index.php?error=no_rows');
             exit;
         }
@@ -113,18 +113,18 @@ if ($baseUrl === '') {
 $nid = (int)$news['id'];
 $url = $baseUrl . '/news/id/' . $nid;
 if (function_exists('gdy_indexnow_submit')) {
-    @gdy_indexnow_submit($pdo, [$url, $baseUrl . '/sitemap.xml']);
+    gdy_indexnow_submit_safe($pdo, [$url, $baseUrl . '/sitemap.xml']);
 }
 
 $root = dirname(__DIR__, 2);
-@unlink($root . '/cache/sitemap.xml');
-@unlink($root . '/cache/rss.xml');
+gdy_unlink($root . '/cache/sitemap.xml');
+gdy_unlink($root . '/cache/rss.xml');
 
     header('Location: index.php?msg=deleted');
     exit;
 
 } catch (Throwable $e) {
-    @error_log('[Godyar News] delete.php error: ' . $e->getMessage());
+    error_log('[Godyar News] delete.php error: ' . $e->getMessage());
     header('Location: index.php?error=exception');
     exit;
 }

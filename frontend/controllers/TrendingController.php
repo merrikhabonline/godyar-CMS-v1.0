@@ -28,7 +28,7 @@ try {
         }
     }
 } catch (\Throwable $e) {
-    @error_log('[TrendingController] ' . $e->getMessage());
+    error_log('[TrendingController] ' . $e->getMessage());
 }
 
 $header = __DIR__ . '/../templates/header.php';

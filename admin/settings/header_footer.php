@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $notice = __('t_f6425ed4f7', 'تم حفظ أكواد الهيدر/الفوتر بنجاح.');
     } catch (Throwable $e) {
         $error = __('t_4fa410044f', 'حدث خطأ أثناء الحفظ.');
-        @error_log('[settings_header_footer] ' . $e->getMessage());
+        error_log('[settings_header_footer] ' . $e->getMessage());
     }
 }
 

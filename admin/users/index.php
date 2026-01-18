@@ -37,7 +37,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Admin Users] Auth: '.$e->getMessage());
+    error_log('[Admin Users] Auth: '.$e->getMessage());
     header('Location: ../login.php');
     exit;
 }
@@ -117,7 +117,7 @@ if ($pdo instanceof PDO) {
         $adminsCount = $adminsStmt->fetchColumn();
 
     } catch (Throwable $e) {
-        @error_log('[Admin Users] index query: '.$e->getMessage());
+        error_log('[Admin Users] index query: '.$e->getMessage());
     }
 }
 

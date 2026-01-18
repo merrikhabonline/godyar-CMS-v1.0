@@ -8,7 +8,7 @@ require_once __DIR__ . '/includes/bootstrap.php';
 // CSRF protection
 if (function_exists('csrf_verify_or_die')) { csrf_verify_or_die(); }
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -54,7 +54,7 @@ try {
         }
     }
 } catch (\Throwable $e) {
-    @error_log('[contact-submit] ' . $e->getMessage());
+    error_log('[contact-submit] ' . $e->getMessage());
 }
 
 header('Location: contact.php?status=ok');

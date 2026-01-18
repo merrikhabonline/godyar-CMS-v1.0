@@ -184,7 +184,7 @@ function gdy_lang_url($targetLang)
 
     // Use the original URI (with prefix) if available
     $uri = (string)(${'_SERVER'}['GDY_ORIGINAL_REQUEST_URI'] ?? (${'_SERVER'}['REQUEST_URI'] ?? '/'));
-    $parts = @parse_url($uri) ?: [];
+    $parts = gdy_parse_url($uri) ?: [];
     $path = (string)($parts['path'] ?? '/');
     $queryStr = (string)($parts['query'] ?? '');
 

@@ -165,7 +165,7 @@ final class NewsService
             $slug = trim((string) ($stmt->fetchColumn() ?: ''));
             return $slug !== '' ? $slug : null;
         } catch (Throwable $e) {
-            @error_log('[NewsService] slugById: ' . $e->getMessage());
+            error_log('[NewsService] slugById: ' . $e->getMessage());
             return null;
         }
     }
@@ -263,7 +263,7 @@ final class NewsService
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             return $row ?: null;
         } catch (Throwable $e) {
-            @error_log('[NewsService] findBySlugOrId: ' . $e->getMessage());
+            error_log('[NewsService] findBySlugOrId: ' . $e->getMessage());
             return null;
         }
     }
@@ -285,7 +285,7 @@ final class NewsService
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
         } catch (Throwable $e) {
-            @error_log('[NewsService] latest: ' . $e->getMessage());
+            error_log('[NewsService] latest: ' . $e->getMessage());
             return [];
         }
     }
@@ -332,7 +332,7 @@ final class NewsService
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
         } catch (Throwable $e) {
-            @error_log('[NewsService] mostRead: ' . $e->getMessage());
+            error_log('[NewsService] mostRead: ' . $e->getMessage());
             return $this->latest($limit);
         }
     }
@@ -351,7 +351,7 @@ final class NewsService
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([':id' => $newsId]);
         } catch (Throwable $e) {
-            @error_log('[NewsService] incrementViews: ' . $e->getMessage());
+            error_log('[NewsService] incrementViews: ' . $e->getMessage());
         }
     }
 
@@ -396,7 +396,7 @@ final class NewsService
             $st->execute();
             $total = (int) ($st->fetchColumn() ?: 0);
         } catch (Throwable $e) {
-            @error_log('[NewsService] archive count: ' . $e->getMessage());
+            error_log('[NewsService] archive count: ' . $e->getMessage());
         }
 
         $orderCol = $dateCol !== null ? "n.`{$dateCol}`" : "n.id";
@@ -413,7 +413,7 @@ final class NewsService
             $st->execute();
             $items = $st->fetchAll(PDO::FETCH_ASSOC) ?: [];
         } catch (Throwable $e) {
-            @error_log('[NewsService] archive list: ' . $e->getMessage());
+            error_log('[NewsService] archive list: ' . $e->getMessage());
         }
 
         return [
@@ -517,7 +517,7 @@ public function relatedByCategory(...$args): array
 
         return is_array($rows) ? $rows : [];
     } catch (\Throwable $e) {
-        @error_log('[NewsService] relatedByCategory: ' . $e->getMessage());
+        error_log('[NewsService] relatedByCategory: ' . $e->getMessage());
         return [];
     }
 }
@@ -949,7 +949,7 @@ private function publishedWhereForTable(string $table, string $alias = 'n'): str
             $st2->execute();
             $items = $st2->fetchAll(PDO::FETCH_ASSOC) ?: [];
         } catch (Throwable $e) {
-            @error_log('[NewsService] search error: ' . $e->getMessage());
+            error_log('[NewsService] search error: ' . $e->getMessage());
             $items = [];
             $total = 0;
             $totalPages = 0;

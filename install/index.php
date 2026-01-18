@@ -28,12 +28,12 @@ header('Content-Type: text/html; charset=utf-8');
 function h(string $v): string { return htmlspecialchars($v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); }
 
 function csrf_token(): string {
-    if (session_status() !== PHP_SESSION_ACTIVE) { @session_start(); }
+    if (session_status() !== PHP_SESSION_ACTIVE) { gdy_session_start(); }
     if (empty($_SESSION['csrf'])) { $_SESSION['csrf'] = bin2hex(random_bytes(16)); }
     return $_SESSION['csrf'];
 }
 function require_post_token(): void {
-    if (session_status() !== PHP_SESSION_ACTIVE) { @session_start(); }
+    if (session_status() !== PHP_SESSION_ACTIVE) { gdy_session_start(); }
     if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') { throw new RuntimeException('Invalid request method'); }
     $t = $_POST['csrf'] ?? '';
     if (!$t || !hash_equals($_SESSION['csrf'] ?? '', (string)$t)) { throw new RuntimeException('CSRF token mismatch'); }
@@ -669,7 +669,7 @@ if (is_file($patch)) {
         file_put_contents($ROOT . '/.env', implode("\n", $env), LOCK_EX);
 
         // 5) Lock installer and re-enable FK checks
-        @file_put_contents($lockFile, "installed_at=".date('c')."\n", LOCK_EX);
+        gdy_file_put_contents($lockFile, "installed_at=".date('c')."\n", LOCK_EX);
         if ($drv !== 'pgsql') { $pdo->exec("SET FOREIGN_KEY_CHECKS=1"); }
 
         $body = '<div class="ok">✅ تم إنشاء الجداول وإنشاء حساب المدير بنجاح.</div>';

@@ -27,10 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $mime = '';
             if (function_exists('finfo_open')) {
-                $fi = @finfo_open(FILEINFO_MIME_TYPE);
+                $fi = gdy_finfo_open(FILEINFO_MIME_TYPE);
                 if ($fi) {
-                    $mime = (string)@finfo_file($fi, $tmp);
-                    @finfo_close($fi);
+                    $mime = (string)gdy_finfo_file($fi, $tmp);
+                    gdy_finfo_close($fi);
                 }
             }
             $allowed = ['image/png'=>'png','image/jpeg'=>'jpg','image/webp'=>'webp','image/gif'=>'gif','image/svg+xml'=>'svg'];
@@ -39,14 +39,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $root = defined('ROOT_PATH') ? rtrim((string)ROOT_PATH, '/\\') : rtrim(dirname(__DIR__, 2), '/\\');
             $dir = $root . '/assets/uploads/site/';
-            if (!is_dir($dir)) { @mkdir($dir, 0755, true); }
+            if (!is_dir($dir)) { gdy_mkdir($dir, 0755, true); }
             $ext = $allowed[$mime];
             $fn = 'logo_' . date('Ymd_His') . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
             $dest = $dir . $fn;
-            if (!@move_uploaded_file($tmp, $dest)) {
+            if (!gdy_move_uploaded_file($tmp, $dest)) {
                 throw new RuntimeException('تعذر حفظ الشعار على السيرفر.');
             }
-            @chmod($dest, 0644);
+            gdy_chmod($dest, 0644);
             $logoUrl = rtrim((string)base_url(), '/') . '/assets/uploads/site/' . $fn;
         } else {
             throw new RuntimeException('فشل رفع الشعار.');
@@ -68,10 +68,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $mime = '';
             if (function_exists('finfo_open')) {
-                $fi = @finfo_open(FILEINFO_MIME_TYPE);
+                $fi = gdy_finfo_open(FILEINFO_MIME_TYPE);
                 if ($fi) {
-                    $mime = (string)@finfo_file($fi, $tmp);
-                    @finfo_close($fi);
+                    $mime = (string)gdy_finfo_file($fi, $tmp);
+                    gdy_finfo_close($fi);
                 }
             }
             $allowed = ['image/png'=>'png','image/x-icon'=>'ico','image/vnd.microsoft.icon'=>'ico','image/svg+xml'=>'svg'];
@@ -80,14 +80,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $root = defined('ROOT_PATH') ? rtrim((string)ROOT_PATH, '/\\') : rtrim(dirname(__DIR__, 2), '/\\');
             $dir = $root . '/assets/uploads/site/';
-            if (!is_dir($dir)) { @mkdir($dir, 0755, true); }
+            if (!is_dir($dir)) { gdy_mkdir($dir, 0755, true); }
             $ext = $allowed[$mime];
             $fn = 'favicon_' . date('Ymd_His') . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
             $dest = $dir . $fn;
-            if (!@move_uploaded_file($tmp, $dest)) {
+            if (!gdy_move_uploaded_file($tmp, $dest)) {
                 throw new RuntimeException('تعذر حفظ الأيقونة على السيرفر.');
             }
-            @chmod($dest, 0644);
+            gdy_chmod($dest, 0644);
             $faviconUrl = rtrim((string)base_url(), '/') . '/assets/uploads/site/' . $fn;
         } else {
             throw new RuntimeException('فشل رفع الأيقونة.');
@@ -115,7 +115,7 @@ settings_save([
         $notice = __('t_36112f9024', 'تم حفظ الإعدادات العامة بنجاح.');
     } catch (Throwable $e) {
         $error = __('t_4fa410044f', 'حدث خطأ أثناء الحفظ.');
-        @error_log('[settings_general] ' . $e->getMessage());
+        error_log('[settings_general] ' . $e->getMessage());
     }
 }
 

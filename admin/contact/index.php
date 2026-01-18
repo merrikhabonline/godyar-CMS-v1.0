@@ -29,7 +29,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Contact] Auth error: ' . $e->getMessage());
+    error_log('[Godyar Contact] Auth error: ' . $e->getMessage());
     if (empty($_SESSION['user']) || (($_SESSION['user']['role'] ?? '') === 'guest')) {
         header('Location: ../login.php');
         exit;
@@ -57,7 +57,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['seen']) &&
         header('Location: index.php');
         exit;
     } catch (Throwable $e) {
-        @error_log('[Godyar Contact] Seen error: ' . $e->getMessage());
+        error_log('[Godyar Contact] Seen error: ' . $e->getMessage());
         header('Location: index.php?error=1');
         exit;
     }
@@ -90,7 +90,7 @@ try {
     ");
     $rows = $stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
 } catch (Throwable $e) {
-    @error_log('[Godyar Contact] Fetch error: ' . $e->getMessage());
+    error_log('[Godyar Contact] Fetch error: ' . $e->getMessage());
 }
 
 require_once __DIR__ . '/../layout/header.php';

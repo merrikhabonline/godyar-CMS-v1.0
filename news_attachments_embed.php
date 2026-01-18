@@ -92,7 +92,7 @@ function gdy_render_news_attachments_embed(PDO $pdo, int $newsId, array $options
     $atts = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     if (!$atts) return;
 
-    $uid = 'gdyAtt' . $newsId . '_' . substr(md5((string)$newsId . '|' . (string)count($atts)), 0, 6);
+    $uid = 'gdyAtt' . $newsId . '_' . substr(hash('sha256', (string)$newsId . '|' . (string)count($atts)), 0, 6);
 
     // CSS بسيط بدون الاعتماد على Bootstrap
     echo "

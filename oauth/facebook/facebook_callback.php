@@ -33,11 +33,11 @@ $tokenUrl = "https://graph.facebook.com/{$ver}/oauth/access_token?" . http_build
     'code' => $code,
 ]);
 
-$tokenJson = @file_get_contents($tokenUrl);
+$tokenJson = gdy_file_get_contents($tokenUrl);
 $data = json_decode((string)$tokenJson, true) ?: [];
 
 if (empty($data['access_token'])) {
-    @error_log('[FacebookOAuth] token exchange failed: ' . (string)$tokenJson);
+    error_log('[FacebookOAuth] token exchange failed: ' . (string)$tokenJson);
     http_response_code(400);
     exit("تعذر تسجيل الدخول عبر Facebook.");
 }
@@ -50,7 +50,7 @@ $meUrl = "https://graph.facebook.com/{$ver}/me?" . http_build_query([
     'access_token' => $accessToken,
 ]);
 
-$meJson = @file_get_contents($meUrl);
+$meJson = gdy_file_get_contents($meUrl);
 $me = json_decode((string)$meJson, true) ?: [];
 
 $email = strtolower(trim((string)($me['email'] ?? '')));

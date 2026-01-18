@@ -8,7 +8,7 @@ require_once __DIR__ . '/_admin_guard.php';
 require_once __DIR__ . '/../includes/bootstrap.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 
@@ -85,7 +85,7 @@ if ($pdo instanceof PDO) {
                 $stmt        = $pdo->query("SELECT title, views FROM news ORDER BY views DESC LIMIT 5");
                 $popularNews = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } catch (Throwable $e) {
-                @error_log('[Dashboard] popularNews error: ' . $e->getMessage());
+                error_log('[Dashboard] popularNews error: ' . $e->getMessage());
             }
 
             // آخر الأخبار (عنوان + تاريخ)
@@ -93,7 +93,7 @@ if ($pdo instanceof PDO) {
                 $stmt       = $pdo->query("SELECT id, title, created_at FROM news ORDER BY created_at DESC LIMIT 6");
                 $recentNews = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } catch (Throwable $e) {
-                @error_log('[Dashboard] recentNews error: ' . $e->getMessage());
+                error_log('[Dashboard] recentNews error: ' . $e->getMessage());
             }
 
 	            // نشاط آخر 7 أيام
@@ -135,7 +135,7 @@ if ($pdo instanceof PDO) {
                     }
                 }
             } catch (Throwable $e) {
-                @error_log('[Dashboard] last7days error: ' . $e->getMessage());
+                error_log('[Dashboard] last7days error: ' . $e->getMessage());
             }
         }
 
@@ -149,7 +149,7 @@ if ($pdo instanceof PDO) {
             try {
                 $stats['today_users'] = (int) $pdo->query("SELECT COUNT(*) FROM users WHERE DATE(created_at) = CURRENT_DATE")->fetchColumn();
             } catch (Throwable $e) {
-                @error_log('[Dashboard] today_users error: ' . $e->getMessage());
+                error_log('[Dashboard] today_users error: ' . $e->getMessage());
             }
         }
 
@@ -159,7 +159,7 @@ if ($pdo instanceof PDO) {
             try {
                 $stats['today_comments'] = (int) $pdo->query("SELECT COUNT(*) FROM comments WHERE DATE(created_at) = CURRENT_DATE")->fetchColumn();
             } catch (Throwable $e) {
-                @error_log('[Dashboard] today_comments error: ' . $e->getMessage());
+                error_log('[Dashboard] today_comments error: ' . $e->getMessage());
             }
         }
 
@@ -186,12 +186,12 @@ if ($pdo instanceof PDO) {
 
                 $stats['unread_messages'] = (int) $pdo->query($sqlContact)->fetchColumn();
             } catch (Throwable $e) {
-                @error_log('[Dashboard] contact_messages error: ' . $e->getMessage());
+                error_log('[Dashboard] contact_messages error: ' . $e->getMessage());
             }
         }
 
     } catch (Throwable $e) {
-        @error_log('[Dashboard] database error: ' . $e->getMessage());
+        error_log('[Dashboard] database error: ' . $e->getMessage());
     }
 }
 
@@ -207,7 +207,7 @@ if ($pdo instanceof PDO) {
             }
         }
     } catch (Throwable $e) {
-        @error_log('[Dashboard] MySQL version error: ' . $e->getMessage());
+        error_log('[Dashboard] MySQL version error: ' . $e->getMessage());
     }
 }
 
@@ -336,7 +336,7 @@ if ($pdo instanceof PDO) {
 	                    }
 	                }
 	            } catch (Throwable $e) {
-	                @error_log('[Dashboard] os/browser analytics: ' . $e->getMessage());
+	                error_log('[Dashboard] os/browser analytics: ' . $e->getMessage());
 	            }
 
             // الأكثر قراءة اليوم (حسب الزيارات في صفحة article)
@@ -382,7 +382,7 @@ if ($pdo instanceof PDO) {
             }
         }
     } catch (Throwable $e) {
-        @error_log('[Dashboard] visits analytics error: ' . $e->getMessage());
+        error_log('[Dashboard] visits analytics error: ' . $e->getMessage());
     }
 }
 

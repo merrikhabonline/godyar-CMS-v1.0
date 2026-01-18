@@ -25,7 +25,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Trending] settings load error: ' . $e->getMessage());
+    error_log('[Trending] settings load error: ' . $e->getMessage());
 }
 
 // Normalize image paths (e.g. "uploads/news/x.jpg") so they work on nested routes.
@@ -84,7 +84,7 @@ try {
         $headerCategories = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 } catch (Throwable $e) {
-    @error_log('[Trending] categories load error: ' . $e->getMessage());
+    error_log('[Trending] categories load error: ' . $e->getMessage());
     $headerCategories = [];
 }
 
@@ -108,7 +108,7 @@ try {
         $trendingNews = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 } catch (Throwable $e) {
-    @error_log('[Trending] trendingNews load error: ' . $e->getMessage());
+    error_log('[Trending] trendingNews load error: ' . $e->getMessage());
     $trendingNews = [];
 }
 

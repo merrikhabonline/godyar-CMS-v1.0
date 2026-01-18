@@ -27,7 +27,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Pages Delete] Auth check error: ' . $e->getMessage());
+    error_log('[Godyar Pages Delete] Auth check error: ' . $e->getMessage());
     if (empty($_SESSION['user']) || (($_SESSION['user']['role'] ?? '') === 'guest')) {
         header('Location: ' . GODYAR_BASE_URL . '/admin/login');
         exit;
@@ -54,7 +54,7 @@ try {
     header('Location: index.php?deleted=1');
     exit;
 } catch (Throwable $e) {
-    @error_log('[Godyar Pages Delete] Delete error: ' . $e->getMessage());
+    error_log('[Godyar Pages Delete] Delete error: ' . $e->getMessage());
     header('Location: index.php?deleted=0');
     exit;
 }

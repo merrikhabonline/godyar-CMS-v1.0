@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../includes/TemplateEngine.php';
 require_once __DIR__ . '/../../includes/site_settings.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 $pdo = gdy_pdo_safe();
@@ -137,7 +137,7 @@ try {
             $colStmt = gdy_db_stmt_columns($pdo, 'categories');
             $cols    = $colStmt->fetchAll(PDO::FETCH_COLUMN, 0);
         } catch (Throwable $e) {
-            @error_log('[News] categories columns error: ' . $e->getMessage());
+            error_log('[News] categories columns error: ' . $e->getMessage());
         }
 
         if (!in_array('name', $cols, true)) {
@@ -162,7 +162,7 @@ try {
         $headerCategories = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 } catch (Throwable $e) {
-    @error_log('[News] categories load error: ' . $e->getMessage());
+    error_log('[News] categories load error: ' . $e->getMessage());
     $headerCategories = [];
 }
 
@@ -433,7 +433,7 @@ try {
                     $pdo->prepare('UPDATE news SET views = views + 1 WHERE id = :id')
                         ->execute([':id' => (int)$newsRow['id']]);
                 } catch (Throwable $e) {
-                    @error_log('[NewsController] views update error: ' . $e->getMessage());
+                    error_log('[NewsController] views update error: ' . $e->getMessage());
                 }
 }
 
@@ -534,7 +534,7 @@ try {
                     $pdo->prepare('UPDATE news SET views = views + 1 WHERE id = :id')
                         ->execute([':id' => (int)$news['id']]);
                 } catch (Throwable $e) {
-                    @error_log('[NewsController] views update error (no cache): ' . $e->getMessage());
+                    error_log('[NewsController] views update error (no cache): ' . $e->getMessage());
                 }
             }
         } else {
@@ -553,7 +553,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[NewsController] ' . $e->getMessage());
+    error_log('[NewsController] ' . $e->getMessage());
     $news = null;
 }
 

@@ -90,10 +90,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $detectedMime = '';
             if (function_exists('finfo_open')) {
-                $finfo = @finfo_open(FILEINFO_MIME_TYPE);
+                $finfo = gdy_finfo_open(FILEINFO_MIME_TYPE);
                 if ($finfo) {
-                    $detectedMime = (string)@finfo_file($finfo, (string)($file['tmp_name'] ?? ''));
-                    @finfo_close($finfo);
+                    $detectedMime = (string)gdy_finfo_file($finfo, (string)($file['tmp_name'] ?? ''));
+                    gdy_finfo_close($finfo);
                 }
             }
 
@@ -103,16 +103,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // فحوصات إضافية للصور و PDF
             if (in_array($extension, ['jpg','jpeg','png','gif','webp'], true)) {
-                if (@getimagesize((string)($file['tmp_name'] ?? '')) === false) {
+                if (gdy_getimagesize((string)($file['tmp_name'] ?? '')) === false) {
                     throw new Exception(__('t_7c2eda6568', 'الملف ليس صورة صالحة.'));
                 }
             }
 
             if ($extension === 'pdf') {
-                $fh = @fopen((string)($file['tmp_name'] ?? ''), 'rb');
+                $fh = gdy_fopen((string)($file['tmp_name'] ?? ''), 'rb');
                 if ($fh) {
-                    $sig = (string)@fread($fh, 4);
-                    @fclose($fh);
+                    $sig = (string)fread($fh, 4);
+                    gdy_fclose($fh);
                     if ($sig !== '%PDF') {
                         throw new Exception(__('t_7c2eda6568', 'الملف ليس PDF صالحاً.'));
                     }
@@ -132,13 +132,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             // نقل الملف
             if (move_uploaded_file($file['tmp_name'], $filePath)) {
-                @chmod($filePath, 0644);
+                gdy_chmod($filePath, 0644);
 
                 // تحسين الصور (Resize + ضغط) لرفع أسرع وأداء أفضل
                 try {
                     $extOpt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
                     if (in_array($extOpt, ['jpg','jpeg','png'], true)) {
-                        $infoOpt = @getimagesize($filePath);
+                        $infoOpt = gdy_getimagesize($filePath);
                         if ($infoOpt && isset($infoOpt[0], $infoOpt[1])) {
                             $w = (int)$infoOpt[0];
                             $h = (int)$infoOpt[1];
@@ -147,9 +147,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $src = null;
 
                             if (in_array($extOpt, ['jpg','jpeg'], true) && function_exists('imagecreatefromjpeg')) {
-                                $src = @imagecreatefromjpeg($filePath);
+                                $src = gdy_imagecreatefromjpeg($filePath);
                             } elseif ($extOpt === 'png' && function_exists('imagecreatefrompng')) {
-                                $src = @imagecreatefrompng($filePath);
+                                $src = gdy_imagecreatefrompng($filePath);
                             }
 
                             if ($src) {
@@ -161,17 +161,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     $nh = (int)max(1, round($h * $ratio));
 
                                     if (function_exists('imagecreatetruecolor')) {
-                                        $tmp = @imagecreatetruecolor($nw, $nh);
+                                        $tmp = gdy_imagecreatetruecolor($nw, $nh);
                                         if ($tmp) {
                                             if ($extOpt === 'png') {
-                                                @imagealphablending($tmp, false);
-                                                @imagesavealpha($tmp, true);
-                                                $transparent = @imagecolorallocatealpha($tmp, 0, 0, 0, 127);
+                                                gdy_imagealphablending($tmp, false);
+                                                gdy_imagesavealpha($tmp, true);
+                                                $transparent = gdy_imagecolorallocatealpha($tmp, 0, 0, 0, 127);
                                                 if ($transparent !== false) {
-                                                    @imagefilledrectangle($tmp, 0, 0, $nw, $nh, $transparent);
+                                                    gdy_imagefilledrectangle($tmp, 0, 0, $nw, $nh, $transparent);
                                                 }
                                             }
-                                            @imagecopyresampled($tmp, $src, 0, 0, 0, 0, $nw, $nh, $w, $h);
+                                            gdy_imagecopyresampled($tmp, $src, 0, 0, 0, 0, $nw, $nh, $w, $h);
                                             $dst = $tmp;
                                         }
                                     }
@@ -179,13 +179,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                 // إعادة حفظ بنفس المسار (ضغط)
                                 if (in_array($extOpt, ['jpg','jpeg'], true) && function_exists('imagejpeg')) {
-                                    @imagejpeg($dst, $filePath, 85);
+                                    gdy_imagejpeg($dst, $filePath, 85);
                                 } elseif ($extOpt === 'png' && function_exists('imagepng')) {
-                                    @imagepng($dst, $filePath, 7);
+                                    gdy_imagepng($dst, $filePath, 7);
                                 }
 
-                                if ($dst !== $src && function_exists('imagedestroy')) { @imagedestroy($dst); }
-                                if (function_exists('imagedestroy')) { @imagedestroy($src); }
+                                if ($dst !== $src && function_exists('imagedestroy')) { gdy_imagedestroy($dst); }
+                                if (function_exists('imagedestroy')) { gdy_imagedestroy($src); }
                             }
                         }
                     }
@@ -205,24 +205,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         $img = null;
                         if ($ext === 'png' && function_exists('imagecreatefrompng')) {
-                            $img = @imagecreatefrompng($filePath);
+                            $img = gdy_imagecreatefrompng($filePath);
                         } elseif (in_array($ext, ['jpg','jpeg'], true) && function_exists('imagecreatefromjpeg')) {
-                            $img = @imagecreatefromjpeg($filePath);
+                            $img = gdy_imagecreatefromjpeg($filePath);
                         }
 
                         if ($img) {
-                            if (function_exists('imagepalettetotruecolor')) { @imagepalettetotruecolor($img); }
-                            if (function_exists('imagealphablending')) { @imagealphablending($img, true); }
-                            if (function_exists('imagesavealpha')) { @imagesavealpha($img, true); }
+                            if (function_exists('imagepalettetotruecolor')) { gdy_imagepalettetotruecolor($img); }
+                            if (function_exists('imagealphablending')) { gdy_imagealphablending($img, true); }
+                            if (function_exists('imagesavealpha')) { gdy_imagesavealpha($img, true); }
 
                             // جودة 82 توازن ممتاز بين الحجم والجودة
-                            if (@imagewebp($img, $webpPath, 82)) {
-                                @chmod($webpPath, 0644);
+                            if (gdy_imagewebp($img, $webpPath, 82)) {
+                                gdy_chmod($webpPath, 0644);
                                 $webpUrl = function_exists('base_url')
                                     ? rtrim((string)base_url(), '/') . '/assets/uploads/media/' . $webpName
                                     : '/assets/uploads/media/' . $webpName;
                             }
-                            if (function_exists('imagedestroy')) { @imagedestroy($img); }
+                            if (function_exists('imagedestroy')) { gdy_imagedestroy($img); }
                         }
                     }
                 } catch (Throwable $e) {

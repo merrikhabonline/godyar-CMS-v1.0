@@ -276,7 +276,7 @@ function og_imagick_pango_text_image(string $text, string $fontFile, int $fontSi
 function og_output_static(string $defaultPath): void {
   header('Content-Type: image/png');
   header('Cache-Control: public, max-age=86400');
-  @readfile($defaultPath);
+  gdy_readfile($defaultPath);
   exit;
 }
 
@@ -307,9 +307,9 @@ function og_render_gd(string $title, string $siteName, string $tagline, array $o
     if (is_file($tp)) {
       $ext = strtolower(pathinfo($tp, PATHINFO_EXTENSION));
       $src = null;
-      if (in_array($ext, ['jpg','jpeg'], true)) $src = @imagecreatefromjpeg($tp);
-      elseif ($ext === 'png') $src = @imagecreatefrompng($tp);
-      elseif ($ext === 'webp' && function_exists('imagecreatefromwebp')) $src = @imagecreatefromwebp($tp);
+      if (in_array($ext, ['jpg','jpeg'], true)) $src = gdy_imagecreatefromjpeg($tp);
+      elseif ($ext === 'png') $src = gdy_imagecreatefrompng($tp);
+      elseif ($ext === 'webp' && function_exists('imagecreatefromwebp')) $src = gdy_imagecreatefromwebp($tp);
       if ($src) {
         imagecopyresampled($img, $src, 0, 0, 0, 0, $W, $H, imagesx($src), imagesy($src));
         imagedestroy($src);
@@ -327,9 +327,9 @@ function og_render_gd(string $title, string $siteName, string $tagline, array $o
     if (is_file($lp)) {
       $ext = strtolower(pathinfo($lp, PATHINFO_EXTENSION));
       $limg = null;
-      if (in_array($ext, ['jpg','jpeg'], true)) $limg = @imagecreatefromjpeg($lp);
-      elseif ($ext === 'png') $limg = @imagecreatefrompng($lp);
-      elseif ($ext === 'webp' && function_exists('imagecreatefromwebp')) $limg = @imagecreatefromwebp($lp);
+      if (in_array($ext, ['jpg','jpeg'], true)) $limg = gdy_imagecreatefromjpeg($lp);
+      elseif ($ext === 'png') $limg = gdy_imagecreatefrompng($lp);
+      elseif ($ext === 'webp' && function_exists('imagecreatefromwebp')) $limg = gdy_imagecreatefromwebp($lp);
       if ($limg) {
         $maxW = 160; $maxH = 160;
         $w = imagesx($limg); $h = imagesy($limg);

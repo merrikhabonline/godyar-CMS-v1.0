@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'toggl
 
         // قراءة الملف الحالي إن وُجد
         if (is_file($metaFile)) {
-            $json = @file_get_contents($metaFile);
+            $json = gdy_file_get_contents($metaFile);
             if (is_string($json) && $json !== '') {
                 $decoded = json_decode($json, true);
                 if (is_array($decoded)) {
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'toggl
         $meta['enabled']  = !$enabled;
 
         // حفظ التغيير
-        @file_put_contents(
+        gdy_file_put_contents(
             $metaFile,
             json_encode($meta, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)
         );
@@ -87,7 +87,7 @@ if (is_dir($pluginsDir)) {
             // قراءة plugin.json إن وجد
             $metaFile = $path . '/plugin.json';
             if (is_file($metaFile)) {
-                $json = @file_get_contents($metaFile);
+                $json = gdy_file_get_contents($metaFile);
                 if (is_string($json) && $json !== '') {
                     $decoded = json_decode($json, true);
                     if (is_array($decoded)) {

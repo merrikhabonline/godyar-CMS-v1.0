@@ -40,7 +40,7 @@ if (!function_exists('gdy_http_get')) {
                 'header' => "User-Agent: GodyarCMS/SEO (+sitemap)\r\n",
             ],
         ]);
-        $body = @file_get_contents($url, false, $ctx);
+        $body = gdy_file_get_contents($url, false, $ctx);
         $ok = $body !== false;
         return ['ok' => $ok, 'code' => $ok ? 200 : 0, 'body' => $ok ? (string)$body : '', 'error' => $ok ? '' : 'file_get_contents_failed'];
     }
@@ -76,7 +76,7 @@ if (!function_exists('gdy_http_post_json')) {
                 'content' => $json,
             ],
         ]);
-        $body = @file_get_contents($url, false, $ctx);
+        $body = gdy_file_get_contents($url, false, $ctx);
         $ok = $body !== false;
         return ['ok' => $ok, 'code' => $ok ? 200 : 0, 'body' => $ok ? (string)$body : '', 'error' => $ok ? '' : 'file_get_contents_failed'];
     }

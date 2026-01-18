@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $notice = __('t_36a9b31463', 'تم حفظ إعدادات المظهر بنجاح.');
     } catch (Throwable $e) {
         $error = __('t_4fa410044f', 'حدث خطأ أثناء الحفظ.');
-        @error_log('[settings_theme] ' . $e->getMessage());
+        error_log('[settings_theme] ' . $e->getMessage());
     }
 }
 

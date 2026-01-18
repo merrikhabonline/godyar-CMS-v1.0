@@ -14,7 +14,7 @@ require_once __DIR__ . '/../plugins/loader.php';
 
 // جلسة
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 /* =========================
@@ -32,7 +32,7 @@ if (!function_exists('admin_generate_csrf_token')) {
         if (function_exists('generate_csrf_token')) {
             return (string)generate_csrf_token();
         }
-        if (session_status() === PHP_SESSION_NONE) @session_start();
+        if (session_status() === PHP_SESSION_NONE) gdy_session_start();
         if (empty($_SESSION['_csrf_token'])) {
             $_SESSION['_csrf_token'] = bin2hex(random_bytes(32));
         }
@@ -45,7 +45,7 @@ if (!function_exists('admin_verify_csrf_token')) {
         if (function_exists('verify_csrf_token')) {
             return (bool)verify_csrf_token($token);
         }
-        if (session_status() === PHP_SESSION_NONE) @session_start();
+        if (session_status() === PHP_SESSION_NONE) gdy_session_start();
         return isset($_SESSION['_csrf_token']) && hash_equals((string)$_SESSION['_csrf_token'], (string)$token);
     }
 }
@@ -67,7 +67,7 @@ if (!function_exists('csrf_field')) {
    ========================= */
 if (!function_exists('admin_add_flash_message')) {
     function admin_add_flash_message(string $type, string $message): void {
-        if (session_status() === PHP_SESSION_NONE) @session_start();
+        if (session_status() === PHP_SESSION_NONE) gdy_session_start();
         // PHP 7.3 and older do not support ??= (null coalescing assignment)
         if (!isset($_SESSION['admin_flash_messages']) || !is_array($_SESSION['admin_flash_messages'])) {
             $_SESSION['admin_flash_messages'] = [];
@@ -82,7 +82,7 @@ if (!function_exists('admin_add_flash_message')) {
 
 if (!function_exists('admin_display_flash_messages')) {
     function admin_display_flash_messages(): void {
-        if (session_status() === PHP_SESSION_NONE) @session_start();
+        if (session_status() === PHP_SESSION_NONE) gdy_session_start();
         if (empty($_SESSION['admin_flash_messages'])) return;
 
         $types = [
@@ -189,7 +189,7 @@ $EXTRA = [
 function render_page(string $title, string $activeHref, callable $contentCb): void {
     global $MENU_GROUPS, $EXTRA, $ADMIN_BASE;
 
-    if (session_status() === PHP_SESSION_NONE) @session_start();
+    if (session_status() === PHP_SESSION_NONE) gdy_session_start();
 
     $csrfToken = admin_generate_csrf_token();
 

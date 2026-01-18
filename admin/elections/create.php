@@ -13,7 +13,7 @@ require_once __DIR__ . '/../../includes/auth.php';
 use Godyar\Auth;
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 if (!Auth::isLoggedIn()) {
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             } catch (Throwable $e) {
                 $errors[] = __('t_3dc686372e', 'حدث خطأ أثناء الحفظ، يرجى المحاولة لاحقاً.');
-                @error_log('[Godyar Elections] create error: ' . $e->getMessage());
+                error_log('[Godyar Elections] create error: ' . $e->getMessage());
             }
         }
     }

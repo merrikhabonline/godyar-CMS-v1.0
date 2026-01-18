@@ -15,7 +15,7 @@ if (file_exists($authFile)) {
 }
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 /**
@@ -91,7 +91,7 @@ try {
     $totalSeats    = isset($row['total_seats']) ? (int)$row['total_seats'] : null;
     $majoritySeats = isset($row['majority_seats']) ? (int)$row['majority_seats'] : null;
 } catch (Throwable $e) {
-    @error_log('[Godyar Elections] fetch single error: ' . $e->getMessage());
+    error_log('[Godyar Elections] fetch single error: ' . $e->getMessage());
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -172,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             } catch (Throwable $e) {
                 $errors[] = __('t_838511a30f', 'حدث خطأ أثناء التحديث، يرجى المحاولة لاحقاً.');
-                @error_log('[Godyar Elections] update error: ' . $e->getMessage());
+                error_log('[Godyar Elections] update error: ' . $e->getMessage());
             }
         }
     }

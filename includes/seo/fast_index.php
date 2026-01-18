@@ -41,7 +41,7 @@ if (!function_exists('gdy_ping_sitemaps')) {
 
         foreach ($urls as $u) {
             try {
-                @file_get_contents($u);
+                gdy_file_get_contents($u);
             } catch (Throwable $e) {
                 // ignore
             }
@@ -81,7 +81,7 @@ if (!function_exists('gdy_indexnow_submit')) {
         ]);
 
         try {
-            $resp = @file_get_contents('https://api.indexnow.org/indexnow', false, $ctx);
+            $resp = gdy_file_get_contents('https://api.indexnow.org/indexnow', false, $ctx);
             // if no error, treat as ok
             return $resp !== false;
         } catch (Throwable $e) {
@@ -110,6 +110,6 @@ if (!function_exists('gdy_fast_index_news')) {
         $urls[] = $base . '/';
         $urls[] = $base . '/sitemap.xml';
 
-        @gdy_indexnow_submit($urls);
+        gdy_indexnow_submit_safe($urls);
     }
 }

@@ -42,7 +42,7 @@ if (class_exists('Cache')) {
         Cache::forget('_admin_cache_test');
     } catch (Throwable $e) {
         $cacheInfo['enabled'] = false;
-        @error_log('[Godyar Cache Test] ' . $e->getMessage());
+        error_log('[Godyar Cache Test] ' . $e->getMessage());
     }
 
     // محاولة معرفة المسار من الكلاس
@@ -59,7 +59,7 @@ if (class_exists('Cache')) {
             }
         }
     } catch (Throwable $e) {
-        @error_log('[Godyar Cache Path] ' . $e->getMessage());
+        error_log('[Godyar Cache Path] ' . $e->getMessage());
     }
 
     // لو بقي المسار فارغاً، نستخدم المسار الشائع عندك
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
         $flash = 'تم مسح ملفات الكاش بنجاح.';
     } catch (Throwable $e) {
         $flash = 'حدث خطأ أثناء مسح الكاش.';
-        @error_log('[Godyar Cache Flush] ' . $e->getMessage());
+        error_log('[Godyar Cache Flush] ' . $e->getMessage());
     }
 }
 

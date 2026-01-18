@@ -357,7 +357,7 @@ class POP3
         //The QUIT command may cause the daemon to exit, which will kill our connection
         //So ignore errors here
         try {
-            @fclose($this->pop_conn);
+            gdy_fclose($this->pop_conn);
         } catch (Exception $e) {
             //Do nothing
         }

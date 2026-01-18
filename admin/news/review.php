@@ -184,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $okCount++;
                 } catch (Throwable $e) {
                     $failCount++;
-                    @error_log('[Review Queue] action failed: ' . $e->getMessage());
+                    error_log('[Review Queue] action failed: ' . $e->getMessage());
                 }
             }
 

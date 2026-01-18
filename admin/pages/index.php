@@ -19,7 +19,7 @@ try {
         }
     } else {
         if (session_status() !== PHP_SESSION_ACTIVE) {
-            @session_start();
+            gdy_session_start();
         }
         if (empty($_SESSION['user']['id']) || (($_SESSION['user']['role'] ?? '') === 'guest')) {
             header('Location: ../login.php');
@@ -27,7 +27,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Admin Pages] auth check error: ' . $e->getMessage());
+    error_log('[Admin Pages] auth check error: ' . $e->getMessage());
     header('Location: ../login.php');
     exit;
 }
@@ -64,7 +64,7 @@ try {
     $statsPages['published'] = (int)$pdo->query("SELECT COUNT(*) FROM pages WHERE status = 'published'")->fetchColumn();
     $statsPages['draft'] = (int)$pdo->query("SELECT COUNT(*) FROM pages WHERE status = 'draft'")->fetchColumn();
 } catch (Throwable $e) {
-    @error_log('[Admin Pages] stats error: ' . $e->getMessage());
+    error_log('[Admin Pages] stats error: ' . $e->getMessage());
 }
 
 // ===== ترقيم الصفحات =====
@@ -98,7 +98,7 @@ try {
     $stmtCount->execute();
     $totalRows = (int)$stmtCount->fetchColumn();
 } catch (Throwable $e) {
-    @error_log('[Admin Pages] count error: ' . $e->getMessage());
+    error_log('[Admin Pages] count error: ' . $e->getMessage());
 }
 
 // جلب البيانات
@@ -119,7 +119,7 @@ try {
     $stmt->execute();
     $pages = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (Throwable $e) {
-    @error_log('[Admin Pages] list error: ' . $e->getMessage());
+    error_log('[Admin Pages] list error: ' . $e->getMessage());
 }
 
 $totalPages = $perPage > 0 ? (int)ceil($totalRows / $perPage) : 1;

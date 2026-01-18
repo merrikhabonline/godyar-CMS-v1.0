@@ -54,7 +54,7 @@ if (!function_exists('gdy_elections_ensure_schema')) {
                     $pdo->exec("ALTER TABLE elections ADD COLUMN majority_seats INT UNSIGNED NULL AFTER total_seats");
                 }
             } catch (\Throwable $e) {
-                @error_log('[Godyar Elections] alter elections columns error: ' . $e->getMessage());
+                error_log('[Godyar Elections] alter elections columns error: ' . $e->getMessage());
             }
 
             // ===== جدول الأحزاب =====
@@ -153,7 +153,7 @@ if (!function_exists('gdy_elections_ensure_schema')) {
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             ");
         } catch (\Throwable $e) {
-            @error_log('[Godyar Elections] ensure schema error: ' . $e->getMessage());
+            error_log('[Godyar Elections] ensure schema error: ' . $e->getMessage());
         }
     }
 }

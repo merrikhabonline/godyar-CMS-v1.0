@@ -86,7 +86,7 @@ try {
     $oldStatus = (string)($news['status'] ?? '');
 
 } catch (Throwable $e) {
-    @error_log('Error fetching news for edit: ' . $e->getMessage());
+    error_log('Error fetching news for edit: ' . $e->getMessage());
     die(__('t_de84129e91', 'حدث خطأ أثناء جلب بيانات الخبر.'));
 }
 
@@ -108,7 +108,7 @@ try {
                          ORDER BY parent_id IS NULL DESC, parent_id ASC, name ASC");
     $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Throwable $e) {
-    @error_log('Error fetching categories: ' . $e->getMessage());
+    error_log('Error fetching categories: ' . $e->getMessage());
 }
 
 $categoriesTree = [];
@@ -144,7 +144,7 @@ try {
         $opinionAuthors = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     }
 } catch (Throwable $e) {
-    @error_log('Error checking / fetching opinion_authors: ' . $e->getMessage());
+    error_log('Error checking / fetching opinion_authors: ' . $e->getMessage());
 }
 
 // -----------------------------------------------------------------------------
@@ -370,7 +370,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
 
                         $uploadDir = __DIR__ . '/../../uploads/news/';
-                        if (!is_dir($uploadDir)) @mkdir($uploadDir, 0755, true);
+                        if (!is_dir($uploadDir)) gdy_mkdir($uploadDir, 0755, true);
 
                         $baseName   = date('Ymd_His') . '_' . bin2hex(random_bytes(4));
                         $fileName   = $baseName . '.' . $ext;
@@ -492,14 +492,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $newStatus = (string)($status ?? '');
                 if ($pdo instanceof PDO) {
                     if ($newStatus === 'published' && $oldStatus !== 'published') {
-                        @gdy_indexnow_submit($pdo, array_filter([$newsUrl, $sitemapUrl]));
+                        gdy_indexnow_submit_safe($pdo, array_filter([$newsUrl, $sitemapUrl]));
                     } elseif ($newStatus === 'published' && $oldStatus === 'published') {
                         // تحديثات على خبر منشور: نرسل رابط الخبر + sitemap
-                        @gdy_indexnow_submit($pdo, array_filter([$newsUrl, $sitemapUrl]));
+                        gdy_indexnow_submit_safe($pdo, array_filter([$newsUrl, $sitemapUrl]));
                     }
                 }
             } catch (Throwable $e) {
-                @error_log('[IndexNow] edit ping failed: ' . $e->getMessage());
+                error_log('[IndexNow] edit ping failed: ' . $e->getMessage());
             }
 
 
@@ -507,13 +507,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // SEO cache invalidation (sitemap/rss)
 $root = dirname(__DIR__, 2);
-@unlink($root . '/cache/sitemap.xml');
-@unlink($root . '/cache/rss.xml');
+gdy_unlink($root . '/cache/sitemap.xml');
+gdy_unlink($root . '/cache/rss.xml');
 // بعد نجاح الحفظ: احذف الصورة القديمة إذا تم رفع صورة جديدة
             if (!empty($uploadedNewImage) && $uploadedNewImage && $oldImagePath !== '' && $imagePath && $oldImagePath !== $imagePath) {
                 $oldFs = __DIR__ . '/../../' . ltrim($oldImagePath, '/');
                 if (is_file($oldFs) && str_starts_with($oldImagePath, 'uploads/news/')) {
-                    @unlink($oldFs);
+                    gdy_unlink($oldFs);
                 }
             }
 
@@ -523,7 +523,7 @@ $root = dirname(__DIR__, 2);
             if (isset($newsCols['image'])) $news['image'] = $imagePath;
 
             try { gdy_sync_news_tags($pdo, $id, (string)$tags_input); }
-            catch (Throwable $e) { @error_log('Error syncing tags: ' . $e->getMessage()); }
+            catch (Throwable $e) { error_log('Error syncing tags: ' . $e->getMessage()); }
 
             try {
                 if (isset($_FILES['attachments'])) {
@@ -531,7 +531,7 @@ $root = dirname(__DIR__, 2);
                     gdy_save_news_attachments($pdo, $id, (array)$_FILES['attachments'], $tmpErrors);
                 }
             } catch (Throwable $e) {
-                @error_log('Error saving attachments: ' . $e->getMessage());
+                error_log('Error saving attachments: ' . $e->getMessage());
             }
 
             $attachments = gdy_get_news_attachments($pdo, $id);
@@ -540,7 +540,7 @@ $root = dirname(__DIR__, 2);
             $updated = true;
 
         } catch (Throwable $e) {
-            @error_log('Error updating news: ' . $e->getMessage());
+            error_log('Error updating news: ' . $e->getMessage());
             $errors['general'] = __('t_6f622496c6', 'حدث خطأ أثناء حفظ التعديلات. يرجى المحاولة مرة أخرى.');
         }
     }

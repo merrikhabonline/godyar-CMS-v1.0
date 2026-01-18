@@ -40,7 +40,7 @@ function topbar_load_config(string $configFile): array
         return $defaults;
     }
 
-    $json = @file_get_contents($configFile);
+    $json = gdy_file_get_contents($configFile);
     if (!is_string($json) || $json === '') {
         return $defaults;
     }
@@ -64,10 +64,10 @@ function topbar_save_config(string $configFile, array $cfg): bool
     }
 
     if (!is_dir(dirname($configFile))) {
-        @mkdir(dirname($configFile), 0775, true);
+        gdy_mkdir(dirname($configFile), 0775, true);
     }
 
-    return @file_put_contents($configFile, $json) !== false;
+    return gdy_file_put_contents($configFile, $json) !== false;
 }
 
 $cfg = topbar_load_config($configFile);

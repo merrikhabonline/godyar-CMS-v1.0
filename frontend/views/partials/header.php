@@ -397,7 +397,7 @@ $cspNonce = defined('GDY_CSP_NONCE') ? (string)GDY_CSP_NONCE : '';
         if (is_file($themeCssDisk)) {
           $hasThemeCss = true;
           $themeCssHref = rtrim((string)($rootUrl ?? ''), '/') . '/assets/css/themes/theme-' . $themeFront . '.css';
-          $v = (string)@filemtime($themeCssDisk);
+          $v = (string)gdy_filemtime($themeCssDisk);
           echo '<link rel="stylesheet" href="' . h($themeCssHref) . ($v !== '' ? ('?v=' . h($v)) : '') . '">' . "\n";
         }
       }
@@ -966,7 +966,7 @@ $__gdyLang = is_string($__gdyLang) ? $__gdyLang : 'ar';
 // نحتاج "مسار التطبيق" بدون جزء اللغة حتى لا تصبح الأصول /ar/assets أو /ar/manifest.php
 $__gdyBase = function_exists('base_url') ? rtrim((string)base_url(), '/') : '';
 
-$__gdyBaseParts = @parse_url($__gdyBase);
+$__gdyBaseParts = gdy_parse_url($__gdyBase);
 $__gdyPath = isset($__gdyBaseParts['path']) ? rtrim((string)$__gdyBaseParts['path'], '/') : '';
 // احذف جزء اللغة النهائي (/ar أو /en) إن وجد
 if ($__gdyLang && $__gdyPath !== '' && substr($__gdyPath, - (strlen($__gdyLang) + 1)) === '/' . $__gdyLang) {
@@ -1011,7 +1011,7 @@ $__gdySwUrl       = ($__gdyBasePath === '' ? '' : $__gdyBasePath) . '/sw.js';
       $___sprite = (defined('ROOT_PATH') ? rtrim((string)ROOT_PATH, '/\\') : rtrim((string)__DIR__, '/\\')) . '/assets/icons/gdy-icons.svg';
       if (is_file($___sprite)) {
           echo "\n<!-- GDY Icons Sprite (inline) -->\n";
-          @readfile($___sprite);
+          gdy_readfile($___sprite);
           echo "\n";
       }
   } catch (Throwable $e) { /* ignore */ }

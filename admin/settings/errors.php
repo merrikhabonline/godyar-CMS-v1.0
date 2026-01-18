@@ -13,7 +13,7 @@ $title = 'سجل أخطاء PHP';
 function gdy_tail_file(string $path, int $maxLines = 200): array {
     if (!is_file($path) || !is_readable($path)) return [];
     $lines = [];
-    $fp = @fopen($path, 'rb');
+    $fp = gdy_fopen($path, 'rb');
     if (!$fp) return [];
     $buffer = '';
     $pos = -1;
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['clear_log'])) {
     verify_csrf();
     // safer: truncate not delete
     if (is_file($logPath) && is_writable($logPath)) {
-        @file_put_contents($logPath, '');
+        gdy_file_put_contents($logPath, '');
         $cleared = true;
         $lines = [];
     }

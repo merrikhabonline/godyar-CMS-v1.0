@@ -69,7 +69,7 @@ if (!function_exists('site_settings_load')) {
                 $pdo->exec("\n                    CREATE TABLE IF NOT EXISTS settings (\n                        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\n                        setting_key VARCHAR(100) NOT NULL UNIQUE,\n                        setting_value TEXT NULL,\n                        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n                        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP\n                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\n                ");
             }
         } catch (\Throwable $e) {
-            @error_log('[site_settings] create table: ' . $e->getMessage());
+            error_log('[site_settings] create table: ' . $e->getMessage());
         }
 
         // Load all rows (schema tolerant)
@@ -78,7 +78,7 @@ if (!function_exists('site_settings_load')) {
             $st = $pdo->query('SELECT * FROM settings');
             $rows = $st ? ($st->fetchAll(\PDO::FETCH_ASSOC) ?: []) : [];
         } catch (\Throwable $e) {
-            @error_log('[site_settings] load: ' . $e->getMessage());
+            error_log('[site_settings] load: ' . $e->getMessage());
             $rows = [];
         }
 

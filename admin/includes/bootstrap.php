@@ -14,6 +14,8 @@ declare(strict_types=1);
 if (!defined('ROOT_PATH')) {
     define('ROOT_PATH', dirname(dirname(__DIR__)));
 }
+
+require_once ROOT_PATH . '/includes/fs.php';
 // Register internal autoloader (and composer autoload if present)
 $autoload = ROOT_PATH . '/vendor/autoload.php';
 if (is_file($autoload)) {
@@ -81,7 +83,7 @@ $logDir  = ROOT_PATH . '/storage/logs';
 $logFile = $logDir . '/php-error.log';
 
 if (!is_dir($logDir)) {
-    @mkdir($logDir, 0755, true);
+    gdy_mkdir($logDir, 0755, true);
 }
 ini_set('error_log', $logFile);
 
@@ -101,7 +103,7 @@ if (session_status() === PHP_SESSION_NONE) {
             'samesite' => 'Lax',
         ]);
     }
-    @session_start();
+    gdy_session_start();
 }
 
 /* =========================
@@ -109,7 +111,7 @@ if (session_status() === PHP_SESSION_NONE) {
    ========================= */
 // Guard: PDO MySQL driver must be enabled on the server (pdo_mysql)
 if (!class_exists('PDO') || !extension_loaded('pdo_mysql')) {
-    @error_log('[Bootstrap] Missing PHP extension: pdo_mysql (PDO MySQL driver).');
+    error_log('[Bootstrap] Missing PHP extension: pdo_mysql (PDO MySQL driver).');
     http_response_code(500);
     header('Content-Type: text/html; charset=utf-8');
     echo '<div style="font-family:Tahoma,Arial;max-width:720px;margin:40px auto;line-height:1.8">';
@@ -146,7 +148,7 @@ try {
         $GLOBALS['database'] = $database;
     }
 } catch (Throwable $e) {
-    @error_log('[Bootstrap] container/legacy adapter init: ' . $e->getMessage());
+    error_log('[Bootstrap] container/legacy adapter init: ' . $e->getMessage());
 }
 
 /* =========================
@@ -204,7 +206,7 @@ function gdy_track_visit(string $page, ?int $newsId=null): void {
     $pdo = gdy_pdo_safe();
     if (!$pdo instanceof PDO) return;
 
-    if (session_status() !== PHP_SESSION_ACTIVE) @session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) gdy_session_start();
 
     $key = 'visit_'.$page.'_'.($newsId ?? 0);
     if (isset($_SESSION[$key]) && time() - $_SESSION[$key] < 600) return;

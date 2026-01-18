@@ -126,7 +126,7 @@ try {
         $stats['today']     = (int)$pdo->query("SELECT COUNT(*) FROM news WHERE DATE(created_at) = CURRENT_DATE")->fetchColumn();
     }
 } catch (Throwable $e) {
-    @error_log('[Admin News] stats: ' . $e->getMessage());
+    error_log('[Admin News] stats: ' . $e->getMessage());
 }
 
 
@@ -289,7 +289,7 @@ try {
     $stmt->execute();
     $total = (int)$stmt->fetchColumn();
 } catch (Throwable $e) {
-    @error_log('[Admin News] count: ' . $e->getMessage());
+    error_log('[Admin News] count: ' . $e->getMessage());
 }
 
 // جلب البيانات
@@ -312,7 +312,7 @@ try {
     $stmt->execute();
     $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Throwable $e) {
-    @error_log('[Admin News] list: ' . $e->getMessage());
+    error_log('[Admin News] list: ' . $e->getMessage());
 }
 
 $totalPages =$totalPages = $perPage > 0 ? (int)ceil($total / $perPage) : 1;

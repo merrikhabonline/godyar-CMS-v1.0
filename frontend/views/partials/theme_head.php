@@ -31,7 +31,7 @@ $frontPreset = strtolower(trim($frontPreset)) ?: 'default';
 
 $themeCoreDisk = ROOT_PATH . '/assets/css/themes/theme-core.css';
 $themeCoreHref = $baseUrl . '/assets/css/themes/theme-core.css';
-$themeCoreV = is_file($themeCoreDisk) ? (string)@filemtime($themeCoreDisk) : (string)time();
+$themeCoreV = is_file($themeCoreDisk) ? (string)gdy_filemtime($themeCoreDisk) : (string)time();
 echo '<link rel="stylesheet" href="' . h($themeCoreHref) . '?v=' . h($themeCoreV) . '">' . "\n";
 
 // Optional theme file for non-default
@@ -41,7 +41,7 @@ if ($themeFront !== 'default') {
     if (is_file($themeCssDisk)) {
         $hasThemeCss = true;
         $themeCssHref = $baseUrl . '/assets/css/themes/theme-' . $themeFront . '.css';
-        $v = (string)@filemtime($themeCssDisk);
+        $v = (string)gdy_filemtime($themeCssDisk);
         echo '<link rel="stylesheet" href="' . h($themeCssHref) . ($v !== '' ? ('?v=' . h($v)) : '') . '">' . "\n";
     }
 }

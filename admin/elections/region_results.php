@@ -15,7 +15,7 @@ if (file_exists($authFile)) {
 }
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 /**
@@ -89,7 +89,7 @@ try {
     $stmt->execute([':id' => $electionId]);
     $currentElection = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 } catch (Throwable $e) {
-    @error_log('[region_results] fetch election error: ' . $e->getMessage());
+    error_log('[region_results] fetch election error: ' . $e->getMessage());
 }
 
 if (!$currentElection) {
@@ -110,7 +110,7 @@ try {
     ]);
     $currentRegion = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 } catch (Throwable $e) {
-    @error_log('[region_results] fetch region error: ' . $e->getMessage());
+    error_log('[region_results] fetch region error: ' . $e->getMessage());
 }
 
 if (!$currentRegion) {
@@ -130,7 +130,7 @@ try {
     $stmt->execute([':eid' => $electionId]);
     $parties = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (Throwable $e) {
-    @error_log('[region_results] fetch parties error: ' . $e->getMessage());
+    error_log('[region_results] fetch parties error: ' . $e->getMessage());
 }
 
 // ================== 3) معالجة POST (حفظ نتائج الولاية) ==================
@@ -199,7 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             safe_redirect('region_results.php?election_id=' . $electionId . '&region_id=' . $regionId . '&saved=1');
         } catch (Throwable $e) {
             $pdo->rollBack();
-            @error_log('[region_results] save results error: ' . $e->getMessage());
+            error_log('[region_results] save results error: ' . $e->getMessage());
             $flashError = __('t_069772f0fe', 'حدث خطأ أثناء حفظ النتائج.');
         }
     }
@@ -227,7 +227,7 @@ try {
         $results[(int)$r['party_id']] = $r;
     }
 } catch (Throwable $e) {
-    @error_log('[region_results] fetch results error: ' . $e->getMessage());
+    error_log('[region_results] fetch results error: ' . $e->getMessage());
 }
 
 $totalSeats = (int)($currentRegion['total_seats'] ?? 0);

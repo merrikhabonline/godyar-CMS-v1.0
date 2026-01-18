@@ -28,7 +28,7 @@ try {
         exit;
     }
 } catch (Throwable $e) {
-    @error_log('[Admin Ads View] Auth error: ' . $e->getMessage());
+    error_log('[Admin Ads View] Auth error: ' . $e->getMessage());
     if (empty($_SESSION['user']) || (($_SESSION['user']['role'] ?? 'guest') === 'guest')) {
         header('Location: ../login.php');
         exit;
@@ -51,7 +51,7 @@ try {
         exit;
     }
 } catch (Throwable $e) {
-    @error_log('[Admin Ads View] fetch: ' . $e->getMessage());
+    error_log('[Admin Ads View] fetch: ' . $e->getMessage());
     header('Location: index.php?error=1');
     exit;
 }

@@ -26,7 +26,7 @@ if (!function_exists('gdy_base_origin')) {
         }
 
         if ($base !== '') {
-            $parts = @parse_url($base) ?: [];
+            $parts = gdy_parse_url($base) ?: [];
             $scheme = (string)($parts['scheme'] ?? '');
             $host   = (string)($parts['host'] ?? '');
             $port   = (string)($parts['port'] ?? '');
@@ -59,7 +59,7 @@ if (!function_exists('gdy_base_url')) {
         }
 
         if ($base !== '') {
-            $parts = @parse_url($base) ?: [];
+            $parts = gdy_parse_url($base) ?: [];
             $p = (string)($parts['path'] ?? '');
             if ($p !== '' && $p !== '/') {
                 $path = rtrim($p, '/');
@@ -83,7 +83,7 @@ if (!function_exists('gdy_current_url')) {
 if (!function_exists('gdy_clean_url')) {
     function gdy_clean_url(string $url): string
     {
-        $parts = @parse_url($url);
+        $parts = gdy_parse_url($url);
         if (!$parts || !is_array($parts)) return $url;
 
         $scheme = (string)($parts['scheme'] ?? '');
@@ -417,7 +417,7 @@ if (!function_exists('gdy_hreflang_map')) {
             $url = gdy_clean_url($url);
         }
 
-        $parts = @parse_url($url);
+        $parts = gdy_parse_url($url);
         if (!$parts || !is_array($parts)) return [];
 
         $scheme = (string)($parts['scheme'] ?? '');

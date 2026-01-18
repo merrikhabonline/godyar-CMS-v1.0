@@ -109,7 +109,7 @@ if ($pdo) {
     }
 
   } catch (Throwable $e) {
-    @error_log('[sitemap_html] ' . $e->getMessage());
+    error_log('[sitemap_html] ' . $e->getMessage());
   }
 }
 ?>

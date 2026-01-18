@@ -889,10 +889,10 @@ class PHPMailer
         $this->edebug("Subject: {$subject}");
         $this->edebug("Headers: {$header}");
         if (!$this->UseSendmailOptions || null === $params) {
-            $result = @mail($to, $subject, $body, $header);
+            $result = gdy_mail($to, $subject, $body, $header);
         } else {
             $this->edebug("Additional params: {$params}");
-            $result = @mail($to, $subject, $body, $header, $params);
+            $result = gdy_mail($to, $subject, $body, $header, $params);
         }
         $this->edebug('Result: ' . ($result ? 'true' : 'false'));
         return $result;
@@ -3241,16 +3241,16 @@ class PHPMailer
                     );
                 }
 
-                @unlink($file);
+                gdy_unlink($file);
                 if ($sign) {
                     $body = file_get_contents($signed);
-                    @unlink($signed);
+                    gdy_unlink($signed);
                     //The message returned by openssl contains both headers and body, so need to split them up
                     $parts = explode("\n\n", $body, 2);
                     $this->MIMEHeader .= $parts[0] . static::$LE . static::$LE;
                     $body = $parts[1];
                 } else {
-                    @unlink($signed);
+                    gdy_unlink($signed);
                     throw new Exception(self::lang('signing') . openssl_error_string());
                 }
             } catch (Exception $exc) {

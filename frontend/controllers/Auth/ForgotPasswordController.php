@@ -4,7 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../../../includes/bootstrap.php';
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 if (!function_exists('h')) {
@@ -79,9 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // نحاول الإرسال لكن لا نوقف النظام لو فشل
             try {
-                @mail($user['email'], $subject, $body, $headers);
+                gdy_mail($user['email'], $subject, $body, $headers);
             } catch (Throwable $e) {
-                @error_log('[Frontend ForgotPassword] mail error: ' . $e->getMessage());
+                error_log('[Frontend ForgotPassword] mail error: ' . $e->getMessage());
             }
 
             $success = 'تم إرسال رابط استعادة كلمة المرور إلى بريدك الإلكتروني (إن كان مسجلاً لدينا).';
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         unset($_SESSION['front_forgot_csrf']);
     } catch (Throwable $e) {
         $error = $e->getMessage();
-        @error_log('[Frontend ForgotPassword] ' . $e->getMessage());
+        error_log('[Frontend ForgotPassword] ' . $e->getMessage());
     }
 }
 ?>

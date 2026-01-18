@@ -63,7 +63,7 @@ return new class implements GodyarPluginInterface {
 
             $related = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
         } catch (\Throwable $e) {
-            @error_log('[RelatedNews] ' . $e->getMessage());
+            error_log('[RelatedNews] ' . $e->getMessage());
             return;
         }
 

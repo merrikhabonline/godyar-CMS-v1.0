@@ -53,7 +53,7 @@ if ($pdo instanceof PDO) {
         $stmt = $pdo->query($sql);
         $team = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     } catch (Throwable $e) {
-        @error_log('[Front team] ' . $e->getMessage());
+        error_log('[Front team] ' . $e->getMessage());
     }
 }
 

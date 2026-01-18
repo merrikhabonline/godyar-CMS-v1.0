@@ -82,7 +82,7 @@ $newsUrl     = $postId > 0 ? $baseUrl . '/news/id/' . $postId : '#';
 $seoDesc = $excerpt !== '' ? $excerpt : mb_substr(trim(strip_tags((string)$body)), 0, 160, 'UTF-8');
 $publishedIso = '';
 if ($date !== '') {
-    $ts = @strtotime((string)$date);
+    $ts = gdy_strtotime((string)$date);
     if ($ts) $publishedIso = date('c', $ts);
 }
 $pageSeo = [

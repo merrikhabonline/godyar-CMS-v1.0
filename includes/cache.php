@@ -191,7 +191,7 @@ class Cache
      */
     protected static function filePath(string $key): string
     {
-        $hash = sha1($key);
+        $hash = hash('sha256', $key);
         return static::$path . DIRECTORY_SEPARATOR . $hash . '.phpcache';
     }
 

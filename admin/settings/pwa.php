@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Log
         $logDir = ABSPATH . '/storage/push';
         if (!is_dir($logDir)) {
-            @mkdir($logDir, 0755, true);
+            gdy_mkdir($logDir, 0755, true);
         }
         $logLine = [
             'ts' => date('c'),
@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'test_only' => $testOnly,
             'result' => $sendRes,
         ];
-        @file_put_contents($logDir . '/send-log-' . date('Y-m-d') . '.jsonl', json_encode($logLine, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . "\n", FILE_APPEND);
+        gdy_file_put_contents($logDir . '/send-log-' . date('Y-m-d') . '.jsonl', json_encode($logLine, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . "\n", FILE_APPEND);
         $total = (int)($sendRes['total'] ?? 0);
         if ($total === 0) {
             // No subscribers yet: not an error, show a helpful notice.

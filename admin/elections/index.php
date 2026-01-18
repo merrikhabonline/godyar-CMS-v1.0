@@ -15,7 +15,7 @@ if (file_exists($authFile)) {
 }
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 /**
@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt->execute([':st' => $newSt, ':id' => $id]);
                     $flashSuccess = __('t_4770efc5dd', 'تم تحديث حالة التغطية بنجاح.');
                 } catch (Throwable $e) {
-                    @error_log('[elections index] set_status error: ' . $e->getMessage());
+                    error_log('[elections index] set_status error: ' . $e->getMessage());
                     $flashError = __('t_5b5f2fdf6e', 'حدث خطأ أثناء تحديث الحالة.');
                 }
             } else {
@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt->execute([':id' => $id]);
                     $flashSuccess = __('t_13538cf967', 'تم حذف التغطية بنجاح.');
                 } catch (Throwable $e) {
-                    @error_log('[elections index] delete error: ' . $e->getMessage());
+                    error_log('[elections index] delete error: ' . $e->getMessage());
                     $flashError = __('t_470e695a0c', 'تعذر حذف التغطية، ربما مرتبطة ببيانات أخرى.');
                 }
             }
@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt->execute($params);
                     $flashSuccess = __('t_0eeaa2fe67', 'تم تحديث حالة التغطيات المحددة بنجاح.');
                 } catch (Throwable $e) {
-                    @error_log('[elections index] bulk_status error: ' . $e->getMessage());
+                    error_log('[elections index] bulk_status error: ' . $e->getMessage());
                     $flashError = __('t_22ed99fb09', 'تعذر تنفيذ عملية التحديث الجماعي.');
                 }
             }
@@ -211,7 +211,7 @@ try {
     $stmt->execute($params);
     $totalRows = (int)$stmt->fetchColumn();
 } catch (Throwable $e) {
-    @error_log('[elections index] count error: ' . $e->getMessage());
+    error_log('[elections index] count error: ' . $e->getMessage());
     $totalRows = 0;
 }
 
@@ -242,7 +242,7 @@ try {
     $stmt->execute();
     $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Throwable $e) {
-    @error_log('[elections index] fetch list error: ' . $e->getMessage());
+    error_log('[elections index] fetch list error: ' . $e->getMessage());
     $items = [];
     $totalRows = 0;
 }

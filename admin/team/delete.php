@@ -30,7 +30,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Admin Team Delete] Auth: '.$e->getMessage());
+    error_log('[Admin Team Delete] Auth: '.$e->getMessage());
     header('Location: ../login.php');
     exit;
 }
@@ -69,7 +69,7 @@ if ($pdo instanceof PDO) {
         $stmt = $pdo->prepare("DELETE FROM team_members WHERE id = :id LIMIT 1");
         $stmt->execute([':id' => $id]);
     } catch (Throwable $e) {
-        @error_log('[Admin Team Delete] delete: '.$e->getMessage());
+        error_log('[Admin Team Delete] delete: '.$e->getMessage());
     }
 }
 

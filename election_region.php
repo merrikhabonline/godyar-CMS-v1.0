@@ -46,7 +46,7 @@ try {
     $stmt->execute([':slug' => $electionSlug]);
     $currentElection = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 } catch (Throwable $e) {
-    @error_log('[Election Region] fetch election error: ' . $e->getMessage());
+    error_log('[Election Region] fetch election error: ' . $e->getMessage());
 }
 
 if (!$currentElection) {
@@ -244,7 +244,7 @@ try {
     ]);
     $region = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 } catch (Throwable $e) {
-    @error_log('[Election Region] fetch region error: ' . $e->getMessage());
+    error_log('[Election Region] fetch region error: ' . $e->getMessage());
 }
 
 // لو ما في سطر في قاعدة البيانات، نعمل كائن افتراضي من الميتاداتا فقط
@@ -294,7 +294,7 @@ if ((int)$region['id'] > 0) {
             $totalSeatsLeading += (int)$pr['seats_leading'];
         }
     } catch (Throwable $e) {
-        @error_log('[Election Region] fetch party results error: ' . $e->getMessage());
+        error_log('[Election Region] fetch party results error: ' . $e->getMessage());
     }
 }
 
@@ -328,7 +328,7 @@ if ((int)$region['id'] > 0) {
         ]);
         $constituencies = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     } catch (Throwable $e) {
-        @error_log('[Election Region] fetch constituencies error: ' . $e->getMessage());
+        error_log('[Election Region] fetch constituencies error: ' . $e->getMessage());
         $constituencies = [];
     }
 
@@ -368,7 +368,7 @@ if ((int)$region['id'] > 0) {
                     $candidatesByConstituency[$cid][] = $row;
                 }
             } catch (Throwable $e) {
-                @error_log('[Election Region] fetch candidates error: ' . $e->getMessage());
+                error_log('[Election Region] fetch candidates error: ' . $e->getMessage());
                 $candidatesByConstituency = [];
             }
         }

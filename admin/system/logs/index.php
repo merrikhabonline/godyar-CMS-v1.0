@@ -131,7 +131,7 @@ if ($pdo instanceof PDO) {
             $logs  = $stmt2->fetchAll(PDO::FETCH_ASSOC) ?: [];
         }
     } catch (Throwable $e) {
-        @error_log('[Godyar System Logs] ' . $e->getMessage());
+        error_log('[Godyar System Logs] ' . $e->getMessage());
     }
 }
 

@@ -16,7 +16,7 @@ class Slide
             $m = new \Godyar\Models\Slide();
             return $m->all();
         } catch (\Throwable $e) {
-            @error_log('[App\\Models\\Slide::all] ' . $e->getMessage());
+            error_log('[App\\Models\\Slide::all] ' . $e->getMessage());
             return [];
         }
     }

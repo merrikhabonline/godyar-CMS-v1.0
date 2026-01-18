@@ -7,7 +7,7 @@ require_once __DIR__ . '/../../../includes/bootstrap.php';
 require_once __DIR__ . '/../../../includes/site_settings.php';
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // هيلبر بسيط للهروب من XSS
@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } catch (Throwable $e) {
         $error = $e->getMessage();
-        @error_log('[Frontend Login] ' . $e->getMessage());
+        error_log('[Frontend Login] ' . $e->getMessage());
     }
 }
 

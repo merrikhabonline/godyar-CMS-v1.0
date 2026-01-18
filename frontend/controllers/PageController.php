@@ -8,7 +8,7 @@ require_once __DIR__ . '/../../includes/TemplateEngine.php';
 require_once __DIR__ . '/../../includes/site_settings.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 if (!function_exists('h')) {
@@ -64,7 +64,7 @@ try {
     $stmt = $pdo->query("SELECT id, name, slug FROM categories WHERE is_active = 1 ORDER BY {$orderBy} LIMIT 8");
 $headerCategories = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (Throwable $e) {
-    @error_log('[PageController] categories load error: ' . $e->getMessage());
+    error_log('[PageController] categories load error: ' . $e->getMessage());
     $headerCategories = [];
 }
 
@@ -125,7 +125,7 @@ if ($slug === '') {
             http_response_code(404);
         }
     } catch (Throwable $e) {
-        @error_log('[PageController] page load error: ' . $e->getMessage());
+        error_log('[PageController] page load error: ' . $e->getMessage());
         $pageNotFound = true;
         $page = [
             'title'      => 'خطأ في تحميل الصفحة',

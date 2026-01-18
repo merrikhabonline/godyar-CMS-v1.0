@@ -51,7 +51,7 @@ if ($pdo instanceof PDO) {
             $stmt = $pdo->query($sql);
             $stats[$key] = (int)$stmt->fetchColumn();
         } catch (Throwable $e) {
-            @error_log('[Godyar Reports] ' . $key . ': ' . $e->getMessage());
+            error_log('[Godyar Reports] ' . $key . ': ' . $e->getMessage());
         }
     }
 }

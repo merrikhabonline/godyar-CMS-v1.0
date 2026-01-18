@@ -394,7 +394,7 @@ $pagePreloadImages = !empty($coverUrl) ? [$coverUrl] : [];
 $seoDesc = $excerpt !== '' ? $excerpt : mb_substr(trim(strip_tags($body)), 0, 170, 'UTF-8');
 $publishedIso = '';
 if ($date !== '') {
-    $ts = @strtotime($date);
+    $ts = gdy_strtotime($date);
     if ($ts) $publishedIso = date('c', $ts);
 }
 $pageSeo = [

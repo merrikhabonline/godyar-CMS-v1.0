@@ -4,7 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../includes/bootstrap.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 $clientId = function_exists('env') ? (string)env('GITHUB_OAUTH_CLIENT_ID', '') : '';

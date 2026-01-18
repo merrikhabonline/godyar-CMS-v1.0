@@ -30,7 +30,7 @@ class Security
         if ($strict) {
             // ✅ CSP بدون unsafe-inline (يحتاج إضافة nonce في أي <script>/<style> inline)
             $nonce = rtrim(strtr(base64_encode(random_bytes(18)), '+/', '-_'), '=');
-            if (session_status() !== PHP_SESSION_ACTIVE) @session_start();
+            if (session_status() !== PHP_SESSION_ACTIVE) gdy_session_start();
             $_SESSION['csp_nonce'] = $nonce;
 
             $csp = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; " .

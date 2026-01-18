@@ -16,7 +16,7 @@ if (!isset($pageHead)) { $pageHead = ''; }
 if (strpos((string)$pageHead, 'admin-ui.css') === false) {
     // Cache busting (CSS might be cached aggressively in some shared hosts)
     $adminUiFile = __DIR__ . '/../assets/css/admin-ui.css';
-    $v = is_file($adminUiFile) ? (int)@filemtime($adminUiFile) : time();
+    $v = is_file($adminUiFile) ? (int)gdy_filemtime($adminUiFile) : time();
     $pageHead = '<link rel="stylesheet" href="' . $__base . '/admin/assets/css/admin-ui.css?v=' . $v . '">' . "\n" . $pageHead;
 }
 

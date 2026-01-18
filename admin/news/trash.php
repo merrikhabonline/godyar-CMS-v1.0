@@ -84,7 +84,7 @@ try {
     $stmt->execute();
     $total = (int)$stmt->fetchColumn();
 } catch (Throwable $e) {
-    @error_log('[Admin News Trash] count: ' . $e->getMessage());
+    error_log('[Admin News Trash] count: ' . $e->getMessage());
 }
 
 // جلب البيانات
@@ -104,7 +104,7 @@ try {
     $stmt->execute();
     $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Throwable $e) {
-    @error_log('[Admin News Trash] list: ' . $e->getMessage());
+    error_log('[Admin News Trash] list: ' . $e->getMessage());
 }
 
 $totalPages = $perPage > 0 ? (int)ceil($total / $perPage) : 1;

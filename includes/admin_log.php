@@ -44,7 +44,7 @@ if (!function_exists('admin_log')) {
                 ':ua'      => $_SERVER['HTTP_USER_AGENT'] ?? null,
             ]);
         } catch (\Throwable $e) {
-            @error_log('[admin_log] ' . $e->getMessage());
+            error_log('[admin_log] ' . $e->getMessage());
         }
     }
 }

@@ -37,10 +37,10 @@ class Upload {
         if ($tmp === '' || $size <= 0 || $size > $this->maxBytes) return null;
 
         if (!function_exists('finfo_open')) return null;
-        $finfo = @finfo_open(FILEINFO_MIME_TYPE);
+        $finfo = gdy_finfo_open(FILEINFO_MIME_TYPE);
         if (!$finfo) return null;
-        $mime = (string)@finfo_file($finfo, $tmp);
-        @finfo_close($finfo);
+        $mime = (string)gdy_finfo_file($finfo, $tmp);
+        gdy_finfo_close($finfo);
 
         if (!isset($this->allowedMimeToExt[$mime])) return null;
         $ext = $this->allowedMimeToExt[$mime];
@@ -48,12 +48,12 @@ class Upload {
         $root = defined('ROOT_PATH') ? ROOT_PATH : dirname(__DIR__, 1);
 		// Trim both forward and back slashes (must escape backslash in PHP string).
 		$destAbs = rtrim($root, '/\\') . $this->destRelDir;
-        if (!is_dir($destAbs)) @mkdir($destAbs, 0775, true);
+        if (!is_dir($destAbs)) gdy_mkdir($destAbs, 0775, true);
 
         $name = bin2hex(random_bytes(16)) . '.' . $ext;
 		$abs  = rtrim($destAbs, '/\\') . DIRECTORY_SEPARATOR . $name;
 
-        if (!@move_uploaded_file($tmp, $abs)) return null;
+        if (!gdy_move_uploaded_file($tmp, $abs)) return null;
 
         $rel = rtrim($this->destRelDir, '/') . '/' . $name;
         return ['file_name'=>$name,'file_rel'=>$rel,'mime'=>$mime,'size'=>$size];

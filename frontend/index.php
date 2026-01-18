@@ -3,7 +3,7 @@
 // نقطة الدخول لواجهة الموقع (الصفحة الرئيسية)
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // لو تم استدعاء هذا الملف مباشرة (بدون public index)

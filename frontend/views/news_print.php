@@ -15,7 +15,7 @@ declare(strict_types=1);
 $title   = (string)($post['title'] ?? '');
 $content = (string)($post['content'] ?? ($post['body'] ?? ''));
 $dateRaw = (string)($post['date'] ?? ($post['published_at'] ?? ($post['created_at'] ?? '')));
-$ts      = $dateRaw !== '' ? @strtotime($dateRaw) : false;
+$ts      = $dateRaw !== '' ? gdy_strtotime($dateRaw) : false;
 $dateFmt = $ts ? date('Y/m/d', $ts) : ($dateRaw !== '' ? $dateRaw : '');
 
 $autoprint = isset($_GET['autoprint']) && (string)$_GET['autoprint'] === '1';
@@ -59,24 +59,24 @@ function gdy_strip_print_highlights(string $html): string
 {
   // Best-effort: remove invalid UTF-8 bytes that can crash preg_* (PCRE) and cause HTTP 500 on some articles.
   if (function_exists('iconv')) {
-    $fixed = @iconv('UTF-8', 'UTF-8//IGNORE', $html);
+    $fixed = gdy_iconv('UTF-8', 'UTF-8//IGNORE', $html);
     if (is_string($fixed) && $fixed !== '') {
       $html = $fixed;
     }
   }
 
   // Replace <mark> with <span>
-  $tmp = @preg_replace('~<\s*mark\b~i', '<span', $html);
+  $tmp = preg_replace('~<\s*mark\b~i', '<span', $html);
   if ($tmp !== null) { $html = $tmp; }
-  $tmp = @preg_replace('~</\s*mark\s*>~i', '</span>', $html);
+  $tmp = preg_replace('~</\s*mark\s*>~i', '</span>', $html);
   if ($tmp !== null) { $html = $tmp; }
 
   // Remove legacy bgcolor="..."
-  $tmp = @preg_replace('~\sbgcolor\s*=\s*("|\').*?\1~i', '', $html);
+  $tmp = preg_replace('~\sbgcolor\s*=\s*("|\').*?\1~i', '', $html);
   if ($tmp !== null) { $html = $tmp; }
 
   // Clean style="..." (strip background colors/highlights)
-  $tmp = @preg_replace_callback('~\sstyle\s*=\s*("|\')(.*?)\1~is', function ($m) {
+  $tmp = preg_replace_callback('~\sstyle\s*=\s*("|\')(.*?)\1~is', function ($m) {
     $quote = $m[1];
     $style = (string)($m[2] ?? '');
 

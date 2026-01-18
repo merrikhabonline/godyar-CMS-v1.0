@@ -7,7 +7,7 @@ require_once __DIR__ . '/../../includes/bootstrap.php';
 require_once __DIR__ . '/../../includes/Auth.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // يسمح فقط للمدير بالدخول إلى مركز الأمان

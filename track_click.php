@@ -16,7 +16,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/includes/bootstrap.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 $pdo = gdy_pdo_safe();
@@ -36,7 +36,7 @@ if ($adId > 0 && $pdo instanceof PDO) {
             $resolvedRedirect = $target;
         }
     } catch (Throwable $e) {
-        @error_log('Click redirect resolve error: ' . $e->getMessage());
+        error_log('Click redirect resolve error: ' . $e->getMessage());
     }
 }
 
@@ -52,7 +52,7 @@ if ($adId > 0 && $pdo instanceof PDO) {
             $stmt = $pdo->prepare("UPDATE ads SET clicks = clicks + 1 WHERE id = :id");
             $stmt->execute([':id' => $adId]);
         } catch (Throwable $e2) {
-            @error_log('Click counter update error: ' . $e2->getMessage());
+            error_log('Click counter update error: ' . $e2->getMessage());
         }
     }
 

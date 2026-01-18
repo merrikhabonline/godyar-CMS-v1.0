@@ -30,7 +30,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Contact View] Auth error: ' . $e->getMessage());
+    error_log('[Godyar Contact View] Auth error: ' . $e->getMessage());
     if (empty($_SESSION['user']) || (($_SESSION['user']['role'] ?? '') === 'guest')) {
         header('Location: ../login.php');
         exit;
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         try {
             verify_csrf();
         } catch (Throwable $e) {
-            @error_log('[Godyar Contact View] CSRF error: ' . $e->getMessage());
+            error_log('[Godyar Contact View] CSRF error: ' . $e->getMessage());
             $_SESSION['error_message'] = __('t_3dde9f5e86', 'انتهت صلاحية الجلسة، يرجى إعادة المحاولة.');
             header('Location: view.php?id=' . $id);
             exit;
@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         header('Location: view.php?id=' . $id);
         exit;
     } catch (Throwable $e) {
-        @error_log('[Godyar Contact View] Status update error: ' . $e->getMessage());
+        error_log('[Godyar Contact View] Status update error: ' . $e->getMessage());
         $_SESSION['error_message'] = __('t_cb1835a2c3', 'حدث خطأ أثناء تحديث حالة الرسالة.');
         header('Location: view.php?id=' . $id);
         exit;
@@ -125,7 +125,7 @@ try {
         $row['status'] = 'seen';
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Contact View] Fetch error: ' . $e->getMessage());
+    error_log('[Godyar Contact View] Fetch error: ' . $e->getMessage());
     header('Location: index.php?error=1');
     exit;
 }

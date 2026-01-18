@@ -59,7 +59,7 @@ if ($id > 0 && $pdo instanceof PDO) {
         $stmt = $pdo->prepare("UPDATE news SET deleted_at = NULL WHERE id = :id LIMIT 1");
         $stmt->execute([':id' => $id]);
     } catch (Throwable $e) {
-        @error_log('[Godyar News] restore: ' . $e->getMessage());
+        error_log('[Godyar News] restore: ' . $e->getMessage());
     }
 }
 

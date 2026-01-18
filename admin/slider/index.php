@@ -37,7 +37,7 @@ if ($pdo instanceof PDO) {
         ");
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (Throwable $e) {
-        @error_log('[Godyar Slider Index] ' . $e->getMessage());
+        error_log('[Godyar Slider Index] ' . $e->getMessage());
     }
 }
 

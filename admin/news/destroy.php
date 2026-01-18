@@ -56,7 +56,7 @@ if ($id > 0 && $pdo instanceof PDO) {
         $stmt = $pdo->prepare("DELETE FROM news WHERE id = :id LIMIT 1");
         $stmt->execute([':id' => $id]);
     } catch (Throwable $e) {
-        @error_log('[Godyar News] destroy: ' . $e->getMessage());
+        error_log('[Godyar News] destroy: ' . $e->getMessage());
     }
 }
 

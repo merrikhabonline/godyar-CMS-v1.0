@@ -30,7 +30,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'clear_ratelimit') {
     $deleted = 0;
     if (is_dir($dir)) {
         foreach (glob($dir . '/*.json') as $f) {
-            if (@unlink($f)) $deleted++;
+            if (gdy_unlink($f)) $deleted++;
         }
     }
     $notice = __('t_rl_cleared', 'تم مسح ملفات الحد من المحاولات.') . ' (' . $deleted . ')';
@@ -52,7 +52,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'export') {
         exit;
     } catch (Throwable $e) {
         $error = __('t_4fa410044f', 'حدث خطأ أثناء التصدير.');
-        @error_log('[settings_tools_export] ' . $e->getMessage());
+        error_log('[settings_tools_export] ' . $e->getMessage());
     }
 }
 
@@ -78,12 +78,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                     if ($f->isDir()) {
                         // لا نحذف مجلد cache نفسه
                         if (realpath($path) !== realpath($cacheDir)) {
-                            @rmdir($path);
+                            gdy_rmdir($path);
                         }
                     } else {
                         // اترك أي ملفات حماية إن وُجدت
                         if (basename($path) === '.htaccess') continue;
-                        if (@unlink($path)) $deleted++;
+                        if (gdy_unlink($path)) $deleted++;
                     }
                 }
             }
@@ -155,7 +155,7 @@ $pdo->commit();
             $pdo->rollBack();
         }
         $error = $error ?: __('t_4fa410044f', 'حدث خطأ أثناء التنفيذ.');
-        @error_log('[settings_tools] ' . $e->getMessage());
+        error_log('[settings_tools] ' . $e->getMessage());
     }
 }
 ?>

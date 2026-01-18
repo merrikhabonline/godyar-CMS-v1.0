@@ -8,7 +8,7 @@ require_once __DIR__ . '/../_admin_guard.php';
 require_once __DIR__ . '/../../includes/bootstrap.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 $pdo = gdy_pdo_safe();

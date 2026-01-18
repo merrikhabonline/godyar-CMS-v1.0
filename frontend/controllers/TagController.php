@@ -75,7 +75,7 @@ try {
         $items = $st->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 } catch (Throwable $e) {
-    @error_log('[TagController] ' . $e->getMessage());
+    error_log('[TagController] ' . $e->getMessage());
     $tag   = null;
     $items = [];
 }

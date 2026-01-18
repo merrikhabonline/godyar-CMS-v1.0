@@ -1,6 +1,11 @@
 <?php
 declare(strict_types=1);
 
+// Ensure root constant is available even if this file is included standalone.
+if (!defined('GODYAR_ROOT')) {
+    define('GODYAR_ROOT', dirname(__DIR__));
+}
+
 /**
  * maintenance.php
  * حراسة وضع الصيانة للواجهة الأمامية

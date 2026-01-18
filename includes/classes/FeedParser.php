@@ -22,12 +22,12 @@ class FeedParser
                 ],
             ]);
 
-            $xmlString = @file_get_contents($url, false, $context);
+            $xmlString = gdy_file_get_contents($url, false, $context);
             if ($xmlString === false) {
                 return [];
             }
 
-            $xml = @simplexml_load_string($xmlString, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $xml = gdy_simplexml_load_string($xmlString, 'SimpleXMLElement', LIBXML_NOCDATA);
             if ($xml === false) {
                 return [];
             }
@@ -64,7 +64,7 @@ class FeedParser
 
             return $items;
         } catch (\Throwable $e) {
-            @error_log('[FeedParser] ' . $e->getMessage());
+            error_log('[FeedParser] ' . $e->getMessage());
             return [];
         }
     }

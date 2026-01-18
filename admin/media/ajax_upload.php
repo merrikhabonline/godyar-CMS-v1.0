@@ -59,10 +59,10 @@ if ($size <= 0 || $size > $max) {
 // Detect MIME
 $mime = '';
 if (function_exists('finfo_open')) {
-    $fi = @finfo_open(FILEINFO_MIME_TYPE);
+    $fi = gdy_finfo_open(FILEINFO_MIME_TYPE);
     if ($fi) {
-        $mime = (string)@finfo_file($fi, $tmp);
-        @finfo_close($fi);
+        $mime = (string)gdy_finfo_file($fi, $tmp);
+        gdy_finfo_close($fi);
     }
 }
 $allowed = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/gif' => 'gif', 'image/webp' => 'webp'];
@@ -71,7 +71,7 @@ if (!isset($allowed[$mime])) {
 }
 
 // Extra validation: ensure it's a real image
-if (@getimagesize($tmp) === false) {
+if (gdy_getimagesize($tmp) === false) {
     jexit(400, ['ok' => false, 'error' => 'bad_image', 'message' => 'الملف ليس صورة صالحة.']);
 }
 
@@ -84,28 +84,28 @@ if ($ext === 'jpeg') $ext = 'jpg';
 $root = defined('ROOT_PATH') ? rtrim((string)ROOT_PATH, '/\\') : rtrim(dirname(__DIR__, 2), '/\\');
 $uploadDir = $root . '/assets/uploads/media/';
 if (!is_dir($uploadDir)) {
-    @mkdir($uploadDir, 0755, true);
+    gdy_mkdir($uploadDir, 0755, true);
 }
 
 $base = date('Ymd_His') . '_' . bin2hex(random_bytes(4));
 $fileName = $base . '.' . $ext;
 $dest = $uploadDir . $fileName;
 
-if (!@move_uploaded_file($tmp, $dest)) {
+if (!gdy_move_uploaded_file($tmp, $dest)) {
     jexit(500, ['ok' => false, 'error' => 'move', 'message' => 'تعذر حفظ الصورة على السيرفر.']);
 }
-@chmod($dest, 0644);
+gdy_chmod($dest, 0644);
 
 // ---- Optional compression + watermark (GD) ----
 function gdy_image_open(string $path, string $mime) {
     switch ($mime) {
         case 'image/jpeg':
         case 'image/jpg':
-            return @imagecreatefromjpeg($path);
+            return gdy_imagecreatefromjpeg($path);
         case 'image/png':
-            return @imagecreatefrompng($path);
+            return gdy_imagecreatefrompng($path);
         case 'image/webp':
-            return function_exists('imagecreatefromwebp') ? @imagecreatefromwebp($path) : null;
+            return function_exists('imagecreatefromwebp') ? gdy_imagecreatefromwebp($path) : null;
         default:
             return null;
     }
@@ -115,13 +115,13 @@ function gdy_image_save($im, string $path, string $mime, int $quality): bool {
         // PNG: 0 (no compression) .. 9 (max)
         $level = 6;
         imagesavealpha($im, true);
-        return @imagepng($im, $path, $level);
+        return gdy_imagepng($im, $path, $level);
     }
     if ($mime === 'image/webp' && function_exists('imagewebp')) {
-        return @imagewebp($im, $path, max(0, min(100, $quality)));
+        return gdy_imagewebp($im, $path, max(0, min(100, $quality)));
     }
     // default jpeg
-    return @imagejpeg($im, $path, max(40, min(95, $quality)));
+    return gdy_imagejpeg($im, $path, max(40, min(95, $quality)));
 }
 function gdy_apply_watermark($im, int $w, int $h, int $opacity): void {
     try {
@@ -131,7 +131,7 @@ function gdy_apply_watermark($im, int $w, int $h, int $opacity): void {
         $logoUrl = (string)settings_get('site.logo', '');
         if ($logoUrl === '') { return; }
 
-        $p = @parse_url($logoUrl);
+        $p = gdy_parse_url($logoUrl);
         $rel = (string)($p['path'] ?? '');
         if ($rel === '') { return; }
 
@@ -140,7 +140,7 @@ function gdy_apply_watermark($im, int $w, int $h, int $opacity): void {
         $logoPath = rtrim($root, '/') . $rel;
         if (!is_file($logoPath)) { return; }
 
-        $info = @getimagesize($logoPath);
+        $info = gdy_getimagesize($logoPath);
         if (!$info) { return; }
         $mime = (string)($info['mime'] ?? '');
         $wm = gdy_image_open($logoPath, $mime);
@@ -181,7 +181,7 @@ function gdy_apply_watermark($im, int $w, int $h, int $opacity): void {
         imagedestroy($tmp);
         imagedestroy($wm2);
     } catch (Throwable $e) {
-        @error_log('[ajax_upload watermark] ' . $e->getMessage());
+        error_log('[ajax_upload watermark] ' . $e->getMessage());
     }
 }
 function gdy_compress_and_watermark(string $path, string $mime): void {
@@ -193,7 +193,7 @@ function gdy_compress_and_watermark(string $path, string $mime): void {
         if (!$enabledWm) { return; }
     }
 
-    $info = @getimagesize($path);
+    $info = gdy_getimagesize($path);
     if (!$info) { return; }
     $w = (int)$info[0];
     $h = (int)$info[1];
@@ -241,12 +241,12 @@ function gdy_compress_and_watermark(string $path, string $mime): void {
 try {
     gdy_compress_and_watermark($dest, $mime);
 } catch (Throwable $e) {
-    @error_log('[ajax_upload process] ' . $e->getMessage());
+    error_log('[ajax_upload process] ' . $e->getMessage());
 }
 
 
 $url = rtrim((string)base_url(), '/') . '/assets/uploads/media/' . $fileName;
-$size = (int)(@filesize($dest) ?: $size);
+$size = (int)(gdy_filesize($dest) ?: $size);
 
 // Insert into media table if exists
 $pdo = gdy_pdo_safe();
@@ -265,7 +265,7 @@ if ($pdo instanceof PDO) {
         }
     } catch (Throwable $e) {
         // ignore db failure; upload still OK
-        @error_log('[ajax_upload] ' . $e->getMessage());
+        error_log('[ajax_upload] ' . $e->getMessage());
     }
 }
 

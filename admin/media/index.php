@@ -148,7 +148,7 @@ if ($pdo instanceof PDO) {
             $items = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         }
     } catch (Throwable $e) {
-        @error_log('[Godyar Media Index] ' . $e->getMessage());
+        error_log('[Godyar Media Index] ' . $e->getMessage());
     }
 }
 

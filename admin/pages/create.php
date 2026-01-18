@@ -30,7 +30,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Pages Create] Auth error: ' . $e->getMessage());
+    error_log('[Godyar Pages Create] Auth error: ' . $e->getMessage());
     if (empty($_SESSION['user']) || (($_SESSION['user']['role'] ?? '') === 'guest')) {
         header('Location: ../login.php');
         exit;
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         } catch (Throwable $e) {
             $errors[] = __('t_18a2b72a1b', 'حدث خطأ أثناء الحفظ، الرجاء المحاولة لاحقاً.');
-            @error_log('[Godyar Pages Create] Insert error: ' . $e->getMessage());
+            error_log('[Godyar Pages Create] Insert error: ' . $e->getMessage());
         }
     }
 }

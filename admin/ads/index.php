@@ -30,7 +30,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Ads] Auth error: ' . $e->getMessage());
+    error_log('[Godyar Ads] Auth error: ' . $e->getMessage());
     header('Location: ../login.php');
     exit;
 }
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             verify_csrf();
         } catch (Throwable $e) {
-            @error_log('[Godyar Ads] CSRF error: ' . $e->getMessage());
+            error_log('[Godyar Ads] CSRF error: ' . $e->getMessage());
             $_SESSION['error_message'] = __('t_3dde9f5e86', 'انتهت صلاحية الجلسة، يرجى إعادة المحاولة.');
             header('Location: index.php');
             exit;
@@ -114,7 +114,7 @@ $sidebarAdEnabled = $newVal;
             header('Location: index.php');
             exit;
         } catch (Throwable $e) {
-            @error_log('[Godyar Ads] Sidebar setting save error: ' . $e->getMessage());
+            error_log('[Godyar Ads] Sidebar setting save error: ' . $e->getMessage());
             $_SESSION['error_message'] = __('t_0d59660eea', 'حدث خطأ أثناء حفظ إعداد البنر الجانبي.');
             header('Location: index.php');
             exit;
@@ -131,7 +131,7 @@ $sidebarAdEnabled = $newVal;
             header('Location: index.php');
             exit;
         } catch (Throwable $e) {
-            @error_log('[Godyar Ads] Delete error: ' . $e->getMessage());
+            error_log('[Godyar Ads] Delete error: ' . $e->getMessage());
             $_SESSION['error_message'] = __('t_27c981c2bf', 'حدث خطأ أثناء حذف الإعلان.');
             header('Location: index.php');
             exit;
@@ -148,7 +148,7 @@ $sidebarAdEnabled = $newVal;
             header('Location: index.php');
             exit;
         } catch (Throwable $e) {
-            @error_log('[Godyar Ads] Toggle error: ' . $e->getMessage());
+            error_log('[Godyar Ads] Toggle error: ' . $e->getMessage());
             $_SESSION['error_message'] = __('t_aed0cfa650', 'حدث خطأ أثناء تحديث حالة الإعلان.');
             header('Location: index.php');
             exit;
@@ -199,7 +199,7 @@ if ($tableExists) {
         $activeAds  = (int)$pdo->query("SELECT COUNT(*) FROM ads WHERE is_active = 1 AND (ends_at IS NULL OR ends_at >= CURRENT_DATE)")->fetchColumn();
         $expiredAds = (int)$pdo->query("SELECT COUNT(*) FROM ads WHERE ends_at < CURRENT_DATE")->fetchColumn();
     } catch (Throwable $e) {
-        @error_log('[Godyar Ads] Fetch error: ' . $e->getMessage());
+        error_log('[Godyar Ads] Fetch error: ' . $e->getMessage());
     }
 }
 

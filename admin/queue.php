@@ -41,23 +41,23 @@ final class GdyQueue {
     private static function ensureStorage(): void {
         $dir = self::baseDir();
         if (!is_dir($dir)) {
-            @mkdir($dir, 0775, true);
+            gdy_mkdir($dir, 0775, true);
         }
         $file = self::jobsFile();
         if (!is_file($file)) {
-            @file_put_contents($file, json_encode([], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT|JSON_PRETTY_PRINT));
+            gdy_file_put_contents($file, json_encode([], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT|JSON_PRETTY_PRINT));
         }
     }
 
     public static function all(): array {
         self::ensureStorage();
-        $data = json_decode((string)@file_get_contents(self::jobsFile()), true);
+        $data = json_decode((string)gdy_file_get_contents(self::jobsFile()), true);
         return is_array($data) ? $data : [];
     }
 
     private static function save(array $jobs): void {
         self::ensureStorage();
-        @file_put_contents(self::jobsFile(), json_encode(array_values($jobs), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT|JSON_PRETTY_PRINT));
+        gdy_file_put_contents(self::jobsFile(), json_encode(array_values($jobs), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT|JSON_PRETTY_PRINT));
     }
 
     public static function enqueue(string $type, array $payload = [], ?int $runAt = null): string {

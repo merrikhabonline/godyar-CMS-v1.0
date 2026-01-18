@@ -60,8 +60,8 @@ header('Cache-Control: public, max-age=3600');
 
 // إزالة أي headers قد تأتي من إعدادات السيرفر/السيشن (احتياطًا)
 if (function_exists('header_remove')) {
-    @header_remove('Pragma');
-    @header_remove('Expires');
+    header_remove('Pragma');
+    header_remove('Expires');
 }
 
 echo json_encode(

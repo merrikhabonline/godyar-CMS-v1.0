@@ -45,7 +45,7 @@ try {
     }
     $data = $row;
 } catch (Throwable $e) {
-    @error_log('[Godyar Slider Edit] load: ' . $e->getMessage());
+    error_log('[Godyar Slider Edit] load: ' . $e->getMessage());
     header('Location: index.php');
     exit;
 }
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         } catch (Throwable $e) {
             $errors['general'] = __('t_844fcd6345', 'حدث خطأ أثناء حفظ التعديلات.');
-            @error_log('[Godyar Slider Edit] update: ' . $e->getMessage());
+            error_log('[Godyar Slider Edit] update: ' . $e->getMessage());
         }
     }
 }

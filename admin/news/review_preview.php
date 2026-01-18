@@ -89,7 +89,7 @@ try {
         'html' => $html,
     ], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 } catch (Throwable $e) {
-    @error_log('review_preview error: ' . $e->getMessage());
+    error_log('review_preview error: ' . $e->getMessage());
     http_response_code(500);
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode(['ok' => false, 'error' => 'server_error'], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);

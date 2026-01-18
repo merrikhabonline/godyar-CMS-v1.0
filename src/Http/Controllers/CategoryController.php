@@ -30,7 +30,7 @@ final class CategoryController
 
         // GDY_PAGE_CACHE_V8 — cache full rendered HTML for guests (category/tag)
         if (session_status() !== PHP_SESSION_ACTIVE) {
-            @session_start();
+            gdy_session_start();
         }
         $isLogged = isset($_SESSION['user']) && is_array($_SESSION['user']);
         $usePageCache = ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET' && !$isLogged && class_exists('Cache');

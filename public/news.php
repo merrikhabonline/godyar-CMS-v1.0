@@ -36,7 +36,7 @@ if ($pdo instanceof PDO) {
             $newsColumns[$row['Field']] = true;
         }
     } catch (Throwable $e) {
-        @error_log('[Front News] columns news: ' . $e->getMessage());
+        error_log('[Front News] columns news: ' . $e->getMessage());
     }
 }
 
@@ -86,7 +86,7 @@ if ($pdo instanceof PDO) {
         $stmt->execute($params);
         $total = (int)$stmt->fetchColumn();
     } catch (Throwable $e) {
-        @error_log('[Front News] count: ' . $e->getMessage());
+        error_log('[Front News] count: ' . $e->getMessage());
     }
 
     // جلب السجلات
@@ -111,7 +111,7 @@ if ($pdo instanceof PDO) {
         $stmt->execute();
         $items = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     } catch (Throwable $e) {
-        @error_log('[Front News] list: ' . $e->getMessage());
+        error_log('[Front News] list: ' . $e->getMessage());
     }
 }
 

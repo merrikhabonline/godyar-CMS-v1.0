@@ -58,7 +58,7 @@ if (!function_exists('gdy_lang')) {
 
         if ($lang !== '' && in_array($lang, $supported, true)) {
             if (session_status() !== PHP_SESSION_ACTIVE) {
-                @session_start();
+                gdy_session_start();
             }
             $_SESSION['lang'] = $lang;
             if (!headers_sent()) {

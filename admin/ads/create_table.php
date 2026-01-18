@@ -30,7 +30,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Ads Create Table] Auth error: ' . $e->getMessage());
+    error_log('[Godyar Ads Create Table] Auth error: ' . $e->getMessage());
     header('Location: ../login.php');
     exit;
 }
@@ -152,7 +152,7 @@ if (!$tableExists && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crea
     } catch (Throwable $e) {
             if ($pdo->inTransaction()) { $pdo->rollBack(); }
         $error = __('t_065b0c24e1', 'خطأ في إنشاء الجدول: ') . $e->getMessage();
-        @error_log('[Godyar Ads] Table creation error: ' . $e->getMessage());
+        error_log('[Godyar Ads] Table creation error: ' . $e->getMessage());
     }
 }
 

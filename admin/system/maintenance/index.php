@@ -18,13 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $mode = $_POST['mode'] ?? '';
         if ($mode === 'on') {
-            @mkdir(dirname($flagFile), 0775, true);
-            @file_put_contents($flagFile, date('Y-m-d H:i:s') . ' maintenance on');
+            gdy_mkdir(dirname($flagFile), 0775, true);
+            gdy_file_put_contents($flagFile, date('Y-m-d H:i:s') . ' maintenance on');
             $isOn    = true;
             $message = __('t_e1cd3f66b0', 'تم تفعيل وضع الصيانة.');
         } elseif ($mode === 'off') {
             if (is_file($flagFile)) {
-                @unlink($flagFile);
+                gdy_unlink($flagFile);
             }
             $isOn    = false;
             $message = __('t_150fe51a82', 'تم إلغاء وضع الصيانة.');

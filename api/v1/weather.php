@@ -10,7 +10,7 @@ header('Cache-Control: no-store');
 require_once __DIR__ . '/../../includes/bootstrap.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 /** @var PDO|null $pdo */
@@ -62,7 +62,7 @@ try {
         $settings = array_merge($settings, $row);
     }
 } catch (Throwable $e) {
-    @error_log('[api.weather] settings read error: ' . $e->getMessage());
+    error_log('[api.weather] settings read error: ' . $e->getMessage());
     echo json_encode(['ok' => true, 'active' => false]);
     exit;
 }
@@ -103,16 +103,16 @@ if ($refreshMin > 1440) $refreshMin = 1440;
 
 $cacheDir = __DIR__ . '/../../cache';
 if (!is_dir($cacheDir)) {
-    @mkdir($cacheDir, 0755, true);
+    gdy_mkdir($cacheDir, 0755, true);
 }
 $cacheKey = hash('sha256', mb_strtolower($city, 'UTF-8') . '|' . $cc . '|' . $units);
 $cacheFile = rtrim($cacheDir, '/\\') . '/weather_' . $cacheKey . '.json';
 
 // إن كان الكاش حديثاً، نعيده
 if (is_file($cacheFile)) {
-    $age = time() - (int)@filemtime($cacheFile);
+    $age = time() - (int)gdy_filemtime($cacheFile);
     if ($age >= 0 && $age < ($refreshMin * 60)) {
-        $cached = @file_get_contents($cacheFile);
+        $cached = gdy_file_get_contents($cacheFile);
         if ($cached !== false && $cached !== '') {
             echo $cached;
             exit;
@@ -151,11 +151,11 @@ try {
         $ctx = stream_context_create([
             'http' => ['timeout' => 12],
         ]);
-        $resp = @file_get_contents($url, false, $ctx);
+        $resp = gdy_file_get_contents($url, false, $ctx);
         $httpCode = 200;
     }
 } catch (Throwable $e) {
-    @error_log('[api.weather] request error: ' . $e->getMessage());
+    error_log('[api.weather] request error: ' . $e->getMessage());
 }
 
 if (!$resp) {
@@ -206,7 +206,7 @@ if ($json === false) {
     $json = '{"ok":false,"error":"json_encode_failed"}';
 }
 
-@file_put_contents($cacheFile, $json);
+gdy_file_put_contents($cacheFile, $json);
 
  $tmp = json_decode($json, true);
 if (json_last_error() === JSON_ERROR_NONE) {

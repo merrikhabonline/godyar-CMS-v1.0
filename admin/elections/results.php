@@ -15,7 +15,7 @@ if (file_exists($authFile)) {
 }
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 /**
@@ -99,7 +99,7 @@ try {
         $electionId      = (int)$currentElection['id'];
     }
 } catch (Throwable $e) {
-    @error_log('[elections results] fetch elections error: ' . $e->getMessage());
+    error_log('[elections results] fetch elections error: ' . $e->getMessage());
 }
 
 if (!$currentElection) {
@@ -119,7 +119,7 @@ try {
     $stmt->execute([':eid' => $electionId]);
     $parties = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (Throwable $e) {
-    @error_log('[elections results] fetch parties error: ' . $e->getMessage());
+    error_log('[elections results] fetch parties error: ' . $e->getMessage());
 }
 
 // ================== 3) معالجة POST لحفظ الملخص ==================
@@ -194,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             safe_redirect('results.php?election_id=' . $electionId . '&saved=1');
         } catch (Throwable $e) {
             $pdo->rollBack();
-            @error_log('[elections results] save summary error: ' . $e->getMessage());
+            error_log('[elections results] save summary error: ' . $e->getMessage());
             $flashError = __('t_a749e6d977', 'حدث خطأ أثناء حفظ ملخص النتائج.');
         }
     }
@@ -218,7 +218,7 @@ try {
         $summary[(int)$r['party_id']] = $r;
     }
 } catch (Throwable $e) {
-    @error_log('[elections results] fetch summary error: ' . $e->getMessage());
+    error_log('[elections results] fetch summary error: ' . $e->getMessage());
 }
 
 // تجميع بعض الأرقام

@@ -120,7 +120,7 @@ final class AdService
 
             return '<div class="gdy-ad-slot gdy-ad-slot--'.$this->h($location).'">'.$inner.'</div>';
         } catch (Throwable $e) {
-            @error_log('[AdService] render error: ' . $e->getMessage());
+            error_log('[AdService] render error: ' . $e->getMessage());
             return '';
         }
     }

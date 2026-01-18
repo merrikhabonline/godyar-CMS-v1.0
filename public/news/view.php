@@ -26,7 +26,7 @@ if ($pdo instanceof PDO) {
         }
         $news = $stmt ? $stmt->fetch(PDO::FETCH_ASSOC) : null;
     } catch (Throwable $e) {
-        @error_log('[Front News View] ' . $e->getMessage());
+        error_log('[Front News View] ' . $e->getMessage());
     }
 }
 

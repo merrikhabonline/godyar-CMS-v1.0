@@ -50,7 +50,7 @@ function godyar_get_ads(string $position, int $limit = 1): array
         $stmt->execute([':pos' => $position]);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     } catch (Throwable $e) {
-        @error_log('[Godyar Ads] get_ads: ' . $e->getMessage());
+        error_log('[Godyar Ads] get_ads: ' . $e->getMessage());
         return [];
     }
 
@@ -68,7 +68,7 @@ function godyar_get_ads(string $position, int $limit = 1): array
             $stmt2->execute($ids);
         }
     } catch (Throwable $e) {
-        @error_log('[Godyar Ads] impressions update: ' . $e->getMessage());
+        error_log('[Godyar Ads] impressions update: ' . $e->getMessage());
     }
 
     return $rows;

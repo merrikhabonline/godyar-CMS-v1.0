@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         } catch (\Throwable $e) {
             $pdo->rollBack();
-            @error_log('[RBAC] update role permissions error: ' . $e->getMessage());
+            error_log('[RBAC] update role permissions error: ' . $e->getMessage());
             $errorMessage = __('t_48babd483a', 'حدث خطأ أثناء تحديث الصلاحيات، يرجى المحاولة لاحقاً.');
         }
     }

@@ -187,7 +187,7 @@ function gdy_ensure_news_attachments_table(PDO $pdo): void {
     try {
         $pdo->exec($sql);
     } catch (Throwable $e) {
-        @error_log('[News Helpers] failed creating news_attachments: ' . $e->getMessage());
+        error_log('[News Helpers] failed creating news_attachments: ' . $e->getMessage());
     }
 }
 
@@ -262,7 +262,7 @@ function gdy_save_news_attachments(PDO $pdo, int $newsId, array $files, array &$
 
     $uploadDir = __DIR__ . '/../../uploads/news/attachments/';
     if (!is_dir($uploadDir)) {
-        @mkdir($uploadDir, 0755, true);
+        gdy_mkdir($uploadDir, 0755, true);
     }
 
     // hard limits
@@ -322,7 +322,7 @@ function gdy_save_news_attachments(PDO $pdo, int $newsId, array $files, array &$
                 ':file_size' => $size,
             ]);
         } catch (Throwable $e) {
-            @error_log('[News Helpers] insert attachment failed: ' . $e->getMessage());
+            error_log('[News Helpers] insert attachment failed: ' . $e->getMessage());
         }
     }
 }
@@ -337,7 +337,7 @@ function gdy_get_news_attachments(PDO $pdo, int $newsId): array {
         $stmt->execute([$newsId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     } catch (Throwable $e) {
-        @error_log('[News Helpers] get attachments failed: ' . $e->getMessage());
+        error_log('[News Helpers] get attachments failed: ' . $e->getMessage());
         return [];
     }
 }
@@ -353,14 +353,14 @@ function gdy_delete_news_attachment(PDO $pdo, int $attachmentId, int $newsId): b
             // only delete inside uploads/news/attachments
             $root = realpath(__DIR__ . '/../../uploads/news/attachments');
             if ($abs && $root && str_starts_with($abs, $root)) {
-                @unlink($abs);
+                gdy_unlink($abs);
             }
         }
         $del = $pdo->prepare("DELETE FROM news_attachments WHERE id = ? AND news_id = ? LIMIT 1");
         $del->execute([$attachmentId, $newsId]);
         return true;
     } catch (Throwable $e) {
-        @error_log('[News Helpers] delete attachment failed: ' . $e->getMessage());
+        error_log('[News Helpers] delete attachment failed: ' . $e->getMessage());
         return false;
     }
 }
@@ -392,7 +392,7 @@ function gdy_ensure_news_notes_table(PDO $pdo): void
     try {
         $pdo->exec($sql);
     } catch (Throwable $e) {
-        @error_log('[News Helpers] failed creating news_notes: ' . $e->getMessage());
+        error_log('[News Helpers] failed creating news_notes: ' . $e->getMessage());
     }
 }
 
@@ -412,7 +412,7 @@ function gdy_add_news_note(PDO $pdo, int $newsId, ?int $userId, string $note): b
         $stmt->bindValue(':note', $note, PDO::PARAM_STR);
         return (bool)$stmt->execute();
     } catch (Throwable $e) {
-        @error_log('[News Helpers] add note failed: ' . $e->getMessage());
+        error_log('[News Helpers] add note failed: ' . $e->getMessage());
         return false;
     }
 }
@@ -436,7 +436,7 @@ function gdy_get_news_notes(PDO $pdo, int $newsId, int $limit = 50): array
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     } catch (Throwable $e) {
-        @error_log('[News Helpers] get notes failed: ' . $e->getMessage());
+        error_log('[News Helpers] get notes failed: ' . $e->getMessage());
         return [];
     }
 }
@@ -462,7 +462,7 @@ function gdy_ensure_news_revisions_table(PDO $pdo): void
     try {
         $pdo->exec($sql);
     } catch (Throwable $e) {
-        @error_log('[News Helpers] failed creating news_revisions: ' . $e->getMessage());
+        error_log('[News Helpers] failed creating news_revisions: ' . $e->getMessage());
     }
 }
 
@@ -491,7 +491,7 @@ function gdy_capture_news_revision(PDO $pdo, int $newsId, ?int $userId, string $
         $stmt->bindValue(':payload', $json, PDO::PARAM_STR);
         return (bool)$stmt->execute();
     } catch (Throwable $e) {
-        @error_log('[News Helpers] capture revision failed: ' . $e->getMessage());
+        error_log('[News Helpers] capture revision failed: ' . $e->getMessage());
         return false;
     }
 }
@@ -515,7 +515,7 @@ function gdy_get_news_revisions(PDO $pdo, int $newsId, int $limit = 30): array
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     } catch (Throwable $e) {
-        @error_log('[News Helpers] get revisions failed: ' . $e->getMessage());
+        error_log('[News Helpers] get revisions failed: ' . $e->getMessage());
         return [];
     }
 }
@@ -535,7 +535,7 @@ function gdy_get_revision_payload(PDO $pdo, int $revisionId): ?array
         $data = json_decode($payload, true);
         return is_array($data) ? $data : null;
     } catch (Throwable $e) {
-        @error_log('[News Helpers] get revision payload failed: ' . $e->getMessage());
+        error_log('[News Helpers] get revision payload failed: ' . $e->getMessage());
         return null;
     }
 }
@@ -624,7 +624,7 @@ function gdy_restore_news_from_revision(PDO $pdo, int $newsId, int $revisionId, 
 
         return true;
     } catch (Throwable $e) {
-        @error_log('[News Helpers] restore revision failed: ' . $e->getMessage());
+        error_log('[News Helpers] restore revision failed: ' . $e->getMessage());
         return false;
     }
 }

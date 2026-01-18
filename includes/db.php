@@ -20,7 +20,7 @@ if (!function_exists('gdy_pdo_safe')) {
         try {
             return DB::pdo();
         } catch (\Throwable $e) {
-            @error_log('[Godyar DB] PDO unavailable: ' . $e->getMessage());
+            error_log('[Godyar DB] PDO unavailable: ' . $e->getMessage());
             return null;
         }
     }
@@ -68,7 +68,7 @@ if (!function_exists('gdy_register_global_pdo')) {
 
         if (empty($GLOBALS['__godyar_warned_global_pdo'])) {
             $GLOBALS['__godyar_warned_global_pdo'] = true;
-            @error_log('[DEPRECATED] $GLOBALS[\'pdo\'] is enabled for backward compatibility. Prefer Godyar\\DB::pdo() / gdy_pdo().');
+            error_log('[DEPRECATED] $GLOBALS[\'pdo\'] is enabled for backward compatibility. Prefer Godyar\\DB::pdo() / gdy_pdo().');
         }
     }
 }

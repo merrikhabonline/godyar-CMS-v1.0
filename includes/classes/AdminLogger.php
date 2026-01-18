@@ -33,14 +33,14 @@ class AdminLogger
             try {
                 $pdo = DB::pdo();
             } catch (\Throwable $e) {
-                @error_log('[AdminLogger] PDO not available: ' . $e->getMessage());
+                error_log('[AdminLogger] PDO not available: ' . $e->getMessage());
                 return;
             }
         }
 
         // نحاول نجيب المستخدم الحالي من الجلسة
         if (session_status() !== PHP_SESSION_ACTIVE && !headers_sent()) {
-            @session_start();
+            gdy_session_start();
         }
 
         $userId = null;
@@ -75,7 +75,7 @@ class AdminLogger
             ]);
 
         } catch (\Throwable $e) {
-            @error_log('[AdminLogger] log error: ' . $e->getMessage());
+            error_log('[AdminLogger] log error: ' . $e->getMessage());
         }
     }
 }

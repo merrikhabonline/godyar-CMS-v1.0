@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         } catch (Throwable $e) {
             $errors['general'] = __('t_dee8218bc9', 'حدث خطأ أثناء حفظ الشريحة.');
-            @error_log('[Godyar Slider Create] insert: ' . $e->getMessage());
+            error_log('[Godyar Slider Create] insert: ' . $e->getMessage());
         }
     }
 }

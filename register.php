@@ -9,7 +9,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/includes/bootstrap.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // هيلبر للهروب الآمن
@@ -311,7 +311,7 @@ if (function_exists('sanitize_display_name')) {                            $disp
                 }
             } catch (Throwable $e) {
                 $trace = 'GDY-REG-' . substr(bin2hex(random_bytes(10)), 0, 12);
-                @error_log("[$trace] [register] " . $e->getMessage());
+                error_log("[$trace] [register] " . $e->getMessage());
                 $errorMessage = 'حدث خطأ أثناء إنشاء الحساب. الرجاء المحاولة لاحقاً. رقم التتبع: ' . $trace;
             }
         }

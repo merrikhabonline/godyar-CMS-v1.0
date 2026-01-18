@@ -4,7 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../../../includes/bootstrap.php';
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 if (!function_exists('h')) {
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } catch (Throwable $e) {
         $error = $e->getMessage();
-        @error_log('[Frontend ResetPassword] ' . $e->getMessage());
+        error_log('[Frontend ResetPassword] ' . $e->getMessage());
     }
 }
 ?>

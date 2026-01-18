@@ -46,7 +46,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Admin Boot] Auth check error: ' . $e->getMessage());
+    error_log('[Godyar Admin Boot] Auth check error: ' . $e->getMessage());
     if (empty($_SESSION['user']) || (($_SESSION['user']['role'] ?? '') === 'guest')) {
         header('Location: ' . GODYAR_BASE_URL . '/admin/login');
         exit;
@@ -79,7 +79,7 @@ try {
         $currentUserName = (string)$_SESSION['user']['name'];
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Admin Boot] currentUserName: ' . $e->getMessage());
+    error_log('[Godyar Admin Boot] currentUserName: ' . $e->getMessage());
 }
 
 // تضمين رأس اللوحة والقائمة الجانبية

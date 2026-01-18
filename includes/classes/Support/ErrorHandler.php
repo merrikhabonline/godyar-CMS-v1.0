@@ -11,12 +11,12 @@ class ErrorHandler
         if ($debug) {
             // Show all but deprecation notices in production-like env
             error_reporting(E_ALL & ~E_DEPRECATED);
-            @ini_set('display_errors', '1');
-            @ini_set('display_startup_errors', '1');
+            ini_set('display_errors', '1');
+            ini_set('display_startup_errors', '1');
         } else {
             error_reporting(E_ALL & ~E_DEPRECATED);
-            @ini_set('display_errors', '0');
-            @ini_set('display_startup_errors', '0');
+            ini_set('display_errors', '0');
+            ini_set('display_startup_errors', '0');
         }
 
         set_exception_handler([self::class, 'handleException']);

@@ -49,7 +49,7 @@ function gdy_get_base_url(): string
 
 function gdy_news_url_by_slug(string $slug): string
 {
-    return gdy_get_base_url() . '/news/id/' . (int)$id;
+    return gdy_get_base_url() . '/news/' . rawurlencode($slug);
 }
 
 function gdy_category_url(string $slug): string

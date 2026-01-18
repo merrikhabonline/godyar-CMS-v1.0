@@ -36,7 +36,7 @@ if ($pdo instanceof PDO) {
         $stmt = $pdo->query($sql);
         $items = $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
     } catch (Throwable $e) {
-        @error_log('[sitemap-news] ' . $e->getMessage());
+        error_log('[sitemap-news] ' . $e->getMessage());
     }
 }
 

@@ -59,7 +59,7 @@ final class NewsExtrasController
             $items = method_exists($this->news, 'latest') ? $this->news->latest(12) : [];
             $this->json(['ok' => true, 'items' => $items]);
         } catch (Throwable $e) {
-            @error_log('[NewsExtrasController] latest: ' . $e->getMessage());
+            error_log('[NewsExtrasController] latest: ' . $e->getMessage());
             $this->json(['ok' => false, 'message' => 'تعذر جلب آخر الأخبار'], 500);
         }
     }
@@ -88,7 +88,7 @@ final class NewsExtrasController
             $items = $st->fetchAll(PDO::FETCH_ASSOC) ?: [];
             $this->json(['ok' => true, 'items' => $items]);
         } catch (Throwable $e) {
-            @error_log('[NewsExtrasController] suggest: ' . $e->getMessage());
+            error_log('[NewsExtrasController] suggest: ' . $e->getMessage());
             $this->json(['ok' => false, 'message' => 'تعذر الاقتراحات'], 500);
         }
     }
@@ -100,7 +100,7 @@ final class NewsExtrasController
     {
         $list = [];
         try {
-            if (session_status() !== PHP_SESSION_ACTIVE) @session_start();
+            if (session_status() !== PHP_SESSION_ACTIVE) gdy_session_start();
             $list = (array)($_SESSION['bookmarks'] ?? []);
         } catch (Throwable) {}
 
@@ -112,7 +112,7 @@ final class NewsExtrasController
         $id = (int)($_GET['id'] ?? 0);
         $ok = false;
         try {
-            if (session_status() !== PHP_SESSION_ACTIVE) @session_start();
+            if (session_status() !== PHP_SESSION_ACTIVE) gdy_session_start();
             $list = (array)($_SESSION['bookmarks'] ?? []);
             $ok = in_array($id, $list, true);
         } catch (Throwable) {}
@@ -128,7 +128,7 @@ final class NewsExtrasController
         }
 
         try {
-            if (session_status() !== PHP_SESSION_ACTIVE) @session_start();
+            if (session_status() !== PHP_SESSION_ACTIVE) gdy_session_start();
             $list = (array)($_SESSION['bookmarks'] ?? []);
             $list = array_values(array_map('intval', $list));
 
@@ -144,7 +144,7 @@ final class NewsExtrasController
             $_SESSION['bookmarks'] = $list;
             $this->json(['ok' => true, 'bookmarked' => true]);
         } catch (Throwable $e) {
-            @error_log('[NewsExtrasController] bookmarksToggle: ' . $e->getMessage());
+            error_log('[NewsExtrasController] bookmarksToggle: ' . $e->getMessage());
             $this->json(['ok' => false, 'message' => 'تعذر تحديث المفضلة'], 500);
         }
     }

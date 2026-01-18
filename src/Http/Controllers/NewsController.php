@@ -65,7 +65,7 @@ final class NewsController
         $baseUrl = rtrim($this->baseUrl(), '/');
         $headerCategories = $this->categories->headerCategories(6);
 
-        $cacheKey = 'news_show_slug_' . sha1($slug);
+        $cacheKey = 'news_show_slug_' . hash('sha256', $slug);
         $bundle = null;
 
         $useCache = class_exists('Cache') && !$isPreview;

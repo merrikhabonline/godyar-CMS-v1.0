@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../includes/bootstrap.php';
 require_once __DIR__ . '/../../includes/functions.php';
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 /** @var PDO|null $pdo */
@@ -242,7 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $flashSuccess = __('t_1114f89fa6', 'تم حذف الوسوم غير المستخدمة.');
             }
         } catch (Throwable $e) {
-            @error_log('[tags index] ' . $e->getMessage());
+            error_log('[tags index] ' . $e->getMessage());
             $flashError = $e->getMessage();
         }
     }
@@ -329,7 +329,7 @@ try {
     $st->execute();
     $items = $st->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (Throwable $e) {
-    @error_log('[tags index] list error: ' . $e->getMessage());
+    error_log('[tags index] list error: ' . $e->getMessage());
     $items = [];
 }
 

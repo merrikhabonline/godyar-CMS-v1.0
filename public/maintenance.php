@@ -9,8 +9,8 @@ if (!isset($info) || !is_array($info)) {
         : __DIR__ . '/../storage/maintenance.flag';
 
     if (is_file($flag)) {
-        $raw  = @file_get_contents($flag);
-        $data = @json_decode($raw, true);
+        $raw  = gdy_file_get_contents($flag);
+        $data = json_decode($raw, true);
         if (is_array($data)) {
             $info = $data;
         } else {

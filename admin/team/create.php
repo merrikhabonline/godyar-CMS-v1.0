@@ -29,7 +29,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Team Create] Auth error: ' . $e->getMessage());
+    error_log('[Godyar Team Create] Auth error: ' . $e->getMessage());
     if (empty($_SESSION['user']) || (($_SESSION['user']['role'] ?? '') === 'guest')) {
         header('Location: ../login.php');
         exit;
@@ -62,7 +62,7 @@ try {
           COLLATE=utf8mb4_unicode_ci;
     ");
 } catch (Throwable $e) {
-    @error_log('[Godyar Team AutoTable Create] ' . $e->getMessage());
+    error_log('[Godyar Team AutoTable Create] ' . $e->getMessage());
 }
 
 $errors    = [];
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         } catch (Throwable $e) {
             $errors[] = __('t_70a78374f2', 'حدث خطأ أثناء الحفظ: ') . h($e->getMessage());
-            @error_log('[Godyar Team Create] Insert error: ' . $e->getMessage());
+            error_log('[Godyar Team Create] Insert error: ' . $e->getMessage());
         }
     }
 }

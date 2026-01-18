@@ -58,7 +58,7 @@ function godyar_render_ads(string $position, int $limit = 1): void
 
         $ads = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (Throwable $e) {
-        @error_log('[Front Ads] fetch: ' . $e->getMessage());
+        error_log('[Front Ads] fetch: ' . $e->getMessage());
         return;
     }
 
@@ -72,7 +72,7 @@ function godyar_render_ads(string $position, int $limit = 1): void
             $up = $pdo->prepare("UPDATE ads SET impressions = impressions + 1 WHERE id = :id");
             $up->execute([':id' => (int)$ad['id']]);
         } catch (Throwable $e) {
-            @error_log('[Front Ads] inc impressions: ' . $e->getMessage());
+            error_log('[Front Ads] inc impressions: ' . $e->getMessage());
         }
 
         echo '<div class="godyar-ad-block my-2 text-center">';

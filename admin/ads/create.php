@@ -28,7 +28,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Ads Create] Auth error: ' . $e->getMessage());
+    error_log('[Godyar Ads Create] Auth error: ' . $e->getMessage());
     header('Location: ../login.php');
     exit;
 }
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             verify_csrf();
         } catch (Throwable $e) {
-            @error_log('[Godyar Ads Create] CSRF error: ' . $e->getMessage());
+            error_log('[Godyar Ads Create] CSRF error: ' . $e->getMessage());
             $errors[] = __('t_3dde9f5e86', 'انتهت صلاحية الجلسة، يرجى إعادة المحاولة.');
         }
     }
@@ -276,7 +276,7 @@ $success = __('t_c96e687008', 'تم إضافة الإعلان بنجاح.');// �
             }
         } catch (Throwable $e) {
             $errors[] = __('t_16052fe4fe', 'حدث خطأ أثناء حفظ الإعلان.');
-            @error_log('[Godyar Ads Create] Insert error: ' . $e->getMessage());
+            error_log('[Godyar Ads Create] Insert error: ' . $e->getMessage());
         }
     }
 }

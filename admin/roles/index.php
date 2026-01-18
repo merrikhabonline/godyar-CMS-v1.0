@@ -19,7 +19,7 @@ try {
     $roles = $stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
 } catch (Throwable $e) {
     $rolesError = __('t_b2f64f4c64', 'تعذر تحميل الأدوار (قد يكون جدول roles غير موجود أو لا تملك صلاحية).');
-    @error_log('[Roles] ' . $e->getMessage());
+    error_log('[Roles] ' . $e->getMessage());
 }
 ?>
 <div class="admin-content">

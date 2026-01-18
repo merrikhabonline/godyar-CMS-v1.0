@@ -21,7 +21,7 @@ try {
         }
     } else {
         if (session_status() !== PHP_SESSION_ACTIVE) {
-            @session_start();
+            gdy_session_start();
         }
         if (empty($_SESSION['user']['id']) || (($_SESSION['user']['role'] ?? '') === 'guest')) {
             header('Location: ../login.php');
@@ -29,7 +29,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Admin Pages Edit] auth check error: ' . $e->getMessage());
+    error_log('[Admin Pages Edit] auth check error: ' . $e->getMessage());
     header('Location: ../login.php');
     exit;
 }
@@ -63,7 +63,7 @@ try {
         exit;
     }
 } catch (Throwable $e) {
-    @error_log('[Admin Pages Edit] load page error: ' . $e->getMessage());
+    error_log('[Admin Pages Edit] load page error: ' . $e->getMessage());
     header('Location: index.php?error=load_failed');
     exit;
 }
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors[] = __('t_7e93229117', 'هذا الـ slug مستخدم لصفحة أخرى، الرجاء اختيار آخر.');
         }
     } catch (Throwable $e) {
-        @error_log('[Admin Pages Edit] slug check error: ' . $e->getMessage());
+        error_log('[Admin Pages Edit] slug check error: ' . $e->getMessage());
         $errors[] = __('t_02d52a4506', 'حدث خطأ أثناء فحص الـ slug.');
     }
 
@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: index.php?saved=1');
             exit;
         } catch (Throwable $e) {
-            @error_log('[Admin Pages Edit] update error: ' . $e->getMessage());
+            error_log('[Admin Pages Edit] update error: ' . $e->getMessage());
             $errors[] = __('t_ef95baa3c9', 'حدث خطأ أثناء حفظ التعديلات، الرجاء المحاولة لاحقاً.');
         }
     }

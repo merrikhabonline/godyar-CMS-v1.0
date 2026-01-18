@@ -8,7 +8,7 @@ require_once __DIR__ . '/../../includes/TemplateEngine.php';
 require_once __DIR__ . '/../../includes/site_settings.php';
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 if (!function_exists('h')) {
@@ -70,7 +70,7 @@ try {
         $headerCategories = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 } catch (Throwable $e) {
-    @error_log('[Contact] categories error: ' . $e->getMessage());
+    error_log('[Contact] categories error: ' . $e->getMessage());
 }
 
 if (function_exists('base_url')) {
@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':message' => $message,
             ]);
         } catch (Throwable $e) {
-            @error_log('[Contact] DB error: ' . $e->getMessage());
+            error_log('[Contact] DB error: ' . $e->getMessage());
         }
     }
 
@@ -190,10 +190,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $headers .= "MIME-Version: 1.0\r\n";
 
             // نحاول الإرسال (ولو فشل لا نوقف المستخدم)
-            @mail($adminEmail, $encodedSubject, $body, $headers);
+            gdy_mail($adminEmail, $encodedSubject, $body, $headers);
         }
     } catch (Throwable $e) {
-        @error_log('[Contact] mail error: ' . $e->getMessage());
+        error_log('[Contact] mail error: ' . $e->getMessage());
     }
 
     // رسالة نجاح وإرجاع لصفحة اتصل بنا

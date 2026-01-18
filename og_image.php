@@ -10,8 +10,8 @@ if (!function_exists('h')) {
     function h(string $v): string { return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
 }
 
-@ini_set('display_errors', '0');
-@ini_set('log_errors', '1');
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
 
 $type = isset($_GET['type']) ? strtolower((string)$_GET['type']) : 'page';
 $title = isset($_GET['title']) ? trim((string)$_GET['title']) : '';

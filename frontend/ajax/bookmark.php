@@ -6,7 +6,7 @@ require_once __DIR__ . '/../includes/bootstrap.php';
 header('Content-Type: application/json; charset=utf-8');
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 $user = $_SESSION['user'] ?? null;
@@ -82,7 +82,7 @@ try {
         echo json_encode(['ok' => true, 'status' => 'added'], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Bookmark] ' . $e->getMessage());
+    error_log('[Godyar Bookmark] ' . $e->getMessage());
     http_response_code(500);
     echo json_encode(['ok' => false, 'error' => 'EXCEPTION'], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 }

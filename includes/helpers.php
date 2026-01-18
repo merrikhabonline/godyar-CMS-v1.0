@@ -44,7 +44,7 @@ if (!function_exists('gdy_apply_glossary')) {
                 $stmt = $pdo->query("SELECT term, short_definition FROM gdy_glossary WHERE is_active = 1 ORDER BY CHAR_LENGTH(term) DESC");
                 $cache = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
             } catch (Throwable $e) {
-                @error_log('[gdy_glossary] fetch terms failed: ' . $e->getMessage());
+                error_log('[gdy_glossary] fetch terms failed: ' . $e->getMessage());
                 $cache = [];
             }
         }
@@ -94,7 +94,7 @@ if (!function_exists('gdy_ai_glossary_suggest_terms')) {
 
         // لو لم يتم تعريف مفتاح الـ API لا نفعل شيئاً
         if (!defined('OPENAI_API_KEY') || OPENAI_API_KEY === '') {
-            @error_log('[gdy_ai_glossary] OPENAI_API_KEY is not defined');
+            error_log('[gdy_ai_glossary] OPENAI_API_KEY is not defined');
             return [];
         }
 
@@ -149,7 +149,7 @@ if (!function_exists('gdy_ai_glossary_suggest_terms')) {
 
         $response = curl_exec($ch);
         if ($response === false) {
-            @error_log('[gdy_ai_glossary] curl error: ' . curl_error($ch));
+            error_log('[gdy_ai_glossary] curl error: ' . curl_error($ch));
             curl_close($ch);
             return [];
         }
@@ -159,7 +159,7 @@ if (!function_exists('gdy_ai_glossary_suggest_terms')) {
 
         $data = json_decode($response, true);
         if ($status >= 400 || !is_array($data)) {
-            @error_log('[gdy_ai_glossary] bad status: ' . $status . ' body: ' . $response);
+            error_log('[gdy_ai_glossary] bad status: ' . $status . ' body: ' . $response);
             return [];
         }
 
@@ -175,7 +175,7 @@ if (!function_exists('gdy_ai_glossary_suggest_terms')) {
 
         $terms = json_decode($content, true);
         if (!is_array($terms)) {
-            @error_log('[gdy_ai_glossary] JSON decode failed: ' . $content);
+            error_log('[gdy_ai_glossary] JSON decode failed: ' . $content);
             return [];
         }
 

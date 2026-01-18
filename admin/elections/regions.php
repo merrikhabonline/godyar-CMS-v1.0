@@ -15,7 +15,7 @@ if (file_exists($authFile)) {
 }
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 /**
@@ -87,7 +87,7 @@ try {
         $electionId = $currentElection ? (int)$currentElection['id'] : 0;
     }
 } catch (Throwable $e) {
-    @error_log('[elections regions] fetch election error: ' . $e->getMessage());
+    error_log('[elections regions] fetch election error: ' . $e->getMessage());
 }
 
 if (!$currentElection) {
@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     safe_redirect('regions.php?election_id=' . $electionId . '&saved=1');
                 } catch (Throwable $e) {
-                    @error_log('[elections regions] save_region error: ' . $e->getMessage());
+                    error_log('[elections regions] save_region error: ' . $e->getMessage());
                     $flashError = __('t_cb5e6b9f21', 'حدث خطأ أثناء حفظ بيانات الولاية / المنطقة.');
                 }
             }
@@ -191,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ]);
                     $flashSuccess = __('t_d1dc412a92', 'تم حذف الولاية / المنطقة.');
                 } catch (Throwable $e) {
-                    @error_log('[elections regions] delete_region error: ' . $e->getMessage());
+                    error_log('[elections regions] delete_region error: ' . $e->getMessage());
                     $flashError = __('t_04d075984c', 'تعذر حذف الولاية / المنطقة، ربما لها نتائج مرتبطة.');
                 }
             }
@@ -215,7 +215,7 @@ try {
     $stmt->execute([':eid' => $electionId]);
     $regions = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (Throwable $e) {
-    @error_log('[elections regions] fetch list error: ' . $e->getMessage());
+    error_log('[elections regions] fetch list error: ' . $e->getMessage());
 }
 
 // ولاية للتعديل؟

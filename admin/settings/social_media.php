@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $notice = __('t_08ed73869e', 'تم حفظ إعدادات السوشيال بنجاح.');
     } catch (Throwable $e) {
         $error = __('t_4fa410044f', 'حدث خطأ أثناء الحفظ.');
-        @error_log('[settings_social] ' . $e->getMessage());
+        error_log('[settings_social] ' . $e->getMessage());
     }
 }
 

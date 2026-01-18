@@ -32,7 +32,7 @@ require_once $bootstrapPath;
 
 // بدء الجلسة
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // هيلبر للهروب
@@ -86,7 +86,8 @@ try {
             ORDER BY c.id DESC
         ";
 
-        $stmt = $pdo->query($sql);
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
         $categories = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 
         $total        = count($categories);
@@ -125,7 +126,7 @@ try {
     exit;
 
 } catch (Throwable $e) {
-    @error_log('[categories_api] ' . $e->getMessage());
+    error_log('[categories_api] ' . $e->getMessage());
     http_response_code(500);
     echo json_encode([
         'ok'    => false,

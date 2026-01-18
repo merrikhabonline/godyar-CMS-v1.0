@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $notice = __('t_9fa83b6bf3', 'تم حفظ إعدادات الوقت واللغة بنجاح.');
     } catch (Throwable $e) {
         $error = __('t_4fa410044f', 'حدث خطأ أثناء الحفظ.');
-        @error_log('[settings_time] ' . $e->getMessage());
+        error_log('[settings_time] ' . $e->getMessage());
     }
 }
 

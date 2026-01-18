@@ -95,10 +95,10 @@ try {
 
 // Delete file on disk (best-effort)
 if ($fsPath !== '' && is_file($fsPath)) {
-    @unlink($fsPath);
+    gdy_unlink($fsPath);
     // Delete possible webp variant
     $webp = preg_replace('~\.(jpe?g|png)$~i', '.webp', $fsPath);
-    if ($webp && $webp !== $fsPath && is_file($webp)) @unlink($webp);
+    if ($webp && $webp !== $fsPath && is_file($webp)) gdy_unlink($webp);
 }
 
 echo json_encode(['ok' => true]);

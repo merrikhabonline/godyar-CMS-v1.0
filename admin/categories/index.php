@@ -8,7 +8,7 @@ require_once __DIR__ . '/../_admin_guard.php';
 require_once __DIR__ . '/../../includes/bootstrap.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 $pdo = gdy_pdo_safe();
@@ -72,7 +72,7 @@ if ($pdo instanceof PDO) {
         $hasCatParent      = in_array('parent_id', $cols, true);
         $hasCatMembersOnly = in_array('is_members_only', $cols, true);
     } catch (Throwable $e) {
-        @error_log('[Admin Categories] categories schema check error: ' . $e->getMessage());
+        error_log('[Admin Categories] categories schema check error: ' . $e->getMessage());
     }
 }
 
@@ -93,11 +93,11 @@ if ($pdo instanceof PDO) {
                 $newsJoinMode = 'by_slug';
             } else {
                 $newsJoinMode = 'none';
-                @error_log('[Admin Categories] news table exists but no category_id/category_slug column found.');
+                error_log('[Admin Categories] news table exists but no category_id/category_slug column found.');
             }
         }
     } catch (Throwable $e) {
-        @error_log('[Admin Categories] news schema check error: ' . $e->getMessage());
+        error_log('[Admin Categories] news schema check error: ' . $e->getMessage());
         $newsJoinMode = 'none';
     }
 }
@@ -236,7 +236,7 @@ $success[] = __('t_a3a05f91fb', 'تم تحديث القسم بنجاح.');
                 }
             }
         } catch (Throwable $e) {
-            @error_log('[Admin Categories] action error: '.$e->getMessage());
+            error_log('[Admin Categories] action error: '.$e->getMessage());
             $errors[] = __('t_a2db7a2af3', 'حدث خطأ أثناء معالجة الطلب، الرجاء المحاولة لاحقاً.');
         }
     }
@@ -328,7 +328,7 @@ if ($pdo instanceof PDO) {
             }
         }
     } catch (Throwable $e) {
-        @error_log('[Admin Categories] list error: '.$e->getMessage());
+        error_log('[Admin Categories] list error: '.$e->getMessage());
         $errors[] = __('t_8b5340d791', 'حدث خطأ أثناء جلب الأقسام.');
     }
 }
@@ -354,7 +354,7 @@ if ($editId > 0 && $pdo instanceof PDO) {
         $stmt->execute(['id' => $editId]);
         $editRow = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     } catch (Throwable $e) {
-        @error_log('[Admin Categories] edit load error: '.$e->getMessage());
+        error_log('[Admin Categories] edit load error: '.$e->getMessage());
     }
 }
 
@@ -869,7 +869,7 @@ html, body {
           $stParent = $pdo->query("SELECT id, name FROM categories ORDER BY name ASC");
           $allCatsForParent = $stParent ? $stParent->fetchAll(PDO::FETCH_ASSOC) : [];
       } catch (Throwable $e) {
-          @error_log('[Admin Categories] parent categories load error: ' . $e->getMessage());
+          error_log('[Admin Categories] parent categories load error: ' . $e->getMessage());
       }
   }
 ?>

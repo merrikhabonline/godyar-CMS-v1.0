@@ -10,7 +10,7 @@ $currentPage = 'weather_settings';
 $pageTitle   = __('t_cdefdef2cf', 'إعدادات الطقس');
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // دالة هروب بسيطة
@@ -39,7 +39,7 @@ if (!function_exists('gdy_column_exists')) {
             }            // Fallback via information_schema helpers
             return function_exists('gdy_db_column_exists') ? gdy_db_column_exists($pdo, $table, $column) : false;
         } catch (Throwable $e) {
-            @error_log('[Schema] column_exists error: ' . $e->getMessage());
+            error_log('[Schema] column_exists error: ' . $e->getMessage());
             return false;
         }
     }
@@ -98,7 +98,7 @@ if (!function_exists('gdy_ensure_weather_columns')) {
                 try {
                     $pdo->exec($sql);
                 } catch (Throwable $e) {
-                    @error_log("[Weather Settings] ALTER TABLE add column `$col` error: " . $e->getMessage());
+                    error_log("[Weather Settings] ALTER TABLE add column `$col` error: " . $e->getMessage());
                 }
             }
         }
@@ -141,7 +141,7 @@ try {
 
     gdy_ensure_weather_columns($pdo);
 } catch (Throwable $e) {
-    @error_log('[Weather Settings] Initial CREATE/ensure error: ' . $e->getMessage());
+    error_log('[Weather Settings] Initial CREATE/ensure error: ' . $e->getMessage());
 }
 
 // ✅ إنشاء جدول المدن/الدول
@@ -161,7 +161,7 @@ try {
     ";
     $pdo->exec($createLocSql);
 } catch (Throwable $e) {
-    @error_log('[Weather Settings] weather_locations create error: ' . $e->getMessage());
+    error_log('[Weather Settings] weather_locations create error: ' . $e->getMessage());
 }
 
 // قراءة السجل الحالي من weather_settings
@@ -172,7 +172,7 @@ try {
         $current = array_merge($current, $row);
     }
 } catch (Throwable $e) {
-    @error_log('[Weather Settings] Select error: ' . $e->getMessage());
+    error_log('[Weather Settings] Select error: ' . $e->getMessage());
 }
 
 // جلب قائمة المدن/الدول
@@ -185,7 +185,7 @@ try {
     ");
     $locations = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (Throwable $e) {
-    @error_log('[Weather Settings] locations select error: ' . $e->getMessage());
+    error_log('[Weather Settings] locations select error: ' . $e->getMessage());
 }
 
 // إحصائيات بسيطة للمدن
@@ -268,7 +268,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if ((int)($l['is_active'] ?? 0) === 1) $locActiveCount++;
                 }
             } catch (Throwable $e) {
-                @error_log('[Weather Settings] locations reload error: ' . $e->getMessage());
+                error_log('[Weather Settings] locations reload error: ' . $e->getMessage());
             }
 
         /* ---------- 1) فورم إضافة مدينة/دولة ---------- */
@@ -382,7 +382,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $locId = 0;
                     }
                 } catch (Throwable $e) {
-                    @error_log('[Weather Settings] read location error: ' . $e->getMessage());
+                    error_log('[Weather Settings] read location error: ' . $e->getMessage());
                 }
             }
 
@@ -452,7 +452,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } catch (Throwable $e) {
                     $msg      = $e->getMessage();
                     $errors[] = __('t_0ac43c887f', 'حدث خطأ أثناء حفظ الإعدادات في قاعدة البيانات: ') . $msg;
-                    @error_log('[Weather Settings] Save error: ' . $msg);
+                    error_log('[Weather Settings] Save error: ' . $msg);
                 }
             }
         }

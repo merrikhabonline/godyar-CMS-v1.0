@@ -49,7 +49,7 @@ final class TagService
                 'description' => '',
             ];
         } catch (Throwable $e) {
-            @error_log('[TagService] findBySlug error: ' . $e->getMessage());
+            error_log('[TagService] findBySlug error: ' . $e->getMessage());
             return null;
         }
     }
@@ -118,7 +118,7 @@ final class TagService
 
             return ['items' => $items, 'total' => $total, 'total_pages' => $totalPages];
         } catch (Throwable $e) {
-            @error_log('[TagService] listNews error: ' . $e->getMessage());
+            error_log('[TagService] listNews error: ' . $e->getMessage());
             return ['items' => [], 'total' => 0, 'total_pages' => 1];
         }
     }
@@ -157,7 +157,7 @@ final class TagService
             }
             return $out;
         } catch (Throwable $e) {
-            @error_log('[TagService] forNews error: ' . $e->getMessage());
+            error_log('[TagService] forNews error: ' . $e->getMessage());
             return [];
         }
     }

@@ -24,7 +24,7 @@ function gdy_column_exists(PDO $pdo, string $table, string $column): bool
             }            // Fallback via information_schema helpers
             return function_exists('gdy_db_column_exists') ? gdy_db_column_exists($pdo, $table, $column) : false;
         } catch (Throwable $e) {
-            @error_log('[Schema] column_exists error: ' . $e->getMessage());
+            error_log('[Schema] column_exists error: ' . $e->getMessage());
             return false;
         }
     }
@@ -139,7 +139,7 @@ if ($mode === 'single') {
             $author = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
         }
     } catch (Throwable $e) {
-        @error_log('[opinion_author] fetch author error: ' . $e->getMessage());
+        error_log('[opinion_author] fetch author error: ' . $e->getMessage());
         $author = null;
     }
 
@@ -227,7 +227,7 @@ if ($mode === 'single') {
         $stmt->execute([':aid' => $authorId]);
         $articles = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     } catch (Throwable $e) {
-        @error_log('[opinion_author] fetch simple articles error: ' . $e->getMessage());
+        error_log('[opinion_author] fetch simple articles error: ' . $e->getMessage());
         $articles = [];
     }
 
@@ -250,7 +250,7 @@ if ($mode === 'single') {
         $stmt->execute([':excluded' => $excludedName]);
         $authors = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     } catch (Throwable $e) {
-        @error_log('[opinion_author] list authors error: ' . $e->getMessage());
+        error_log('[opinion_author] list authors error: ' . $e->getMessage());
         $authors = [];
     }
 }

@@ -44,7 +44,7 @@ try {
         exit;
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Logs] Auth error: ' . $e->getMessage());
+    error_log('[Godyar Logs] Auth error: ' . $e->getMessage());
     header('Location: ../../login.php');
     exit;
 }
@@ -70,11 +70,12 @@ if ($pdo instanceof PDO) {
             ORDER BY al.id DESC
             LIMIT 100
         ";
-        $stmt = $pdo->query($sql);
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
         $rows = $stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
     } catch (Throwable $e) {
         $dbError = $e->getMessage();
-        @error_log('[Godyar Logs] DB error: ' . $e->getMessage());
+        error_log('[Godyar Logs] DB error: ' . $e->getMessage());
     }
 } else {
     $dbError = 'لا يمكن الاتصال بقاعدة البيانات حالياً.';

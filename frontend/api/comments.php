@@ -14,14 +14,14 @@ if (!defined('ROOT_PATH')) {
     define('ROOT_PATH', dirname(__DIR__, 1)); // default: /public_html/api -> /public_html
 }
 
-@ini_set('display_errors', '0');
-@ini_set('display_startup_errors', '0');
+ini_set('display_errors', '0');
+ini_set('display_startup_errors', '0');
 
 header('Content-Type: application/json; charset=utf-8');
 
 // Ensure session (for logged-in users)
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // Bootstrap PDO (best-effort; do not leak details)
@@ -113,7 +113,7 @@ if ($method === 'GET') {
             'total_pages' => (int)ceil($total / max(1, $perPage)),
         ]);
     } catch (\Throwable $e) {
-        @error_log('[comments] GET error: ' . $e->getMessage());
+        error_log('[comments] GET error: ' . $e->getMessage());
         _gdy_json(500, ['ok' => false, 'error' => 'list_failed']);
     }
 }
@@ -203,7 +203,7 @@ if ($method === 'POST') {
 
         _gdy_json(200, ['ok' => true, 'id' => (int)$pdo->lastInsertId(), 'status' => $status]);
     } catch (\Throwable $e) {
-        @error_log('[comments] POST error: ' . $e->getMessage());
+        error_log('[comments] POST error: ' . $e->getMessage());
         _gdy_json(500, ['ok' => false, 'error' => 'create_failed']);
     }
 }

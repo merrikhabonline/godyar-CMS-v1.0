@@ -7,7 +7,7 @@ require_once __DIR__ . '/_admin_guard.php';
 require_once __DIR__ . '/../includes/bootstrap.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // إعداد بيانات الصفحة
@@ -46,7 +46,7 @@ if (isset($_GET['delete'])) {
             $success = __('t_a0aac81546', 'تم حذف الفيديو بنجاح.');
         } catch (Throwable $e) {
             $errors[] = __('t_efb6890f77', 'تعذّر حذف الفيديو، يرجى المحاولة لاحقاً.');
-            @error_log('[Manage Videos] Delete error: ' . $e->getMessage());
+            error_log('[Manage Videos] Delete error: ' . $e->getMessage());
         }
     }
 }
@@ -62,7 +62,7 @@ if (isset($_GET['edit'])) {
             $stmt->execute([':id' => $id]);
             $editing = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
         } catch (Throwable $e) {
-            @error_log('[Manage Videos] Load edit error: ' . $e->getMessage());
+            error_log('[Manage Videos] Load edit error: ' . $e->getMessage());
         }
     }
 }
@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } catch (Throwable $e) {
                 $msg      = $e->getMessage();
                 $errors[] = __('t_a7e651d555', 'حدث خطأ أثناء حفظ البيانات في قاعدة البيانات: ') . $msg;
-                @error_log('[Manage Videos] Save error: ' . $msg);
+                error_log('[Manage Videos] Save error: ' . $msg);
             }
         }
     }
@@ -148,7 +148,7 @@ try {
     $stmt   = $pdo->query("SELECT * FROM featured_videos ORDER BY created_at DESC, id DESC");
     $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Throwable $e) {
-    @error_log('[Manage Videos] Fetch error: ' . $e->getMessage());
+    error_log('[Manage Videos] Fetch error: ' . $e->getMessage());
     $tableMissing = true;
 }
 

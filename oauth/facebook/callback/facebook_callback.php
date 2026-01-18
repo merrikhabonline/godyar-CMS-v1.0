@@ -4,7 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../includes/bootstrap.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 function gdy_oauth_fail_facebook(string $msg, int $code = 400): void {

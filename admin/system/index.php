@@ -29,7 +29,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar System] Auth check error: ' . $e->getMessage());
+    error_log('[Godyar System] Auth check error: ' . $e->getMessage());
     if (empty($_SESSION['user']) || (($_SESSION['user']['role'] ?? '') === 'guest')) {
         header('Location: ../login.php');
         exit;
@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $action = ''; // لا تنفّذ أي شيء
             }
         } catch (Throwable $e) {
-            @error_log('[Godyar System] verify_csrf error: ' . $e->getMessage());
+            error_log('[Godyar System] verify_csrf error: ' . $e->getMessage());
         }
     }
 
@@ -153,15 +153,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // تفعيل وضع الصيانة
                 $dir = dirname($maintenanceFlag);
                 if (!is_dir($dir)) {
-                    @mkdir($dir, 0775, true);
+                    gdy_mkdir($dir, 0775, true);
                 }
-                @file_put_contents($maintenanceFlag, date('c'));
+                gdy_file_put_contents($maintenanceFlag, date('c'));
                 $maintenanceEnabled = true;
                 $flashSuccess = __('t_e1cd3f66b0', 'تم تفعيل وضع الصيانة.');
 
             } elseif (!$enable && $maintenanceEnabled) {
                 // إلغاء وضع الصيانة + مسح الكاش (تكامل مباشر مع Cache)
-                @unlink($maintenanceFlag);
+                gdy_unlink($maintenanceFlag);
                 $maintenanceEnabled = false;
 
                 if (class_exists('Cache')) {
@@ -170,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $flashSuccess = __('t_c5f14e13a0', 'تم إلغاء وضع الصيانة ومسح الكاش.');
                     } catch (Throwable $e) {
                         $flashSuccess = __('t_6bd9335ece', 'تم إلغاء وضع الصيانة، لكن حدث خطأ أثناء مسح الكاش.');
-                        @error_log('[Godyar System] maintenance flush error: ' . $e->getMessage());
+                        error_log('[Godyar System] maintenance flush error: ' . $e->getMessage());
                     }
                 } else {
                     $flashSuccess = __('t_150fe51a82', 'تم إلغاء وضع الصيانة.');
@@ -250,7 +250,7 @@ if ($cacheConfig['driver'] === 'file') {
                 }
             }
         } catch (Throwable $e) {
-            @error_log('[Godyar System] cache stats: ' . $e->getMessage());
+            error_log('[Godyar System] cache stats: ' . $e->getMessage());
         }
     }
 }
@@ -385,7 +385,7 @@ $errorLogPath = (string)env('GODYAR_ERROR_LOG', ini_get('error_log'));
 $errorLogLines = [];
 if ($tab === 'logs' && $errorLogPath && is_file($errorLogPath) && is_readable($errorLogPath)) {
     try {
-        $fp = @fopen($errorLogPath, 'rb');
+        $fp = gdy_fopen($errorLogPath, 'rb');
         if ($fp) {
             $bufferSize = 8192;
             $pos   = -1;
@@ -409,7 +409,7 @@ if ($tab === 'logs' && $errorLogPath && is_file($errorLogPath) && is_readable($e
             $errorLogLines = explode("\n", trim($lines));
         }
     } catch (Throwable $e) {
-        @error_log('[Godyar System] error_log tail error: ' . $e->getMessage());
+        error_log('[Godyar System] error_log tail error: ' . $e->getMessage());
     }
 }
 

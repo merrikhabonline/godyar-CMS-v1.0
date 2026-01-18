@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $cacheSupported) {
             $cacheMessage = 'تم مسح الكاش بنجاح.';
         } catch (Throwable $e) {
             $cacheMessage = 'حدث خطأ أثناء مسح الكاش.';
-            @error_log('[Godyar system/cache] ' . $e->getMessage());
+            error_log('[Godyar system/cache] ' . $e->getMessage());
         }
     }
 }

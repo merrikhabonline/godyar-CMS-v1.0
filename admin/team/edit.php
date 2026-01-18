@@ -29,7 +29,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Team Edit] Auth error: ' . $e->getMessage());
+    error_log('[Godyar Team Edit] Auth error: ' . $e->getMessage());
     if (empty($_SESSION['user']) || (($_SESSION['user']['role'] ?? '') === 'guest')) {
         header('Location: ../login.php');
         exit;
@@ -62,7 +62,7 @@ try {
           COLLATE=utf8mb4_unicode_ci;
     ");
 } catch (Throwable $e) {
-    @error_log('[Godyar Team AutoTable Edit] ' . $e->getMessage());
+    error_log('[Godyar Team AutoTable Edit] ' . $e->getMessage());
 }
 
 $id = isset($_GET['id']) && ctype_digit((string)$_GET['id']) ? (int)$_GET['id'] : 0;
@@ -81,7 +81,7 @@ try {
         exit;
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Team Edit] Fetch error: ' . $e->getMessage());
+    error_log('[Godyar Team Edit] Fetch error: ' . $e->getMessage());
     header('Location: index.php?error=1');
     exit;
 }
@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         } catch (Throwable $e) {
             $errors[] = __('t_70a78374f2', 'حدث خطأ أثناء الحفظ: ') . h($e->getMessage());
-            @error_log('[Godyar Team Edit] Update error: ' . $e->getMessage());
+            error_log('[Godyar Team Edit] Update error: ' . $e->getMessage());
         }
     }
 }

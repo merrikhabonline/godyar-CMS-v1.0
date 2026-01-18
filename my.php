@@ -4,7 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/includes/bootstrap.php';
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 $user = $_SESSION['user'] ?? null;
@@ -49,7 +49,7 @@ if ($pdo instanceof PDO) {
             $bookmarkedNews = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
         }
     } catch (Throwable $e) {
-        @error_log('[Godyar My] ' . $e->getMessage());
+        error_log('[Godyar My] ' . $e->getMessage());
     }
 }
 

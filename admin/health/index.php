@@ -32,7 +32,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Health] Auth error: '.$e->getMessage());
+    error_log('[Godyar Health] Auth error: '.$e->getMessage());
     header('Location: ../../login.php');
     exit;
 }

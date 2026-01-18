@@ -8,7 +8,7 @@ use Godyar\Feeds\RssReader;
 use Godyar\Services\FeedImportService;
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 /** @var PDO|null $pdo */
@@ -191,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         } catch (Throwable $e) {
-            @error_log('[feeds index] ' . $e->getMessage());
+            error_log('[feeds index] ' . $e->getMessage());
             $flashError = $e->getMessage();
         }
     }
@@ -253,7 +253,7 @@ try {
     $st->execute();
     $feeds = $st->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (Throwable $e) {
-    @error_log('[feeds index] list error: ' . $e->getMessage());
+    error_log('[feeds index] list error: ' . $e->getMessage());
     $feeds = [];
 }
 

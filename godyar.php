@@ -107,7 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errors) && isset($pdo)) {
         if (!empty($_FILES['featured_image']['name'])) {
             $uploadDir  = __DIR__ . '/../../uploads/news/';
             if (!is_dir($uploadDir)) {
-                @mkdir($uploadDir, 0777, true);
+                // تجنب صلاحيات واسعة
+                gdy_mkdir($uploadDir, 0755, true);
             }
 
             $ext = pathinfo($_FILES['featured_image']['name'], PATHINFO_EXTENSION);

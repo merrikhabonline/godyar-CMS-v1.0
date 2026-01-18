@@ -7,7 +7,7 @@ $BASE_DIR = dirname(__DIR__, 2);
 require_once $BASE_DIR . '/includes/bootstrap.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 header('Content-Type: application/json; charset=utf-8');

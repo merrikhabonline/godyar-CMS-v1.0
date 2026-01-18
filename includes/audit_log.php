@@ -19,7 +19,7 @@ if (!function_exists('gody_audit_log')) {
     {
         $dir = rtrim(ROOT_PATH, '/\\') . '/storage/logs';
         if (!is_dir($dir)) {
-            @mkdir($dir, 0775, true);
+            gdy_mkdir($dir, 0775, true);
         }
 
         $ip = (string)($_SERVER['REMOTE_ADDR'] ?? 'unknown');
@@ -38,6 +38,6 @@ if (!function_exists('gody_audit_log')) {
         $line = json_encode($row, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
         if (!$line) return;
 
-        @file_put_contents($dir . '/audit.log', $line . PHP_EOL, FILE_APPEND | LOCK_EX);
+        gdy_file_put_contents($dir . '/audit.log', $line . PHP_EOL, FILE_APPEND | LOCK_EX);
     }
 }

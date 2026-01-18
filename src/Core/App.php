@@ -17,18 +17,18 @@ final class App
 
         $tz = self::env('TIMEZONE', 'Asia/Riyadh');
         if (function_exists('date_default_timezone_set')) {
-            @date_default_timezone_set($tz);
+            date_default_timezone_set($tz);
         }
 
         $debug = self::env('APP_DEBUG', 'false');
         $isDebug = ($debug === 'true' || $debug === true || $debug === 1 || $debug === '1');
         if ($isDebug) {
-            @ini_set('display_errors', '1');
-            @ini_set('display_startup_errors', '1');
+            ini_set('display_errors', '1');
+            ini_set('display_startup_errors', '1');
             error_reporting(E_ALL & ~E_DEPRECATED);
         } else {
-            @ini_set('display_errors', '0');
-            @ini_set('display_startup_errors', '0');
+            ini_set('display_errors', '0');
+            ini_set('display_startup_errors', '0');
             error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
         }
     }
@@ -50,7 +50,7 @@ final class App
         $data = [];
         foreach ($candidates as $f) {
             if (file_exists($f)) {
-                $parsed = @parse_ini_file($f, false, defined('INI_SCANNER_RAW') ? INI_SCANNER_RAW : 0);
+                $parsed = gdy_parse_ini_file($f, false, defined('INI_SCANNER_RAW') ? INI_SCANNER_RAW : 0);
                 if (is_array($parsed)) {
                     $data = $parsed;
                     break;

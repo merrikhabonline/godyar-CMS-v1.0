@@ -141,7 +141,7 @@ final class CategoryService
             $slug = trim((string)($st->fetchColumn() ?: ''));
             return $slug !== '' ? $slug : null;
         } catch (Throwable $e) {
-            @error_log('[CategoryService] slugById error: ' . $e->getMessage());
+            error_log('[CategoryService] slugById error: ' . $e->getMessage());
             return null;
         }
     }
@@ -205,7 +205,7 @@ final class CategoryService
             $row = $st->fetch(PDO::FETCH_ASSOC) ?: null;
             return $row;
         } catch (Throwable $e) {
-            @error_log('[CategoryService] findBySlugOrId error: ' . $e->getMessage());
+            error_log('[CategoryService] findBySlugOrId error: ' . $e->getMessage());
             return null;
         }
     }
@@ -243,7 +243,7 @@ final class CategoryService
             $st->execute();
             return $st->fetchAll(PDO::FETCH_ASSOC) ?: [];
         } catch (Throwable $e) {
-            @error_log('[CategoryService] all error: ' . $e->getMessage());
+            error_log('[CategoryService] all error: ' . $e->getMessage());
             return [];
         }
     }
@@ -281,7 +281,7 @@ final class CategoryService
             $st->execute();
             return $st->fetchAll(PDO::FETCH_ASSOC) ?: [];
         } catch (Throwable $e) {
-            @error_log('[CategoryService] headerCategories error: ' . $e->getMessage());
+            error_log('[CategoryService] headerCategories error: ' . $e->getMessage());
             return [];
         }
     }
@@ -376,7 +376,7 @@ final class CategoryService
             $st->execute();
             return $st->fetchAll(PDO::FETCH_ASSOC) ?: [];
         } catch (Throwable $e) {
-            @error_log('[CategoryService] siblingCategories error: ' . $e->getMessage());
+            error_log('[CategoryService] siblingCategories error: ' . $e->getMessage());
             return [];
         }
     }
@@ -441,7 +441,7 @@ final class CategoryService
             $st->execute([':cid' => $categoryId]);
             $total = (int)($st->fetchColumn() ?: 0);
         } catch (Throwable $e) {
-            @error_log('[CategoryService] listPublishedNews count error: ' . $e->getMessage());
+            error_log('[CategoryService] listPublishedNews count error: ' . $e->getMessage());
         }
 
         $totalPages = max(1, (int)ceil($total / $perPage));
@@ -466,7 +466,7 @@ final class CategoryService
             $st->execute();
             $items = $st->fetchAll(PDO::FETCH_ASSOC) ?: [];
         } catch (Throwable $e) {
-            @error_log('[CategoryService] listPublishedNews list error: ' . $e->getMessage());
+            error_log('[CategoryService] listPublishedNews list error: ' . $e->getMessage());
         }
 
         return [

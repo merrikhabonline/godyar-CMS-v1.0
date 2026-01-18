@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $notice = __('t_04cc9e8d8b', 'تم حفظ إعدادات SEO بنجاح.');
     } catch (Throwable $e) {
         $error = __('t_4fa410044f', 'حدث خطأ أثناء الحفظ.');
-        @error_log('[settings_seo] ' . $e->getMessage());
+        error_log('[settings_seo] ' . $e->getMessage());
     }
 }
 

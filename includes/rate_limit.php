@@ -14,7 +14,7 @@ if (!defined('ROOT_PATH')) {
 function gody_rate_limit(string $bucket, int $max = 5, int $windowSeconds = 600): bool
 {
     $dir = rtrim(ROOT_PATH, '/\\') . '/storage/ratelimit';
-    if (!is_dir($dir)) @mkdir($dir, 0755, true);
+    if (!is_dir($dir)) gdy_mkdir($dir, 0755, true);
 
     $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
     $key = hash('sha256', $bucket . '|' . $ip);
@@ -24,7 +24,7 @@ function gody_rate_limit(string $bucket, int $max = 5, int $windowSeconds = 600)
     $data = ['count' => 0, 'reset' => $now + $windowSeconds];
 
     if (is_file($file)) {
-        $raw = @file_get_contents($file);
+        $raw = gdy_file_get_contents($file);
         if (is_string($raw) && $raw !== '') {
             $j = json_decode($raw, true);
             if (is_array($j) && isset($j['count'], $j['reset'])) {
@@ -39,7 +39,7 @@ function gody_rate_limit(string $bucket, int $max = 5, int $windowSeconds = 600)
     }
 
     $data['count'] += 1;
-    @file_put_contents($file, json_encode($data), LOCK_EX);
+    gdy_file_put_contents($file, json_encode($data), LOCK_EX);
 
     return $data['count'] <= $max;
 }
@@ -51,7 +51,7 @@ function gody_rate_limit_retry_after(string $bucket): int
     $key = hash('sha256', $bucket . '|' . $ip);
     $file = $dir . '/' . $key . '.json';
     if (!is_file($file)) return 0;
-    $raw = @file_get_contents($file);
+    $raw = gdy_file_get_contents($file);
     $j = json_decode($raw ?: '', true);
     $reset = isset($j['reset']) ? (int)$j['reset'] : 0;
     $now = time();

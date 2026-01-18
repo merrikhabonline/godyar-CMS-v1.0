@@ -45,7 +45,7 @@ if (!function_exists('gdy_column_exists')) {
             }            // Fallback via information_schema helpers
             return function_exists('gdy_db_column_exists') ? gdy_db_column_exists($pdo, $table, $column) : false;
         } catch (Throwable $e) {
-            @error_log('[Schema] column_exists error: ' . $e->getMessage());
+            error_log('[Schema] column_exists error: ' . $e->getMessage());
             return false;
         }
     }
@@ -127,7 +127,7 @@ if ($newsIdOrSlug === null || $newsIdOrSlug === '') {
             $notFound = true;
         }
     } catch (Throwable $e) {
-        @error_log('[news.php] fetch article error: ' . $e->getMessage());
+        error_log('[news.php] fetch article error: ' . $e->getMessage());
         http_response_code(500);
         $notFound = true;
     }
@@ -222,7 +222,7 @@ if ($pdo instanceof PDO
             }
         }
     } catch (Throwable $e) {
-        @error_log('[news.php] opinion author error: ' . $e->getMessage());
+        error_log('[news.php] opinion author error: ' . $e->getMessage());
     }
 }
 
@@ -252,7 +252,7 @@ if ($pdo instanceof PDO && !$notFound && $catId) {
         ]);
         $relatedArticles = $stmtRel->fetchAll(PDO::FETCH_ASSOC) ?: [];
     } catch (Throwable $e) {
-        @error_log('[news.php] related articles error: ' . $e->getMessage());
+        error_log('[news.php] related articles error: ' . $e->getMessage());
     }
 }
 

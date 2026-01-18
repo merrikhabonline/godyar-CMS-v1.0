@@ -36,7 +36,7 @@ return new class implements GodyarPluginInterface {
             return $defaults;
         }
 
-        $json = @file_get_contents($this->configFile);
+        $json = gdy_file_get_contents($this->configFile);
         if (!is_string($json) || $json === '') {
             return $defaults;
         }

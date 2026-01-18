@@ -45,7 +45,7 @@ if (!function_exists('gody_parse_env_file')) {
     function gody_parse_env_file(string $path): array {
         if (!is_file($path)) return [];
         $out = [];
-        $lines = @file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
+        $lines = gdy_file_lines($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
         foreach ($lines as $line) {
             $line = trim($line);
             if ($line === '' || $line[0] === '#' || $line[0] === ';') continue;
@@ -217,17 +217,17 @@ if (!defined('DB_PASS')) define('DB_PASS', defined('DB_PASSWORD') ? DB_PASSWORD 
 
 /* ---------- Timezone ---------- */
 if (defined('TIMEZONE') && TIMEZONE) {
-    @date_default_timezone_set(TIMEZONE);
+    date_default_timezone_set(TIMEZONE);
 }
 
 /* ---------- Error reporting per APP_DEBUG ---------- */
 if (defined('APP_DEBUG') && APP_DEBUG) {
-    @ini_set('display_errors', '1');
-    @ini_set('display_startup_errors', '1');
+    ini_set('display_errors', '1');
+    ini_set('display_startup_errors', '1');
     error_reporting(E_ALL);
 } else {
-    @ini_set('display_errors', '0');
-    @ini_set('display_startup_errors', '0');
+    ini_set('display_errors', '0');
+    ini_set('display_startup_errors', '0');
     error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 }
 

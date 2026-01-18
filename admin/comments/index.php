@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id'
                 $flash = ['type' => 'secondary', 'msg' => __('t_17a1b66879', 'تم حذف التعليق.')];
             }
         } catch (Throwable $e) {
-            @error_log('[comments] action error: ' . $e->getMessage());
+            error_log('[comments] action error: ' . $e->getMessage());
             $flash = ['type' => 'danger', 'msg' => __('t_82d19eb55e', 'تعذر تنفيذ العملية.')];
         }
     }
@@ -155,7 +155,7 @@ try {
     $stmt->execute($params);
     $total = (int)$stmt->fetchColumn();
 } catch (Throwable $e) {
-    @error_log('[comments] count error: ' . $e->getMessage());
+    error_log('[comments] count error: ' . $e->getMessage());
 }
 
 $items = [];
@@ -172,7 +172,7 @@ try {
     $stmt->execute($params);
     $items = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (Throwable $e) {
-    @error_log('[comments] list error: ' . $e->getMessage());
+    error_log('[comments] list error: ' . $e->getMessage());
 }
 
 $totalPages = max(1, (int)ceil($total / $perPage));
@@ -245,12 +245,9 @@ require_once __DIR__ . '/../layout/sidebar.php';
               $badge = $st==='approved'?'success':($st==='rejected'?'danger':'warning');
               $newsTitle = (string)($c['news_title'] ?? '—');
               $newsUrl = '';
-              $slug = (string)($c['news_slug'] ?? '');
-              if ($slug !== '') {
-                  $newsUrl = '../..' . '/news/id/' . (int)$id;
-              } else {
-                  $nid = (int)($c['news_id'] ?? 0);
-                  if ($nid > 0) $newsUrl = '../..' . '/news/id/' . $nid;
+              $nid = (int)($c['news_id'] ?? 0);
+              if ($nid > 0) {
+                  $newsUrl = '../..' . '/news/id/' . $nid;
               }
             ?>
             <tr>

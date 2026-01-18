@@ -83,7 +83,7 @@ if (!function_exists('gdy_indexnow_submit')) {
                 curl_close($ch);
                 $ok = ($code >= 200 && $code < 300);
                 if (!$ok) {
-                    @error_log('[IndexNow] HTTP ' . $code . ' resp=' . (is_string($resp) ? substr($resp, 0, 300) : ''));
+                    error_log('[IndexNow] HTTP ' . $code . ' resp=' . (is_string($resp) ? substr($resp, 0, 300) : ''));
                 }
             }
         } else {
@@ -95,7 +95,7 @@ if (!function_exists('gdy_indexnow_submit')) {
                     'timeout' => 6,
                 ],
             ]);
-            $resp = @file_get_contents($endpoint, false, $ctx);
+            $resp = gdy_file_get_contents($endpoint, false, $ctx);
             if (isset($http_response_header) && is_array($http_response_header)) {
                 foreach ($http_response_header as $h) {
                     if (preg_match('~^HTTP/\S+\s+(\d+)~', $h, $m)) { $code = (int)$m[1]; break; }
@@ -103,7 +103,7 @@ if (!function_exists('gdy_indexnow_submit')) {
             }
             $ok = ($code >= 200 && $code < 300);
             if (!$ok) {
-                @error_log('[IndexNow] HTTP ' . $code . ' resp=' . (is_string($resp) ? substr($resp, 0, 300) : ''));
+                error_log('[IndexNow] HTTP ' . $code . ' resp=' . (is_string($resp) ? substr($resp, 0, 300) : ''));
             }
         }
 

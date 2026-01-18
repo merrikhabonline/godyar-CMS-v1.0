@@ -3,7 +3,7 @@
 // الصفحة الرئيسية: سلايدر أخبار مميزة + بلوكات أقسام + فيديوهات مميزة + كتّاب الرأي
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // الاتصال من bootstrap / index
@@ -359,7 +359,7 @@ if ($pdo instanceof PDO) {
             $weatherLocations = $stmt ? ($stmt->fetchAll(PDO::FETCH_ASSOC) ?: []) : [];
         }
     } catch (Throwable $e) {
-        @error_log('[home] weather settings load error: ' . $e->getMessage());
+        error_log('[home] weather settings load error: ' . $e->getMessage());
         $weatherLocations = [];
     }
 }
@@ -468,7 +468,7 @@ if ($pdo instanceof PDO) {
             }
         }
     } catch (Throwable $e) {
-        @error_log('[Home Opinion Authors] ' . $e->getMessage());
+        error_log('[Home Opinion Authors] ' . $e->getMessage());
         $opinionAuthors = [];
         $opinionAuthorsMap = [];
     }

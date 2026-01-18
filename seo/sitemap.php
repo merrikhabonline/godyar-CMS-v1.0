@@ -52,7 +52,7 @@ if ($pdo instanceof PDO) {
             $lm = '';
             $u = (string)($c['updated_at'] ?? '');
             if ($u !== '') {
-                $ts = @strtotime($u);
+                $ts = gdy_strtotime($u);
                 if ($ts) $lm = gmdate('c', $ts);
             }
             $urls[] = ['loc' => $baseUrl . '/category/' . rawurlencode($slug), 'lastmod' => $lm];
@@ -73,7 +73,7 @@ if ($pdo instanceof PDO) {
             $lm = '';
             $cand = (string)($r['updated_at'] ?? ($r['date'] ?? ($r['created_at'] ?? '')));
             if ($cand !== '') {
-                $ts = @strtotime($cand);
+                $ts = gdy_strtotime($cand);
                 if ($ts) $lm = gmdate('c', $ts);
             }
             $urls[] = ['loc' => $baseUrl . '/news/id/' . $id, 'lastmod' => $lm];
@@ -99,7 +99,7 @@ foreach ($urls as $u) {
 echo '</urlset>';
 $xml = ob_get_clean();
 if (is_string($xml) && $xml !== '') {
-    @file_put_contents($cacheFile, $xml, LOCK_EX);
+    gdy_file_put_contents($cacheFile, $xml, LOCK_EX);
 }
 echo $xml;
 exit;

@@ -29,7 +29,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Team] Auth error: ' . $e->getMessage());
+    error_log('[Godyar Team] Auth error: ' . $e->getMessage());
     if (empty($_SESSION['user']) || (($_SESSION['user']['role'] ?? '') === 'guest')) {
         header('Location: ../login.php');
         exit;
@@ -62,7 +62,7 @@ try {
           COLLATE=utf8mb4_unicode_ci;
     ");
 } catch (Throwable $e) {
-    @error_log('[Godyar Team AutoTable Index] ' . $e->getMessage());
+    error_log('[Godyar Team AutoTable Index] ' . $e->getMessage());
 }
 
 // حذف عضو
@@ -74,7 +74,7 @@ if (isset($_GET['delete']) && ctype_digit((string)$_GET['delete'])) {
         header('Location: index.php?deleted=1');
         exit;
     } catch (Throwable $e) {
-        @error_log('[Godyar Team] Delete error: ' . $e->getMessage());
+        error_log('[Godyar Team] Delete error: ' . $e->getMessage());
         header('Location: index.php?error=1');
         exit;
     }
@@ -116,7 +116,7 @@ try {
     $stmt->execute($params);
     $rows = $stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
 } catch (Throwable $e) {
-    @error_log('[Godyar Team] Fetch error: ' . $e->getMessage());
+    error_log('[Godyar Team] Fetch error: ' . $e->getMessage());
 }
 
 // Professional unified admin shell

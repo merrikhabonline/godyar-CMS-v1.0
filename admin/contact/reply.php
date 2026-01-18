@@ -29,7 +29,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Admin Contact Reply] Auth: '.$e->getMessage());
+    error_log('[Admin Contact Reply] Auth: '.$e->getMessage());
     header('Location: ../login.php');
     exit;
 }
@@ -54,7 +54,7 @@ try {
     $stmt->execute([':id' => $id]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 } catch (Throwable $e) {
-    @error_log('[Admin Contact Reply] fetch: '.$e->getMessage());
+    error_log('[Admin Contact Reply] fetch: '.$e->getMessage());
 }
 
 if (!$row) {
@@ -138,14 +138,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sent = false;
                 try {
                     // قد لا تكون mail() مفعّلة على الخادم
-                    $sent = @mail(
+                    $sent = gdy_mail(
                         $to,
                         '=?UTF-8?B?' . base64_encode($subject) . '?=',
                         $body,
                         $headers
                     );
                 } catch (Throwable $e) {
-                    @error_log('[Admin Contact Reply] mail error: '.$e->getMessage());
+                    error_log('[Admin Contact Reply] mail error: '.$e->getMessage());
                 }
 
                 // تحديث حالة الرسالة في قاعدة البيانات
@@ -164,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['contact_reply_csrf'] = bin2hex(random_bytes(16));
                     $csrfToken = $_SESSION['contact_reply_csrf'];
                 } catch (Throwable $e) {
-                    @error_log('[Admin Contact Reply] update DB: '.$e->getMessage());
+                    error_log('[Admin Contact Reply] update DB: '.$e->getMessage());
                     $errors[] = __('t_616f4954e6', 'تمت محاولة إرسال البريد لكن حدث خطأ أثناء تحديث حالة الرسالة في قاعدة البيانات.');
                 }
 

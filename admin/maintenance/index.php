@@ -33,17 +33,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         if ($mode === 'enable') {
             $content = $msg === '' ? 'Site is under maintenance' : $msg;
-            @file_put_contents($flagFile, $content);
+            gdy_file_put_contents($flagFile, $content);
             $flash = __('t_d4c9797619', 'تم تفعيل وضع الصيانة. سيظهر للزوار صفحة الصيانة.');
         } elseif ($mode === 'disable') {
             if (is_file($flagFile)) {
-                @unlink($flagFile);
+                gdy_unlink($flagFile);
             }
             $flash = __('t_ec96ec5ee6', 'تم إلغاء وضع الصيانة. الموقع الآن متاح للزوار.');
         }
     } catch (Throwable $e) {
         $flash = __('t_bff9e6efda', 'حدث خطأ أثناء تحديث حالة الصيانة.');
-        @error_log('[Godyar Maintenance] ' . $e->getMessage());
+        error_log('[Godyar Maintenance] ' . $e->getMessage());
     }
 }
 
@@ -51,8 +51,8 @@ $isMaintenance = is_file($flagFile);
 $currentMsg    = '';
 $lastUpdated   = '';
 if ($isMaintenance) {
-    $currentMsg = (string)@file_get_contents($flagFile);
-    $ts = @filemtime($flagFile);
+    $currentMsg = (string)gdy_file_get_contents($flagFile);
+    $ts = gdy_filemtime($flagFile);
     if ($ts) {
         $lastUpdated = date('Y-m-d H:i', (int)$ts);
     }

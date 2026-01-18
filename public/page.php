@@ -25,7 +25,7 @@ if ($pdo instanceof PDO && $slug !== '') {
             $pageColumns[$row['Field']] = true;
         }
     } catch (Throwable $e) {
-        @error_log('[Front Page] columns pages: ' . $e->getMessage());
+        error_log('[Front Page] columns pages: ' . $e->getMessage());
     }
 
     $sql = "SELECT * FROM pages WHERE slug = :slug";
@@ -42,7 +42,7 @@ if ($pdo instanceof PDO && $slug !== '') {
         $stmt->execute([':slug' => $slug]);
         $page = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     } catch (Throwable $e) {
-        @error_log('[Front Page] select: ' . $e->getMessage());
+        error_log('[Front Page] select: ' . $e->getMessage());
     }
 }
 

@@ -12,7 +12,7 @@ if ($limit <= 0 || $limit > 3000) $limit = 300;
 $lines = [];
 if (is_file($logFile) && is_readable($logFile)) {
     // read last N lines efficiently
-    $data = @file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
+    $data = gdy_file_lines($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
     $data = array_slice($data, max(0, count($data) - $limit));
     if ($q !== '') {
         foreach ($data as $ln) {

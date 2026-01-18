@@ -31,7 +31,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Featured Videos] Auth error: ' . $e->getMessage());
+    error_log('[Featured Videos] Auth error: ' . $e->getMessage());
     header('Location: login.php');
     exit;
 }

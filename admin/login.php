@@ -26,7 +26,7 @@ if (!function_exists('h')) {
 
 // نتأكد أن الجلسة شغالة (غالبًا البوتستراب شغّلها، لكن للاحتياط)
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // توليد رمز CSRF بسيط
@@ -162,12 +162,18 @@ if (!$user || !in_array($role, $allowedRoles, true)) {
             setcookie('admin_remember_email', $email, [
                 'expires'  => time() + (30 * 24 * 60 * 60),
                 'path'     => '/admin', // ✅ بدل /godyar/admin
-                'secure'   => !empty($_SERVER['HTTPS']),
-                'httponly' => false,
+	            'secure'   => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+	            'httponly' => true,
                 'samesite' => 'Lax',
             ]);
         } else {
-            setcookie('admin_remember_email', '', time() - 3600, '/admin');
+	        setcookie('admin_remember_email', '', [
+	            'expires'  => time() - 3600,
+	            'path'     => '/admin',
+	            'secure'   => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+	            'httponly' => true,
+	            'samesite' => 'Lax',
+	        ]);
         }
 
         // ملاحظة: بعض قواعد البيانات القديمة لا تحتوي عمود last_login.
@@ -196,7 +202,7 @@ if (!$user || !in_array($role, $allowedRoles, true)) {
 
     } catch (\Throwable $e) {
         $error = $e->getMessage();
-        @error_log('[Godyar Login] '.$e->getMessage());
+        error_log('[Godyar Login] '.$e->getMessage());
     
 
         // ✅ Audit log (failed login)

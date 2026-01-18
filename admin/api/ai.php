@@ -223,7 +223,7 @@ try {
             echo json_encode(['success' => false, 'message' => __('t_855f8ff1b4', 'نوع المهمة غير مدعوم.')], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar AI] error: ' . $e->getMessage());
+    error_log('[Godyar AI] error: ' . $e->getMessage());
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => __('t_296a798734', 'حدث خطأ غير متوقع أثناء معالجة طلب الذكاء الاصطناعي.')], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 }

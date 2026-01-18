@@ -26,7 +26,7 @@ if ($method === 'OPTIONS') {
 
 // Start session (for logged-in user detection)
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // Load bootstrap / DB access (best effort)
@@ -196,6 +196,6 @@ try {
 
     gdy_json_fail(405, 'method_not_allowed', ['allowed' => ['GET', 'POST']]);
 } catch (Throwable $e) {
-    @error_log('[comments endpoint] ' . $e->getMessage());
+    error_log('[comments endpoint] ' . $e->getMessage());
     gdy_json_fail(500, 'server_error');
 }

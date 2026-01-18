@@ -14,7 +14,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/includes/bootstrap.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // تحميل HomeController حتى يعمل الهيدر/الفوتر (إعدادات الموقع)
@@ -122,7 +122,7 @@ function ensure_user_profiles_table(PDO $pdo): bool {
 
         return true;
     } catch (Throwable $e) {
-        @error_log('[profile] ensure_user_profiles_table failed: ' . $e->getMessage());
+        error_log('[profile] ensure_user_profiles_table failed: ' . $e->getMessage());
         return false;
     }
 }
@@ -485,7 +485,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         throw new RuntimeException('حجم صورة الملف الشخصي كبير (الحد الأقصى 2MB).');
                     }
                     $tmp = (string)($f['tmp_name'] ?? '');
-                    $info = @getimagesize($tmp);
+                    $info = gdy_getimagesize($tmp);
                     if (!$info) {
                         throw new RuntimeException('الملف المرفوع ليس صورة صحيحة.');
                     }
@@ -502,11 +502,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     $dir = __DIR__ . '/uploads/avatars';
                     if (!is_dir($dir)) {
-                        @mkdir($dir, 0755, true);
+                        gdy_mkdir($dir, 0755, true);
                     }
                     $name = 'user_' . $uid . '_' . date('Ymd_His') . '.' . $extMap[$mime];
                     $dest = $dir . '/' . $name;
-                    if (!@move_uploaded_file($tmp, $dest)) {
+                    if (!gdy_move_uploaded_file($tmp, $dest)) {
                         throw new RuntimeException('تعذر حفظ صورة الملف الشخصي.');
                     }
                     $avatarPath = 'uploads/avatars/' . $name;
@@ -526,7 +526,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         throw new RuntimeException('حجم صورة الغلاف كبير (الحد الأقصى 4MB).');
                     }
                     $tmp = (string)($f['tmp_name'] ?? '');
-                    $info = @getimagesize($tmp);
+                    $info = gdy_getimagesize($tmp);
                     if (!$info) {
                         throw new RuntimeException('ملف الغلاف ليس صورة صحيحة.');
                     }
@@ -542,11 +542,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     $dir = __DIR__ . '/uploads/covers';
                     if (!is_dir($dir)) {
-                        @mkdir($dir, 0755, true);
+                        gdy_mkdir($dir, 0755, true);
                     }
                     $name = 'cover_' . $uid . '_' . date('Ymd_His') . '.' . $extMap[$mime];
                     $dest = $dir . '/' . $name;
-                    if (!@move_uploaded_file($tmp, $dest)) {
+                    if (!gdy_move_uploaded_file($tmp, $dest)) {
                         throw new RuntimeException('تعذر حفظ صورة الغلاف.');
                     }
                     $coverPath = 'uploads/covers/' . $name;

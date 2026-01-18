@@ -79,7 +79,7 @@ try {
     exit;
 
 } catch (Throwable $e) {
-    @error_log('[Admin Users Toggle] ' . $e->getMessage());
+    error_log('[Admin Users Toggle] ' . $e->getMessage());
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'حدث خطأ أثناء تحديث الحالة']);
     exit;

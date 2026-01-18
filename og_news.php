@@ -6,8 +6,8 @@ declare(strict_types=1);
  * Pretty URL (Apache): /og/news/{id}.png  ->  og_news.php?id={id}
  */
 
-@ini_set('display_errors', '0');
-@ini_set('log_errors', '1');
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
 
 if (!defined('ROOT_PATH')) {
     define('ROOT_PATH', __DIR__);
@@ -150,7 +150,7 @@ try {
     exit;
 
 } catch (Throwable $e) {
-    @error_log('[og_news] ' . $e->getMessage());
+    error_log('[og_news] ' . $e->getMessage());
     http_response_code(500);
     exit;
 }

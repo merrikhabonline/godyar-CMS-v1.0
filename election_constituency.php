@@ -44,7 +44,7 @@ try {
     $stmt->execute([':slug' => $electionSlug]);
     $currentElection = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 } catch (Throwable $e) {
-    @error_log('[Election Const] fetch election error: ' . $e->getMessage());
+    error_log('[Election Const] fetch election error: ' . $e->getMessage());
 }
 
 if (!$currentElection) {
@@ -87,7 +87,7 @@ try {
     ]);
     $constituency = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 } catch (Throwable $e) {
-    @error_log('[Election Const] fetch constituency error: ' . $e->getMessage());
+    error_log('[Election Const] fetch constituency error: ' . $e->getMessage());
 }
 
 if (!$constituency) {
@@ -122,7 +122,7 @@ try {
     ]);
     $candidates = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (Throwable $e) {
-    @error_log('[Election Const] fetch candidates error: ' . $e->getMessage());
+    error_log('[Election Const] fetch candidates error: ' . $e->getMessage());
 }
 
 // اسم الدائرة والولاية

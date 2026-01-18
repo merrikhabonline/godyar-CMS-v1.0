@@ -92,7 +92,7 @@ final class PluginManager
             ];
             $metaFile = $pluginPath . '/plugin.json';
             if (is_file($metaFile)) {
-                $json = @file_get_contents($metaFile);
+                $json = gdy_file_get_contents($metaFile);
                 if (is_string($json) && $json !== '') {
                     $decoded = json_decode($json, true);
                     if (is_array($decoded)) {
@@ -127,7 +127,7 @@ final class PluginManager
                     $instance->register($this);
                 }
             } catch (\Throwable $e) {
-                @error_log('[Godyar Plugin] Failed to load plugin ' . $slug . ': ' . $e->getMessage());
+                error_log('[Godyar Plugin] Failed to load plugin ' . $slug . ': ' . $e->getMessage());
             }
         }
     }
@@ -157,7 +157,7 @@ final class PluginManager
             try {
                 $cb(...$args);
             } catch (\Throwable $e) {
-                @error_log('[Godyar Plugin] Error in hook ' . $hook . ': ' . $e->getMessage());
+                error_log('[Godyar Plugin] Error in hook ' . $hook . ': ' . $e->getMessage());
             }
         }
     }
@@ -177,7 +177,7 @@ final class PluginManager
             try {
                 $result = $cb($result, ...$args);
             } catch (\Throwable $e) {
-                @error_log('[Godyar Plugin] Error in filter ' . $hook . ': ' . $e->getMessage());
+                error_log('[Godyar Plugin] Error in filter ' . $hook . ': ' . $e->getMessage());
             }
         }
 

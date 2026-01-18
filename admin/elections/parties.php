@@ -15,7 +15,7 @@ if (file_exists($authFile)) {
 }
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 /**
@@ -98,7 +98,7 @@ try {
         $electionId = $currentElection ? (int)$currentElection['id'] : 0;
     }
 } catch (Throwable $e) {
-    @error_log('[elections parties] fetch election error: ' . $e->getMessage());
+    error_log('[elections parties] fetch election error: ' . $e->getMessage());
 }
 
 if (!$currentElection) {
@@ -177,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     safe_redirect('parties.php?election_id=' . $electionId . '&saved=1');
                 } catch (Throwable $e) {
-                    @error_log('[elections parties] save_party error: ' . $e->getMessage());
+                    error_log('[elections parties] save_party error: ' . $e->getMessage());
                     $flashError = __('t_d2fe36c431', 'حدث خطأ أثناء حفظ بيانات الحزب.');
                 }
             }
@@ -196,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ]);
                     $flashSuccess = __('t_ca0e49f28d', 'تم حذف الحزب بنجاح.');
                 } catch (Throwable $e) {
-                    @error_log('[elections parties] delete_party error: ' . $e->getMessage());
+                    error_log('[elections parties] delete_party error: ' . $e->getMessage());
                     $flashError = __('t_25ab8fd945', 'تعذر حذف الحزب، ربما مرتبط بنتائج انتخابية.');
                 }
             }
@@ -220,7 +220,7 @@ try {
     $stmt->execute([':eid' => $electionId]);
     $parties = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (Throwable $e) {
-    @error_log('[elections parties] fetch list error: ' . $e->getMessage());
+    error_log('[elections parties] fetch list error: ' . $e->getMessage());
 }
 
 // ================== 4) لو طلب تعديل حزب ==================

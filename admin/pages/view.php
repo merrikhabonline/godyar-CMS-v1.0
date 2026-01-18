@@ -38,7 +38,7 @@ try {
     $stmt->execute([':id' => $id]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 } catch (Throwable $e) {
-    @error_log('[Godyar Pages View] ' . $e->getMessage());
+    error_log('[Godyar Pages View] ' . $e->getMessage());
 }
 
 if (!$row) {

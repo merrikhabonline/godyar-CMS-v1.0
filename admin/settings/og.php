@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $notice = __('t_90e2dfc8e1', 'تم حفظ إعدادات OG بنجاح.');
     } catch (Throwable $e) {
         $error = __('t_54f61c6dd4', 'تعذر حفظ الإعدادات. حاول مرة أخرى.');
-        @error_log('[settings_og] ' . $e->getMessage());
+        error_log('[settings_og] ' . $e->getMessage());
     }
 }
 

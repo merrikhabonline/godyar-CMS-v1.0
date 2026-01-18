@@ -17,7 +17,7 @@ require_once __DIR__ . '/includes/bootstrap.php';
 require_once __DIR__ . '/includes/rate_limit.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // هيلبر للهروب الآمن
@@ -200,7 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             if ($remember === '1') {
                                 $isSecure = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
                                 $params = session_get_cookie_params();
-                                @setcookie(
+                                setcookie(
                                     session_name(),
                                     session_id(),
                                     [
@@ -280,7 +280,7 @@ header('Location: ' . $redirectAfterLogin);
                     }
                 }
             } catch (Throwable $e) {
-                @error_log('[login] ' . $e->getMessage());
+                error_log('[login] ' . $e->getMessage());
                 $errorMessage = 'حدث خطأ أثناء التحقق من بيانات الدخول. الرجاء المحاولة لاحقاً.';
             }
         }

@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $notice = __('t_abef82929a', 'تم حفظ إعدادات سايدبار الواجهة بنجاح.');
     } catch (Throwable $e) {
         $error = __('t_4fa410044f', 'حدث خطأ أثناء الحفظ.');
-        @error_log('[settings_frontend_sidebar] ' . $e->getMessage());
+        error_log('[settings_frontend_sidebar] ' . $e->getMessage());
     }
 }
 

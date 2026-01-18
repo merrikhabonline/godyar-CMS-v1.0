@@ -130,9 +130,17 @@ if (strpos((string)$pageHead, 'admin-ui.css') === false) {
     <link rel="apple-touch-icon" sizes="180x180" href="<?= h($apple) ?>">
 
 
+    <?php
+      $jsonFlags = JSON_UNESCAPED_UNICODE
+        | JSON_UNESCAPED_SLASHES
+        | JSON_HEX_TAG
+        | JSON_HEX_AMP
+        | JSON_HEX_APOS
+        | JSON_HEX_QUOT;
+    ?>
     <script>
-      window.GODYAR_BASE_URL = <?= json_encode($___base, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
-      window.GDY_ADMIN_URL   = <?= json_encode($___admin, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+      window.GODYAR_BASE_URL = <?= json_encode($___base, $jsonFlags) ?>;
+      window.GDY_ADMIN_URL   = <?= json_encode($___admin, $jsonFlags) ?>;
     </script>
 
     <link rel="stylesheet" href="<?= h($bootstrapCss) ?>">
@@ -165,7 +173,7 @@ try {
     $___sprite = rtrim((string)$root, '/\\') . '/assets/icons/gdy-icons.svg';
     if (is_file($___sprite)) {
         echo "\n<!-- GDY Icons Sprite (inline) -->\n";
-        @readfile($___sprite);
+        gdy_readfile($___sprite);
         echo "\n";
     }
 } catch (Throwable $e) { /* ignore */ }

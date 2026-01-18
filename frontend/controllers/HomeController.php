@@ -8,7 +8,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../../includes/bootstrap.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 /**
@@ -59,7 +59,7 @@ final class HomeController
             $safeTable = str_replace('`', '', $table);            $stmt = gdy_db_stmt_column_like($pdo, $safeTable, $column);
             return (bool)($stmt && $stmt->fetchColumn());
         } catch (\Throwable $e) {
-            @error_log('[HomeController] columnExists error: ' . $e->getMessage());
+            error_log('[HomeController] columnExists error: ' . $e->getMessage());
             return false;
         }
     }
@@ -153,7 +153,7 @@ final class HomeController
             // احتفاظ بالخام أيضًا لو احتجته لاحقًا
             $cache['raw'] = $raw;
         } catch (\Throwable $e) {
-            @error_log('[HomeController] getSiteSettings error: ' . $e->getMessage());
+            error_log('[HomeController] getSiteSettings error: ' . $e->getMessage());
             $cache = [
                 'site_name'          => 'Godyar News',
                 'site_tagline'       => 'منصة إخبارية متكاملة',
@@ -389,7 +389,7 @@ final class HomeController
             $rows = $stmt ? $stmt->fetchAll(\PDO::FETCH_ASSOC) : [];
             return $rows ?: [];
         } catch (\Throwable $e) {
-            @error_log('[HomeController] getOpinionAuthors error: ' . $e->getMessage());
+            error_log('[HomeController] getOpinionAuthors error: ' . $e->getMessage());
             return [];
         }
     }

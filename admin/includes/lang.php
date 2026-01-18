@@ -39,7 +39,7 @@ if (!function_exists('gdy_lang')) {
         $q = isset($_GET['lang']) ? strtolower(trim((string)$_GET['lang'])) : '';
         if ($q !== '' && in_array($q, $supported, true)) {
             if (session_status() !== PHP_SESSION_ACTIVE) {
-                @session_start();
+                gdy_session_start();
             }
             $_SESSION['gdy_lang'] = $q;
 
@@ -53,7 +53,7 @@ if (!function_exists('gdy_lang')) {
         }
 
         if (session_status() !== PHP_SESSION_ACTIVE) {
-            @session_start();
+            gdy_session_start();
         }
 
         $s = isset($_SESSION['gdy_lang']) ? strtolower(trim((string)$_SESSION['gdy_lang'])) : '';

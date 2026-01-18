@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../includes/bootstrap.php';
 header('Content-Type: application/json; charset=utf-8');
 
 if (session_status() === PHP_SESSION_NONE) {
-    @session_start();
+    gdy_session_start();
 }
 
 if (!function_exists('j')) {
@@ -40,7 +40,7 @@ try {
         exit;
     }
 } catch (Throwable $e) {
-    @error_log('[Godyar Reaction] check table: ' . $e->getMessage());
+    error_log('[Godyar Reaction] check table: ' . $e->getMessage());
     echo j(['ok' => false, 'error' => 'EXCEPTION']);
     exit;
 }
@@ -67,6 +67,6 @@ try {
 
     echo j(['ok' => true, 'counts' => $counts]);
 } catch (Throwable $e) {
-    @error_log('[Godyar Reaction] insert: ' . $e->getMessage());
+    error_log('[Godyar Reaction] insert: ' . $e->getMessage());
     echo j(['ok' => false, 'error' => 'EXCEPTION']);
 }

@@ -77,7 +77,7 @@ foreach ($items as $it) {
     $link = $baseUrl . '/news/id/' . $id;
 
     $date = (string)($it['updated_at'] ?? ($it['date'] ?? ($it['created_at'] ?? '')));
-    $ts = $date !== '' ? @strtotime($date) : false;
+    $ts = $date !== '' ? gdy_strtotime($date) : false;
     $pub = $ts ? gmdate('r', $ts) : gmdate('r');
 
     echo "  <item>\n";
@@ -92,7 +92,7 @@ foreach ($items as $it) {
 echo "</channel>\n</rss>";
 $xml = ob_get_clean();
 if (is_string($xml) && $xml !== '') {
-    @file_put_contents($cacheFile, $xml, LOCK_EX);
+    gdy_file_put_contents($cacheFile, $xml, LOCK_EX);
 }
 echo $xml;
 exit;

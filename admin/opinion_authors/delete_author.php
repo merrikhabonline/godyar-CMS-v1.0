@@ -49,6 +49,6 @@ try {
 
     echo json_encode(['success' => true]);
 } catch (Throwable $e) {
-    @error_log('[Opinion Authors] delete_author error: ' . $e->getMessage());
+    error_log('[Opinion Authors] delete_author error: ' . $e->getMessage());
     echo json_encode(['success' => false, 'message' => __('t_b36dd83f10', 'حدث خطأ غير متوقع أثناء الحذف.')]);
 }

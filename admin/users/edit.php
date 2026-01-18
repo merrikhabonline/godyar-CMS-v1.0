@@ -37,7 +37,7 @@ try {
         }
     }
 } catch (Throwable $e) {
-    @error_log('[Admin Users Edit] Auth: '.$e->getMessage());
+    error_log('[Admin Users Edit] Auth: '.$e->getMessage());
     header('Location: ../login.php');
     exit;
 }
@@ -111,7 +111,7 @@ if ($pdo instanceof PDO) {
         $stmt->execute([':id' => $id]);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (Throwable $e) {
-        @error_log('[Admin Users Edit] fetch: '.$e->getMessage());
+        error_log('[Admin Users Edit] fetch: '.$e->getMessage());
     }
 }
 
@@ -181,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $errors[] = __('t_9e53c1cbe6', 'اسم المستخدم أو البريد الإلكتروني مستخدم من حساب آخر.');
                 }
             } catch (Throwable $e) {
-                @error_log('[Admin Users Edit] unique check: '.$e->getMessage());
+                error_log('[Admin Users Edit] unique check: '.$e->getMessage());
             }
         }
 
@@ -229,7 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit;
                 }
             } catch (Throwable $e) {
-                @error_log('[Admin Users Edit] update: '.$e->getMessage());
+                error_log('[Admin Users Edit] update: '.$e->getMessage());
                 $errors[] = __('t_ebd9a4245e', 'حدث خطأ أثناء تحديث بيانات المستخدم.');
             }
         }

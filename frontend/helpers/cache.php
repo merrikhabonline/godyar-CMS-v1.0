@@ -6,17 +6,20 @@ class Cache {
     $f = self::file($key);
     if (!is_file($f)) return null;
     if (filemtime($f) < time()-$ttl) return null;
-    return @file_get_contents($f);
+    return gdy_file_get_contents($f);
   }
   public static function put(string $key, string $value) {
     $f = self::file($key);
-    if (!is_dir(dirname($f))) @mkdir(dirname($f), 0775, true);
-    @file_put_contents($f, $value);
+    if (!is_dir(dirname($f))) gdy_mkdir(dirname($f), 0755, true);
+    gdy_file_put_contents($f, $value);
   }
   public static function remember(string $key, int $ttl, callable $cb) {
     $v = self::get($key, $ttl);
     if ($v !== null) return $v;
     $v = (string)$cb(); self::put($key, $v); return $v;
   }
-  private static function file(string $key){ return rtrim(self::$dir,'/').'/'.md5($key).'.cache'; }
+  private static function file(string $key){
+    $hash = hash('sha256', $key);
+    return rtrim(self::$dir,'/').'/'.$hash.'.cache';
+  }
 }

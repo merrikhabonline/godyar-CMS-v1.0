@@ -33,7 +33,10 @@ $userAvatar = $_SESSION['user']['avatar'] ?? null;
 
 // تحميل Auth عند الحاجة
 if (!class_exists(\Godyar\Auth::class)) {
-    @require_once __DIR__ . '/../../includes/auth.php';
+    $authFile = __DIR__ . '/../../includes/auth.php';
+    if (is_file($authFile)) {
+        require_once $authFile;
+    }
 }
 
 $isWriter = class_exists(\Godyar\Auth::class) && \Godyar\Auth::isWriter();

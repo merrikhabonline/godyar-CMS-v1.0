@@ -23,7 +23,7 @@ if ($pdo instanceof PDO) {
         ");
         $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (Throwable $e) {
-        @error_log('[Front News Index] ' . $e->getMessage());
+        error_log('[Front News Index] ' . $e->getMessage());
     }
 }
 

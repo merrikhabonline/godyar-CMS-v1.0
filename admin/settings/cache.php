@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $notice = __('t_2b91fb1389', 'تم حفظ إعدادات الكاش بنجاح.');
     } catch (Throwable $e) {
         $error = __('t_4fa410044f', 'حدث خطأ أثناء الحفظ.');
-        @error_log('[settings_cache] ' . $e->getMessage());
+        error_log('[settings_cache] ' . $e->getMessage());
     }
 }
 

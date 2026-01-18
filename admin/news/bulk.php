@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 // IMPORTANT: this endpoint is called via fetch(). Any PHP warning/notice printed to output
 // will break JSON parsing and the UI shows "Bulk failed".
-@ini_set('display_errors', '0');
-@ini_set('html_errors', '0');
-@ini_set('log_errors', '1');
+ini_set('display_errors', '0');
+ini_set('html_errors', '0');
+ini_set('log_errors', '1');
 
 // Buffer output so we can strip accidental output (BOM, notices, etc.) before JSON.
 if (!ob_get_level()) {
@@ -35,7 +35,7 @@ register_shutdown_function(function () use (&$__gdy_bulk_warnings) {
     $fatals = [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR];
     if (!in_array((int)$err['type'], $fatals, true)) return;
     if (ob_get_level()) {
-        @ob_clean();
+        (ob_get_level()>0 ? ob_clean() : null);
     }
     if (!headers_sent()) {
         header('Content-Type: application/json; charset=utf-8');
@@ -57,7 +57,7 @@ register_shutdown_function(function () use (&$__gdy_bulk_warnings) {
 
 function gdy_bulk_json(array $payload, int $code = 200): void {
     if (ob_get_level()) {
-        @ob_clean();
+        (ob_get_level()>0 ? ob_clean() : null);
     }
     if (!headers_sent()) {
         header('Content-Type: application/json; charset=utf-8');
@@ -80,7 +80,7 @@ require_once $BASE_DIR . '/includes/bootstrap.php';
 require_once __DIR__ . '/_news_helpers.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 if (!headers_sent()) {
@@ -402,6 +402,6 @@ if ($scope === 'all') {
     $processed = gdy_apply_action($pdo, $action, $ids, $extra);
     gdy_bulk_json(['ok' => true, 'processed' => $processed]);
 } catch (Throwable $e) {
-    @error_log('[Admin News bulk] ' . $e->getMessage());
+    error_log('[Admin News bulk] ' . $e->getMessage());
     gdy_bulk_json(['ok' => false, 'msg' => 'server error'], 500);
 }

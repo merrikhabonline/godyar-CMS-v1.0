@@ -5,7 +5,7 @@ declare(strict_types=1);
 // صفحة عرض الأخبار حسب التصنيف /category/{slug}
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 
 // تضمين HomeController

@@ -55,7 +55,7 @@ try {
         exit;
     }
 } catch (Throwable $e) {
-    @error_log('[Admin Users Create] Auth: '.$e->getMessage());
+    error_log('[Admin Users Create] Auth: '.$e->getMessage());
     header('Location: ../login.php');
     exit;
 }
@@ -194,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $errors[] = __('t_c6ed943adb', 'اسم المستخدم أو البريد الإلكتروني مستخدم مسبقاً.');
                 }
             } catch (Throwable $e) {
-                @error_log('[Admin Users Create] check unique: '.$e->getMessage());
+                error_log('[Admin Users Create] check unique: '.$e->getMessage());
                 $errors[] = __('t_9c5a2ca0a6', 'حدث خطأ في التحقق من البيانات.');
             }
         }
@@ -250,7 +250,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 
             } catch (Throwable $e) {
-                @error_log('[Admin Users Create] insert: '.$e->getMessage());
+                error_log('[Admin Users Create] insert: '.$e->getMessage());
                 $errors[] = __('t_89f7c31032', 'حدث خطأ أثناء حفظ المستخدم الجديد: ') . $e->getMessage();
             }
         } elseif (!$tableExists) {

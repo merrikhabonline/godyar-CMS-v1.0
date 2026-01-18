@@ -37,7 +37,7 @@ if (empty($redirectUrl) || !filter_var($redirectUrl, FILTER_VALIDATE_URL)) {
                 $redirectUrl = $target;
             }
         } catch (Throwable $e) {
-            @error_log('[ad_click_legacy] ' . $e->getMessage());
+            error_log('[ad_click_legacy] ' . $e->getMessage());
         }
     }
 }

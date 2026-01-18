@@ -124,7 +124,7 @@ function load_dynamic_css(array $styles = []): void {
 if (!function_exists('generate_csrf_token')) {
     function generate_csrf_token(): string {
         if (session_status() !== PHP_SESSION_ACTIVE) {
-            @session_start();
+            gdy_session_start();
         }
 
         if (empty($_SESSION['csrf_token'])) {
@@ -145,7 +145,7 @@ if (!function_exists('csrf_token')) {
 if (!function_exists('verify_csrf_token')) {
     function verify_csrf_token(string $token): bool {
         if (session_status() !== PHP_SESSION_ACTIVE) {
-            @session_start();
+            gdy_session_start();
         }
 
         if (empty($_SESSION['csrf_token']) || empty($token)) {
@@ -183,7 +183,7 @@ if (!function_exists('csrf_verify_or_die')) {
         }
 
         if (session_status() !== PHP_SESSION_ACTIVE) {
-            @session_start();
+            gdy_session_start();
         }
 
         $sent = $_POST[$fieldName] ?? '';
@@ -514,7 +514,7 @@ if (!function_exists('current_user_subscription')) {
             $row = $stmt->fetch(\PDO::FETCH_ASSOC);
             return $row ?: null;
         } catch (\Throwable $e) {
-            @error_log('[Godyar Membership] ' . $e->getMessage());
+            error_log('[Godyar Membership] ' . $e->getMessage());
             return null;
         }
     }

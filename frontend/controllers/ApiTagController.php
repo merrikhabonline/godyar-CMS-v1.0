@@ -1,8 +1,12 @@
 <?php
 require_once __DIR__ . '/../../includes/bootstrap.php';
+
+/** @var \PDO|null $pdo */
+$pdo = $pdo ?? ($GLOBALS['pdo'] ?? null);
 header('Content-Type: application/json; charset=UTF-8');
 $slug = $_GET['slug'] ?? null;
 if (!$slug) { http_response_code(400); echo json_encode(['ok'=>false,'error'=>'missing slug']); exit; }
+if (!($pdo instanceof \PDO)) { http_response_code(500); echo json_encode(['ok'=>false,'error'=>'db_unavailable']); exit; }
 try {
   $st=$pdo->prepare("SELECT id,name,slug FROM tags WHERE slug=:s LIMIT 1");
   $st->execute([':s'=>$slug]); $tag=$st->fetch(PDO::FETCH_ASSOC);
@@ -15,12 +19,13 @@ try {
        LIMIT :lim";
   // Ensure placeholders are bound (query() does not support binding).
   // MySQL may not allow native prepared statements for LIMIT.
+  $prevEmulate = $pdo->getAttribute(PDO::ATTR_EMULATE_PREPARES);
   $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
-  $st2=$pdo->prepare($sql);
-  $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+  $st2 = $pdo->prepare($sql);
   $st2->bindValue(':tid', (int)$tag['id'], PDO::PARAM_INT);
   $st2->bindValue(':lim', (int)$lim, PDO::PARAM_INT);
   $st2->execute();
+  $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, $prevEmulate);
   $items=$st2->fetchAll(PDO::FETCH_ASSOC) ?: [];
   echo json_encode(['ok'=>true,'tag'=>$tag,'items'=> $items], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 } catch (Throwable $e){ error_log('API_TAG: '.$e->getMessage()); http_response_code(500); echo json_encode(['ok'=>false,'error'=>'internal']); }

@@ -21,7 +21,7 @@ if ($pdo instanceof PDO) {
         ");
         $members = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (Throwable $e) {
-        @error_log('[Front Team] ' . $e->getMessage());
+        error_log('[Front Team] ' . $e->getMessage());
     }
 }
 ?>

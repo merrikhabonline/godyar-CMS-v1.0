@@ -26,10 +26,10 @@ final class RssReader
                 ],
             ]);
 
-            $xmlString = @file_get_contents($url, false, $context);
+            $xmlString = gdy_file_get_contents($url, false, $context);
             if ($xmlString === false || trim($xmlString) === '') return [];
 
-            $xml = @simplexml_load_string($xmlString, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $xml = gdy_simplexml_load_string($xmlString, 'SimpleXMLElement', LIBXML_NOCDATA);
             if ($xml === false) return [];
 
             $items = [];
@@ -96,7 +96,7 @@ final class RssReader
 
             return [];
         } catch (\Throwable $e) {
-            @error_log('[RssReader] ' . $e->getMessage());
+            error_log('[RssReader] ' . $e->getMessage());
             return [];
         }
     }

@@ -58,7 +58,7 @@ if ($ref === '') {
 
 // نفس منطق منع التكرار (10 دقائق)
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    @session_start();
+    gdy_session_start();
 }
 $key = 'visit_' . $page . '_' . (string)($newsId ?? 0);
 if (isset($_SESSION[$key]) && time() - (int)$_SESSION[$key] < 600) {
@@ -109,7 +109,7 @@ try {
 
     echo json_encode(['ok' => true], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 } catch (Throwable $e) {
-    @error_log('[track.php] insert error: ' . $e->getMessage());
+    error_log('[track.php] insert error: ' . $e->getMessage());
     http_response_code(500);
     echo json_encode(['ok' => false, 'error' => 'Insert failed'], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 }

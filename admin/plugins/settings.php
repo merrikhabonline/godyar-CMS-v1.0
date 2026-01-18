@@ -32,7 +32,7 @@ $settingsFile = ($pluginDirReal ?? $pluginDir) . '/settings.json';
 // قراءة الإعدادات الحالية
 $settings = [];
 if (!$error && is_file($settingsFile)) {
-    $json = @file_get_contents($settingsFile);
+    $json = gdy_file_get_contents($settingsFile);
     $decoded = json_decode($json, true);
     if (is_array($decoded)) {
         $settings = $decoded;
@@ -45,7 +45,7 @@ if (!$error && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $settings['items_limit']       = (int)($_POST['items_limit'] ?? 5);
     $settings['title_override_ar'] = trim($_POST['title_override_ar'] ?? '');
 
-    @file_put_contents(
+    gdy_file_put_contents(
         $settingsFile,
         json_encode($settings, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)
     );

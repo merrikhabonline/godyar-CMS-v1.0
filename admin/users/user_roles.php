@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $selectedUser) {
 
         } catch (Throwable $e) {
             $pdo->rollBack();
-            @error_log('[RBAC] update user roles error: ' . $e->getMessage());
+            error_log('[RBAC] update user roles error: ' . $e->getMessage());
             $errorMessage = __('t_79492e49fe', 'حدث خطأ أثناء تحديث الأدوار، يرجى المحاولة لاحقاً.');
         }
     }

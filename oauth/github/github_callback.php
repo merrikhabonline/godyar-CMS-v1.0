@@ -42,7 +42,7 @@ curl_close($ch);
 
 $data = json_decode((string)$res, true) ?: [];
 if ($http >= 400 || empty($data['access_token'])) {
-    @error_log('[GitHubOAuth] token exchange failed: HTTP=' . $http . ' RES=' . (string)$res);
+    error_log('[GitHubOAuth] token exchange failed: HTTP=' . $http . ' RES=' . (string)$res);
     http_response_code(400);
     exit("تعذر تسجيل الدخول عبر GitHub.");
 }

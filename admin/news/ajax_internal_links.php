@@ -9,6 +9,8 @@ use Godyar\Auth;
 
 header('Content-Type: application/json; charset=utf-8');
 
+/** @var \PDO|null $pdo */
+$pdo = $pdo ?? ($GLOBALS['pdo'] ?? null);
 if (!Auth::isLoggedIn()) {
   http_response_code(401);
   echo json_encode(['ok'=>false,'error'=>'unauthorized'], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
@@ -22,6 +24,12 @@ if ($q === '' || mb_strlen($q, 'UTF-8') < 2) {
 }
 
 $like = '%' . $q . '%';
+
+if (!($pdo instanceof \PDO)) {
+  http_response_code(500);
+  echo json_encode(['ok'=>false,'items'=>[]]);
+  exit;
+}
 
 try {
   // Keep query conservative to work across different schemas
@@ -50,7 +58,7 @@ try {
 
   echo json_encode(['ok'=>true,'items'=>$items], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 } catch (Throwable $e) {
-  @error_log('[InternalLinks] ' . $e->getMessage());
+  error_log('[InternalLinks] ' . $e->getMessage());
   http_response_code(500);
   echo json_encode(['ok'=>false,'error'=>'server_error'], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 }

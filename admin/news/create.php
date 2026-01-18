@@ -47,7 +47,7 @@ try {
         $imageColumnExists = true;
     }
 } catch (Throwable $e) {
-    @error_log('Could not check image column in news: ' . $e->getMessage());
+    error_log('Could not check image column in news: ' . $e->getMessage());
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +58,7 @@ try {
     $stmt = $pdo->query("SELECT id, name FROM categories ORDER BY name ASC");
     $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Throwable $e) {
-    @error_log('Error fetching categories: ' . $e->getMessage());
+    error_log('Error fetching categories: ' . $e->getMessage());
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ try {
         $opinionAuthors = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     }
 } catch (Throwable $e) {
-    @error_log('Error fetching opinion_authors: ' . $e->getMessage());
+    error_log('Error fetching opinion_authors: ' . $e->getMessage());
 }
 
 // -----------------------------------------------------------------------------
@@ -258,7 +258,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         $uploadDir = __DIR__ . '/../../uploads/news/';
                         if (!is_dir($uploadDir)) {
-                            @mkdir($uploadDir, 0755, true);
+                            gdy_mkdir($uploadDir, 0755, true);
                         }
 
                         $baseName = date('Ymd_His') . '_' . bin2hex(random_bytes(4));
@@ -420,18 +420,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $newsUrl = $u !== '' ? ($u . '/news/id/' . $newsId) : '';
                     $sitemapUrl = $u !== '' ? ($u . '/sitemap.xml') : '';
                     if ($pdo instanceof PDO) {
-                        @gdy_indexnow_submit($pdo, array_filter([$newsUrl, $sitemapUrl]));
+                        gdy_indexnow_submit_safe($pdo, array_filter([$newsUrl, $sitemapUrl]));
                     }
                 }
             } catch (Throwable $e) {
-                @error_log('[IndexNow] create ping failed: ' . $e->getMessage());
+                error_log('[IndexNow] create ping failed: ' . $e->getMessage());
             }
 
 
             try {
                 gdy_sync_news_tags($pdo, $newsId, (string)($tags_input ?? ''));
             } catch (Throwable $e) {
-                @error_log('Error syncing tags: ' . $e->getMessage());
+                error_log('Error syncing tags: ' . $e->getMessage());
             }
 
             try {
@@ -440,12 +440,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     gdy_save_news_attachments($pdo, $newsId, (array)$_FILES['attachments'], $tmpErrors);
                 }
             } catch (Throwable $e) {
-                @error_log('Error saving attachments: ' . $e->getMessage());
+                error_log('Error saving attachments: ' . $e->getMessage());
             }
 // SEO cache invalidation (sitemap/rss)
 $root = dirname(__DIR__, 2);
-@unlink($root . '/cache/sitemap.xml');
-@unlink($root . '/cache/rss.xml');
+gdy_unlink($root . '/cache/sitemap.xml');
+gdy_unlink($root . '/cache/rss.xml');
 
 
 
@@ -453,7 +453,7 @@ $root = dirname(__DIR__, 2);
             exit;
 
         } catch (Throwable $e) {
-            @error_log('Error inserting news: ' . $e->getMessage());
+            error_log('Error inserting news: ' . $e->getMessage());
             $errors['general'] = __('t_c38467d8bb', 'حدث خطأ أثناء حفظ الخبر. يرجى المحاولة مرة أخرى.');
         }
     }

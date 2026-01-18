@@ -36,7 +36,7 @@ try {
     ");
     $allElections = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (Throwable $e) {
-    @error_log('[Elections] fetch all elections error: ' . $e->getMessage());
+    error_log('[Elections] fetch all elections error: ' . $e->getMessage());
 }
 
 if (!$allElections) {
@@ -104,7 +104,7 @@ try {
     $stmt->execute([$electionId, $electionId]);
     $parties = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (Throwable $e) {
-    @error_log('[Elections] fetch parties summary error: ' . $e->getMessage());
+    error_log('[Elections] fetch parties summary error: ' . $e->getMessage());
 }
 
 $totalWon     = 0;
@@ -249,7 +249,7 @@ try {
     }
     unset($region);
 } catch (Throwable $e) {
-    @error_log('[Elections] fetch regions error: ' . $e->getMessage());
+    error_log('[Elections] fetch regions error: ' . $e->getMessage());
 }
 
 // =====================
