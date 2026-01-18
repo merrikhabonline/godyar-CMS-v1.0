@@ -4,7 +4,8 @@ version = 1
 # Specify the analyzers to run. You can add multiple [[analyzers]] tables.
 # The "name" should be the shortcode for the language/tool (e.g., "python", "go", "rust", "javascript").
 [[analyzers]]
-name = "<analyzer-name>"
+name = "<analyzer-godyar-CMS-v1.0
+>"
 enabled = true
 
 # [analyzers.meta] is an optional section for analyzer-specific configurations
