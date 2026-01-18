@@ -25,7 +25,12 @@ $social_links = json_decode($settings['social_links']?? '[]', true) ?: [];
 $footer_about = $settings['footer_about'] ?? '';
 
 function view_include($path){
-  if (file_exists($path)) { require $path; }
-  else { echo "<p style='padding:16px;border:1px dashed #ddd;border-radius:8px'>View not found: ".htmlspecialchars($path)."</p>"; }
+  $allowedFiles = ['file1.php', 'file2.php'];
+  $file = basename($path);
+  if (in_array($file, $allowedFiles)) {
+    $filePath = realpath($path);
+    if ($filePath && file_exists($filePath)) { require $filePath; }
+    else { echo "<p style='padding:16px;border:1px dashed #ddd;border-radius:8px'>View not found: ".htmlspecialchars($path)."</p>"; }
+  } else { echo 'Access denied.'; }
 }
 view_include(__DIR__ . '/../views/archive.php');

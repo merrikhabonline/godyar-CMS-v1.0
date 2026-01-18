@@ -16,8 +16,15 @@ if (!defined('ABSPATH')) {
  * تضمين ملف بشكل آمن مع تحقق من الوجود
  */
 function safe_include(string $file_path): void {
-    if (file_exists($file_path) && is_file($file_path)) {
-        include $file_path;
+    $allowedFiles = ['file1.php', 'file2.php'];
+    $fileName = basename($file_path);
+    if (!in_array($fileName, $allowedFiles, true)) {
+        error_log("محاولة وصول غير مصرح به إلى الملف: " . $fileName);
+        throw new RuntimeException("غير مسموح بالوصول إلى الملف: " . $fileName);
+    }
+    $realPath = realpath($file_path);
+    if ($realPath && file_exists($realPath) && is_file($realPath)) {
+        include $realPath;
     } else {
         error_log("ملف غير موجود: " . $file_path);
         throw new RuntimeException("الملف المطلوب غير متوفر: " . basename($file_path));
@@ -28,10 +35,20 @@ function safe_include(string $file_path): void {
  * تضمين ملف بشكل آمن مع إرجاع المحتوى
  */
 function safe_include_return(string $file_path): string {
-    if (file_exists($file_path) && is_file($file_path)) {
-        ob_start();
-        include $file_path;
-        return ob_get_clean();
+    // Whitelist of allowed files
+    $allowedFiles = ['file1.php', 'file2.php'];
+    // Sanitize the filename
+    $fileName = basename($file_path);
+    if (in_array($fileName, $allowedFiles, true)) {
+        $safePath = __DIR__ . '/' . $fileName;
+        if (file_exists($safePath) && is_file($safePath)) {
+            ob_start();
+            include $safePath;
+            return ob_get_clean();
+        }
+    } else {
+        // Handle unauthorized access
+        echo 'Access denied.';
     }
     return '';
 }
@@ -220,12 +237,20 @@ function safe_redirect(string $url, int $status_code = 302): void {
 function load_view(string $view_path, array $data = []): string {
     extract($data, EXTR_SKIP);
 
-    if (!file_exists($view_path)) {
+    $allowedFiles = ['file1.php', 'file2.php'];
+    $viewFile = basename($view_path);
+    if (!in_array($viewFile, $allowedFiles, true)) {
+        echo 'Access denied.';
+        return '';
+    }
+
+    $realPath = realpath($view_path);
+    if (!$realPath || !file_exists($realPath)) {
         throw new RuntimeException("ملف العرض غير موجود: " . $view_path);
     }
 
     ob_start();
-    include $view_path;
+    include $realPath;
     return ob_get_clean();
 }
 
