@@ -597,7 +597,6 @@ $year = (int)date('Y');
     });
   </script>
 
-
   <!-- Glossary tooltip styles & behavior -->
   <style>
     .gdy-glossary-term{

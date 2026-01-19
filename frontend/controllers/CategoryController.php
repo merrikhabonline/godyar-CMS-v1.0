@@ -285,7 +285,6 @@ if ($sort === 'popular') {
     $orderSql = " ORDER BY COALESCE(n.views, 0) DESC, n.published_at DESC, n.id DESC ";
 }
 
-
 try {
     $newsTableExists = gdy_db_stmt_table_exists($pdo, 'news')->fetch();
     if ($newsTableExists) {

@@ -143,7 +143,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tags = implode(', ', array_slice($words, 0, 6));
     }
 
-
     $publish_at = trim((string)($_POST['publish_at'] ?? ''));
     $publish_at_db = gdy_dt_local_to_sql($publish_at);
 
@@ -427,7 +426,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 error_log('[IndexNow] create ping failed: ' . $e->getMessage());
             }
 
-
             try {
                 gdy_sync_news_tags($pdo, $newsId, (string)($tags_input ?? ''));
             } catch (Throwable $e) {
@@ -446,8 +444,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $root = dirname(__DIR__, 2);
 gdy_unlink($root . '/cache/sitemap.xml');
 gdy_unlink($root . '/cache/rss.xml');
-
-
 
             header('Location: edit.php?id=' . $newsId . '&created=1');
             exit;
@@ -532,7 +528,6 @@ html, body { overflow-x: hidden; }
 .gdy-internal-links .results a { display:block; padding:.45rem .55rem; border-radius: 10px; border:1px solid rgba(148,163,184,.18); margin-top:.4rem; color: rgba(226,232,240,.95); text-decoration:none; }
 .gdy-internal-links .results a:hover { background: rgba(148,163,184,.12); }
 .gdy-internal-links .results .meta { font-size:.78rem; color: rgba(148,163,184,.95); margin-top:.15rem; direction:ltr; text-align:left; }
-
 
 </style>
 
@@ -630,7 +625,6 @@ html, body { overflow-x: hidden; }
                   </div>
                   <div class="results mt-2" id="internal-links-results"></div>
                 </div>
-
 
                 <div class="form-text"><?= h(__('t_bba37921e9', 'يمكن ربط هذا الحقل لاحقاً بمحرر متقدم WYSIWYG.')) ?></div>
               </div>
@@ -796,7 +790,6 @@ html, body { overflow-x: hidden; }
             </div>
           </div>
 
-
           <!-- Professional: Pre-publish Checklist -->
           <div class="gdy-card mt-3" id="prepublish-checklist-card">
             <div class="gdy-card-header">
@@ -833,7 +826,6 @@ html, body { overflow-x: hidden; }
               <div class="form-text mt-2"><?= h(__('t_og_hint','هذه معاينة تقريبية لكيف سيظهر الرابط عند المشاركة في واتساب/فيسبوك. الشكل النهائي يختلف حسب المنصة.')) ?></div>
             </div>
           </div>
-
 
           <div class="gdy-card-header mt-3">
             <div class="small text-muted">
@@ -1308,8 +1300,6 @@ document.addEventListener('DOMContentLoaded', function() {
   <iframe id="gdy-media-frame" src="../media/picker.php?target=content" style="width:100%;height:calc(90vh - 54px);border:0;"></iframe>
 </div>
 
-
 <!-- Editor initialized by /admin/assets/editor/gdy-editor.js -->
-
 
 <?php require_once __DIR__ . '/../layout/footer.php'; ?>

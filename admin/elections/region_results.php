@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 // admin/elections/region_results.php — نتائج ولاية/منطقة معينة في تغطية انتخابية
 

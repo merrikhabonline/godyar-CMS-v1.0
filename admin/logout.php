@@ -1,14 +1,12 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/_role_guard.php';
 require_once __DIR__ . '/../includes/bootstrap.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
     gdy_session_start();
 }
-
 
 // ✅ Audit log
 if (function_exists('gody_audit_log')) {

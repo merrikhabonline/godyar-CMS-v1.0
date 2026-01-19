@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const sidebarSearch = document.getElementById('sidebarSearch');
     const searchResults = document.getElementById('searchResults');
 
-    function clearChildren(el){ while(el && el.firstChild) el.removeChild(el.firstChild); }
+    function clearChildren(el){ while(el?.firstChild) el.removeChild(el.firstChild); }
     function safeSameOriginHref(href){
         try{ const u=new URL(href, window.location.origin); return (u.origin===window.location.origin) ? (u.pathname+u.search+u.hash) : '#'; }catch(e){ return '#'; }
     }
@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if(i < t.length) container.appendChild(document.createTextNode(t.slice(i)));
     }
-
 
     // تهيئة بيانات البحث
     const menuItems = Array.from(document.querySelectorAll('.sidebar-item-card')).map(item => {
@@ -186,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             searchResults.style.display = 'block';
         }
-
 
         // التنقل باللوحة
         sidebarSearch.addEventListener('keydown', function(e) {

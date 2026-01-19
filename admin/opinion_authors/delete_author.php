@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 // admin/opinion_authors/delete_author.php
 // حذف كاتب رأي مع التحقق من عدم وجود مقالات مرتبطة به

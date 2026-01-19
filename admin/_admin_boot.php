@@ -2,7 +2,6 @@
 // admin/_admin_boot.php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/_admin_guard.php';
 // Bootstrap مشترك لكل صفحات لوحة التحكم
 require_once __DIR__ . '/../includes/bootstrap.php';

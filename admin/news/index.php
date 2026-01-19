@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 // GDY_BUILD: v9
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 // godyar/admin/news/index.php — إدارة الأخبار (قائمة)
 
@@ -16,7 +15,6 @@ if (!Auth::isLoggedIn()) {
     header('Location: ../login.php');
     exit;
 }
-
 
 // تحديد نوع المستخدم
 $isWriter = Auth::isWriter();
@@ -59,7 +57,6 @@ $inContent  = ((int)($_GET['in_content'] ?? 0) === 1);
 $noImage    = ((int)($_GET['no_image'] ?? 0) === 1);
 $noDesc     = ((int)($_GET['no_desc'] ?? 0) === 1);
 $noKeywords = ((int)($_GET['no_keywords'] ?? 0) === 1);
-
 
 // تحقق بسيط من تنسيق التاريخ
 $dateRe = '/^\d{4}-\d{2}-\d{2}$/';
@@ -128,7 +125,6 @@ try {
 } catch (Throwable $e) {
     error_log('[Admin News] stats: ' . $e->getMessage());
 }
-
 
 // قائمة التصنيفات (للفلترة)
 $categories = [];
@@ -201,7 +197,6 @@ if ($categoryId > 0) {
     $params[':cid'] = (string)$categoryId;
 }
 
-
 if ($noImage) {
     $where .= " AND (n.image IS NULL OR n.image = '')";
 }
@@ -211,7 +206,6 @@ if ($noDesc) {
 if ($noKeywords) {
     $where .= " AND (n.seo_keywords IS NULL OR n.seo_keywords = '')";
 }
-
 
 if ($dateFrom !== '') {
     $where .= " AND DATE(n.created_at) >= :df";
@@ -462,7 +456,6 @@ html, body {
 .glass-card .card-body {
   background: transparent;
 }
-
 
 /* تحديد جماعي */
 .table-news tbody tr.is-selected { background: rgba(14,165,233,0.10) !important; }

@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/_role_guard.php';
 // admin/login.php — شاشة تسجيل دخول احترافية مع بعض ميزات الأمان
 
@@ -15,7 +14,6 @@ require_once __DIR__ . '/../includes/rate_limit.php';
 // i18n
 $__i18n = __DIR__ . '/i18n.php';
 if (is_file($__i18n)) { require_once $__i18n; }
-
 
 // هيلبر للهروب من الـ XSS
 if (!function_exists('h')) {
@@ -87,7 +85,6 @@ if (!$user || !in_array($role, $allowedRoles, true)) {
     throw new Exception(__('t_81ba8a03a2', 'بيانات الدخول غير صحيحة أو لا تملك صلاحية الدخول للوحة التحكم.'));
 }
 
-
         if (!empty($user['status']) && $user['status'] !== 'active') {
             throw new Exception(__('t_aadb50b501', 'حسابك غير مفعّل، الرجاء التواصل مع الإدارة.'));
         }
@@ -100,11 +97,21 @@ if (!$user || !in_array($role, $allowedRoles, true)) {
 
         $ok = false;
 
-        // دعم md5 قديم باستخدام preg_match
+        // سياسة الأمان: رفض كلمات المرور المخزنة بـ MD5/SHA1 أو كنص واضح.
         if (strlen($hash) === 32 && preg_match('/^[0-9a-f]{32}$/i', $hash)) {
-            $ok = (md5($password) === strtolower($hash));
-        } else {
-            $ok = password_verify($password, $hash);
+            throw new Exception('يرجى تحديث كلمة المرور. استخدم إعادة تعيين كلمة المرور أو تواصل مع الإدارة.');
+        }
+
+        if (is_string($hash) && $hash !== '' && password_verify($pass, $hash)) {
+            $ok = true;
+            // ترقية التجزئة إن لزم.
+            if (password_needs_rehash($hash, PASSWORD_DEFAULT)) {
+                $newHash = password_hash($pass, PASSWORD_DEFAULT);
+                $userId = (int)($user['id'] ?? 0);
+                if ($userId > 0) {
+                    $pdo->prepare('UPDATE users SET password_hash = :h WHERE id = :id')->execute([':h' => $newHash, ':id' => $userId]);
+                }
+            }
         }
 
         if (!$ok) {
@@ -155,7 +162,6 @@ if (!$user || !in_array($role, $allowedRoles, true)) {
         } catch (\Throwable $e) {
             // ignore
         }
-
 
         // خيار __('t_06b29113eb', "تذكر البريد")
         if ($remember) {

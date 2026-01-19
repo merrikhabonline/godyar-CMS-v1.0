@@ -43,7 +43,6 @@ All notable changes to this GitHub release are documented here.
 - Added `assets/css/compat.css` to the loaded stylesheet stack (so compatibility rules apply site-wide).
   **Files:** `frontend/views/partials/header.php`, `header.php`
 
-
 ## 2026-01-17 Schema Compatibility Patch (v1.11-git-clean-r9)
 
 ### Users schema / توافق جدول المستخدمين
@@ -56,14 +55,12 @@ All notable changes to this GitHub release are documented here.
 - Fixed: comments endpoints no longer SELECT `u.display_name` when the column is absent (schema-safe COALESCE expression built dynamically).
   **Files:** `frontend/ajax/comments.php`, `frontend/api/comments.php`, `ajax/comments.php`
 
-
 ## 2026-01-17 Hotfix Patch (v1.11-git-clean-r10)
 
 ### Users schema / توافق جدول المستخدمين
 - Hardened user creation against inconsistent schema detection in some hosting environments (caching/multiple connections):
   - If an `INSERT INTO users` fails with SQLSTATE `42S22` referencing `display_name`, the code automatically retries the insert **without** `display_name`.
   **Files:** `register.php`, `oauth/facebook_callback.php`, `oauth/github_callback.php`, `oauth/facebook/callback/facebook_callback.php`
-
 
 ## 2026-01-17 Frontend Lint & Headers Patch (v1.11-git-clean-r11)
 
@@ -83,7 +80,6 @@ All notable changes to this GitHub release are documented here.
 - Language cookies: emitted RFC-compliant `Expires` attribute (space-separated) to satisfy strict linters, and added `HttpOnly`.
   **Files:** `includes/lang_prefix.php`, `includes/lang.php`, `includes/i18n.php`, `admin/i18n.php`, `admin/includes/lang.php`
 
-
 ## 2026-01-17 Deployment Compatibility Hotfix (v1.11-git-clean-r12)
 
 ### Users schema / توافق جدول المستخدمين
@@ -95,15 +91,12 @@ All notable changes to this GitHub release are documented here.
 - Fixed: `assets/css/compat.css` was shipped with restrictive permissions, causing servers to return an HTML error page (wrong MIME type) and strict browsers to refuse the stylesheet.
   **Files:** `assets/css/compat.css`
 
-
 ## 2026-01-17 Users Schema Hotfix (v1.11-git-clean-r13)
 
 ### Users schema / توافق جدول المستخدمين
 - Fixed: some PDO drivers return a generic error code (e.g., `HY000`) while the message still contains `SQLSTATE[42S22]`, which prevented the "retry without `display_name`" logic from triggering.
   - The retry condition now keys off the exception message (presence of `display_name` + `Unknown column` or `42S22`) instead of relying on `getCode()`.
   **Files:** `register.php`, `oauth/github_callback.php`, `oauth/facebook_callback.php`, `oauth/facebook/callback/facebook_callback.php`
-
-
 
 ## 2026-01-17 Display Name Validation Patch (v1.11-git-clean-r14)
 
@@ -113,7 +106,6 @@ All notable changes to this GitHub release are documented here.
   - Enforced the exact allowed character set: letters/numbers/spaces and `. _ - '`.
   - OAuth: sanitize provider display names to the allowed character set to avoid validation failures.
   **Files:** `includes/bootstrap.php`, `profile.php`, `register.php`, `oauth/github_callback.php`, `oauth/facebook_callback.php`, `oauth/facebook/callback/facebook_callback.php`
-
 
 ## 2026-01-18 Admin UI Icons Patch (v1.11-git-clean-r15)
 
@@ -226,7 +218,6 @@ All notable changes to this GitHub release are documented here.
 - `frontend/controllers/ArchiveController.php`
 - `frontend/controllers/SearchController.php`
 - `frontend/controllers/AuthorController.php`
-
 
 ## 2026-01-18 Security/Static-Analysis Patch (v1.11-git-clean-r24)
 

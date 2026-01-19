@@ -1,8 +1,6 @@
 <?php
 namespace Godyar;
 
-
-
 require_once dirname(__DIR__) . '/env.php';
 
 class DB {

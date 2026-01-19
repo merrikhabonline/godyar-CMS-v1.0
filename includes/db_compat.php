@@ -230,7 +230,6 @@ if (!function_exists('gdy_db_upsert')) {
     }
 }
 
-
 if (!function_exists('gdy_db_stmt_table_exists')) {
     /**
      * Return a PDOStatement compatible with legacy patterns that used table-existence checks.

@@ -561,7 +561,6 @@ require_once __DIR__ . '/../layout/sidebar.php';
   </div>
 </div>
 
-
 <!-- Preview Modal -->
 <div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-scrollable">
@@ -614,7 +613,6 @@ require_once __DIR__ . '/../layout/sidebar.php';
     });
   });
 
-
   // Preview modal
   var modalEl = document.getElementById('previewModal');
   var modalTitleEl = document.getElementById('previewModalTitle');
@@ -660,7 +658,6 @@ require_once __DIR__ . '/../layout/sidebar.php';
         });
     });
   });
-
 
   updateCount();
 })();

@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 // admin/pages/view.php
 
@@ -97,7 +96,6 @@ require_once __DIR__ . '/../layout/sidebar.php';
         <?= nl2br(h($row['content'])) ?>
       </div>
     </div>
-  </div>
   </div>
 </div>
 <?php require_once __DIR__ . '/../layout/footer.php'; ?>

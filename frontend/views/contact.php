@@ -7,7 +7,6 @@ if (!function_exists('h')) {
     }
 }
 
-
 // نتوقع وجود المتغيرات: $page, $pageNotFound, $baseUrl, $themeClass, ...
 $slug = $page['slug'] ?? '';
 ?>

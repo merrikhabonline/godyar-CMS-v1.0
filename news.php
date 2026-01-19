@@ -682,7 +682,6 @@ endif;
                 <span>نسخ الرابط</span>
               </button>
             </div>
-            </div>
 
             <div class="gdy-article-body">
               <?php

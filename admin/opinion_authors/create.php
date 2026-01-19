@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 require_once __DIR__ . '/../../includes/bootstrap.php';
 require_once __DIR__ . '/../../includes/auth.php';
@@ -100,7 +99,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data['page_title'] = __('t_e94800687a', 'مقالات ') . $data['name'];
     }
 
-
     // التحقق من الصحة
     if (empty($data['name'])) {
         $errors[] = __('t_4c5bf14294', 'اسم الكاتب مطلوب.');
@@ -114,7 +112,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (mb_strlen($data['page_title']) > 255) {
         $errors[] = __('t_0b5dad2a74', 'اسم الصفحة يجب أن لا يتجاوز 255 حرفاً.');
     }
-
 
     if (mb_strlen($data['bio']) > 1000) {
         $errors[] = __('t_33e6e5920e', 'السيرة الذاتية يجب أن لا تتجاوز 1000 حرف.');
@@ -224,7 +221,6 @@ require_once __DIR__ . '/../layout/app_start.php';
 .gdy-page-header{
     margin-bottom:0.75rem;
 }
-
 
 .gdy-form-card {
     background: rgba(15, 23, 42, 0.8);

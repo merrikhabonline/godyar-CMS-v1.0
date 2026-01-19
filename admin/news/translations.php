@@ -197,7 +197,6 @@ require __DIR__ . '/../layout/app_start.php';
 
 <div class="row g-3">
 
-
     <div class="col-12 col-lg-7">
       <div class="card shadow-sm">
         <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">

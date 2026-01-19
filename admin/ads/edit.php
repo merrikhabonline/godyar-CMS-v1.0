@@ -44,9 +44,6 @@ if (!function_exists('gdy_ads_dt')) {
     }
 }
 
-
-
-
 require_once __DIR__ . '/../_admin_guard.php';
 require_once __DIR__ . '/../../includes/bootstrap.php';
 
@@ -86,7 +83,6 @@ if (!$pdo instanceof PDO) {
     die(__('t_acc3fac25f', '❌ لا يوجد اتصال بقاعدة البيانات.'));
 }
 $adsMap = gdy_ads_schema_map($pdo);
-
 
 $id = isset($_GET['id']) && ctype_digit((string)$_GET['id']) ? (int)$_GET['id'] : 0;
 if ($id <= 0) {
@@ -202,7 +198,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql = "UPDATE ads SET " . implode(', ', $set) . " WHERE `{$colId}` = :id LIMIT 1";
             $stmt = $pdo->prepare($sql);
             $stmt->execute($params);
-
 
             $_SESSION['success_message'] = __('t_16e9a82b3b', 'تم حفظ التعديلات بنجاح.');
             header('Location: index.php');

@@ -52,7 +52,6 @@ if (!in_array($adminTheme, ['blue','red','green','brown'], true)) {
     $adminTheme = 'blue';
 }
 
-
 if (!isset($pageTitle)) {
     $pageTitle = __('dashboard', [], 'لوحة التحكم');
 }
@@ -83,7 +82,6 @@ $bootstrapCss = is_file($localCssFile)
 $bootstrapJs = is_file($localJsFile)
   ? ($___base . '/assets/vendor/bootstrap/js/' . $jsFileName)
   : '/assets/vendor/bootstrap/js/' . $jsFileName;
-
 
 // Ensure admin UI CSS is loaded (even when pages include header.php directly).
 if (!isset($pageHead)) { $pageHead = ''; }
@@ -128,7 +126,6 @@ if (strpos((string)$pageHead, 'admin-ui.css') === false) {
     <link rel="icon" type="image/png" sizes="16x16" href="<?= h($fav16) ?>">
     <link rel="icon" type="image/png" sizes="32x32" href="<?= h($fav32) ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="<?= h($apple) ?>">
-
 
     <?php
       $jsonFlags = JSON_UNESCAPED_UNICODE
@@ -178,9 +175,6 @@ try {
     }
 } catch (Throwable $e) { /* ignore */ }
 ?>
-
-
-
 
 <?php // Global CSRF token for admin AJAX (Saved Filters, etc.) ?>
 <?php if (function_exists('csrf_token')): ?>

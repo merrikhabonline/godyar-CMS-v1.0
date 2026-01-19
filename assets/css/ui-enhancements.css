@@ -132,7 +132,6 @@ html.theme-dark .gdy-pill{
 /* تحسين تباين النص داخل عناصر شائعة */
 .gdy-pill i{ margin-inline-end: .4rem; }
 
-
 /* ===== Sidebar tabs ===== */
 .gdy-sidecard--tabs .gdy-sidecard-header{
   display:flex;
@@ -246,7 +245,6 @@ html.theme-dark .gdy-skeleton{ background: rgba(255,255,255,.08); }
 
 /* TTS status */
 .gdy-tts-status{display:inline-flex;align-items:center;justify-content:center;min-width:54px;margin-inline-start:8px;font-weight:800;font-size:12px;color:rgba(2,6,23,.7);}html.theme-dark .gdy-tts-status{color:rgba(255,255,255,.75);} 
-
 
 /* =========================
    Mobile Tab Bar (PWA-style)
@@ -384,7 +382,6 @@ html[data-theme="dark"] .gdy-sheet__item{ background: rgba(255,255,255,.08); }
   }
 }
 
-
 /* Mobile App-like bottom navigation + search overlay (v2) */
 .gdy-tabbar{
   gap: 0;
@@ -513,8 +510,6 @@ body.gdy-search-open{
   overflow: hidden;
 }
 
-
-
 .gdy-tabbar{
   --gdy-tab-fg: rgba(15,23,42,.95);
   color: var(--gdy-tab-fg) !important;
@@ -538,7 +533,6 @@ body.theme-dark .gdy-tabbar{
 html[data-theme="dark"] .gdy-tabbar .gdy-tab span{
   text-shadow: 0 1px 0 rgba(0,0,0,.25);
 }
-
 
 /* =========================================================
    Bottom Bar: Strong contrast + force readable labels/icons
@@ -591,8 +585,6 @@ html[data-theme="dark"] .gdy-tabbar .gdy-tab span{
     text-shadow: 0 1px 0 rgba(0,0,0,.35);
   }
 }
-
-
 
 /* ==============================
    Push prompt (mobile only)
@@ -652,7 +644,6 @@ body.theme-dark .gdy-btn-primary{
   .gdy-push-toast{ display:none !important; }
 }
 
-
 /* ================================
    Godyar SVG Icons (NoCDN)
    ================================ */
@@ -669,7 +660,6 @@ body.theme-dark .gdy-btn-primary{
 .gdy-social-icon .gdy-icon{ width: 18px; height: 18px; }
 
 .gdy-pill .gdy-icon{ margin-inline-end: .4rem; }
-
 
 /* =====================================
    Utilities (replace inline styles)

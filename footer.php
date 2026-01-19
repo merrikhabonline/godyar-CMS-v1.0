@@ -685,7 +685,6 @@ $_gdy_navBaseUrl = rtrim($_gdy_baseUrl, '/') . '/' . trim($_gdy_lang, '/');
   })();
   </script>
 
-
 <?php
   $baseUrl = function_exists('base_url') ? rtrim((string)base_url(), '/') : '';
   
@@ -761,7 +760,6 @@ $_gdy_navBaseUrl = rtrim($_gdy_baseUrl, '/') . '/' . trim($_gdy_lang, '/');
   </button>
 </nav>
 
-
 <!-- Mobile Search Overlay -->
 <div class="gdy-search" id="gdyMobileSearch" hidden>
   <div class="gdy-search__top">
@@ -797,7 +795,6 @@ $_gdy_navBaseUrl = rtrim($_gdy_baseUrl, '/') . '/' . trim($_gdy_lang, '/');
 <script src="<?= h($baseUrl) ?>/assets/js/ui-enhancements.js" defer></script>
 <script src="<?= h($baseUrl) ?>/assets/js/lazy-images.js" defer></script>
 <script src="<?= h($baseUrl) ?>/assets/js/modules/newsletter_subscribe.js" defer></script>
-
 
 <!-- Mobile push enable prompt (shows only if push enabled + no subscription) -->
 <div id="gdy-push-toast" class="gdy-push-toast" role="dialog" aria-live="polite" aria-label="Push Prompt">

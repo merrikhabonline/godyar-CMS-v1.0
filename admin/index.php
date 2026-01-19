@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/_admin_guard.php';
 // admin/index.php — لوحة تحكم Godyar
 
@@ -10,8 +9,6 @@ require_once __DIR__ . '/../includes/bootstrap.php';
 if (session_status() !== PHP_SESSION_ACTIVE) {
     gdy_session_start();
 }
-
-
 
 require_once __DIR__ . '/../includes/auth.php';
 
@@ -393,7 +390,6 @@ foreach ($visitAnalytics['sources'] as $k => $v) {
     $visitSourcePct[$k] = $visitTotalSources > 0 ? round(($v / $visitTotalSources) * 100) : 0;
 }
 
-
 $currentPage = 'dashboard';
 $pageTitle   = __('t_a06ee671f4', 'لوحة التحكم');
 
@@ -652,7 +648,6 @@ body {
   box-shadow: 0 16px 35px rgba(15,23,42,0.95);
 }
 
-
 /* ✅ بطاقة بدون إطار (لتنسيق تحليلات الزيارات اليوم بدون إطار خارجي) */
 .gdy-content-card--frameless{
   background: transparent !important;
@@ -875,7 +870,6 @@ html[dir="rtl"] .gdy-activity-bars{
   }
 }
 
-
 /* ===== Analytics cards ===== */
 .gdy-analytics-grid{
   display: grid;
@@ -963,7 +957,6 @@ html[dir="rtl"] .gdy-activity-bars{
   overflow-wrap: anywhere;
 }
 
-
 .gdy-kpi{
   display:flex;
   align-items:center;
@@ -1031,8 +1024,6 @@ html[dir="rtl"] .gdy-activity-bars{
 }
 .gdy-top-news a{ color: #e5e7eb; }
 .gdy-top-news a:hover{ color: #fff; text-decoration: underline; }
-
-
 
 /* ✅ إصلاح تشوه بطاقات تحليلات الزيارات على الشاشات الصغيرة/بدون viewport صحيح
    - يجعل الشبكة مرنة مع حد أدنى للعرض، ويمنع انضغاط البطاقات إلى أعمدة ضيقة

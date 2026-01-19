@@ -41,7 +41,6 @@ require_once __DIR__ . '/../layout/app_start.php';
       </div>
     </div>
 
-
 </div>
 
 <?php require_once __DIR__ . '/../layout/app_end.php'; ?>

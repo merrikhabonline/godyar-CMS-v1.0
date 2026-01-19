@@ -138,7 +138,7 @@ if (!function_exists('__')) {
  *  - __('t_xxx', 'Arabic fallback text')   // backward compatible with earlier UI pass
  *  - __('t_xxx', 'Arabic fallback', ['name' => 'Ali'])
  */
-function __(string $key, $varsOrFallback = [] , array $vars2 = []): string
+function __(string $key, $varsOrFallback = [], array $vars2 = []): string
 {
     $dict = gdy_locale_dict();
 
@@ -162,20 +162,21 @@ function __(string $key, $varsOrFallback = [] , array $vars2 = []): string
     }
     return (string)$text;
 }
+
 }
 
 if (!function_exists('gdy_lang_url')) {
     function gdy_lang_url(string $lang): string
     {
         $lang = strtolower(trim($lang));
-                if (!preg_match('/^[a-z0-9_-]{2,15}$/', $lang)) {
-            return [];
+        if (!preg_match('/^[a-z0-9_-]{2,15}$/', $lang)) {
+            return '';
         }
         $langDir = realpath(ROOT_PATH . '/languages');
         if ($langDir === false) {
-            return [];
+            return '';
         }
-if (!in_array($lang, GDY_SUPPORTED_LANGS, true)) {
+        if (!in_array($lang, GDY_SUPPORTED_LANGS, true)) {
             $lang = 'ar';
         }
 

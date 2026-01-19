@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 // admin/controllers/DashboardController.php
 // Controller مبسط يعيد توجيه أي استدعاء للوحة التحكم إلى index.php الحديث

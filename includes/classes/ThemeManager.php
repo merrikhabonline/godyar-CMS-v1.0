@@ -14,7 +14,6 @@ if (!defined('APP_BOOT')) {
     }
     if (!defined('BASE_PATH')) define('BASE_PATH', $__root);
 }
-<?php
 
 class ThemeManager {
     private $db;
@@ -185,4 +184,3 @@ class ThemeManager {
         return $this->currentTheme;
     }
 }
-?>

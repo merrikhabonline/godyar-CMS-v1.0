@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/includes/bootstrap.php';
 
-
-
 // CSRF protection
 if (function_exists('csrf_verify_or_die')) { csrf_verify_or_die(); }
 if (session_status() !== PHP_SESSION_ACTIVE) {

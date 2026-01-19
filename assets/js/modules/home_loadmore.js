@@ -38,12 +38,12 @@
 
   
   function cardNode(item, badgeText) {
-    const id = item && item.id ? item.id : 0;
-    const title = (item && item.title) ? String(item.title) : '';
-    const excerpt = (item && item.excerpt) ? String(item.excerpt).trim() : '';
-    const img = (item && item.image) ? resolveUrl(item.image) : defaultThumb();
+    const id = item?.id ? item.id : 0;
+    const title = item?.title ? String(item.title) : '';
+    const excerpt = item?.excerpt ? String(item.excerpt).trim() : '';
+    const img = item?.image ? resolveUrl(item.image) : defaultThumb();
     const url = newsUrl(id);
-    const date = (item && item.date) ? String(item.date) : '';
+    const date = item?.date ? String(item.date) : '';
 
     const article = document.createElement('article');
     article.className = 'hm-card';
@@ -96,7 +96,6 @@
     article.appendChild(body);
     return article;
   }
-
 
   async function fetchJSON(url) {
     const r = await fetch(url, { credentials: 'same-origin', headers: { 'Accept': 'application/json' } });

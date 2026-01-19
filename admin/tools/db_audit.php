@@ -47,7 +47,6 @@ function h($v): string {
     return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
 }
 
-
 /**
  * Helper: get tables list
  * @return string[]
@@ -58,7 +57,6 @@ function db_tables(PDO $pdo): array {
     $stmt = $pdo->query($sql);
     return $stmt ? ($stmt->fetchAll(PDO::FETCH_COLUMN, 0) ?: []) : [];
 }
-
 
 /**
  * Helper: get columns list for a table
@@ -71,7 +69,6 @@ function db_columns(PDO $pdo, string $table): array {
     $st->execute([':t' => $table]);
     return $st->fetchAll(PDO::FETCH_COLUMN, 0) ?: [];
 }
-
 
 /**
  * Helper: get index info for a table
@@ -100,7 +97,6 @@ function db_indexes(PDO $pdo, string $table): array {
     $st->execute([':t' => $table]);
     return $st->fetchAll(PDO::FETCH_ASSOC) ?: [];
 }
-
 
 /**
  * Helper: get table status (Engine/Collation/Rows)

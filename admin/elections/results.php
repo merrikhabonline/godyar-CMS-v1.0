@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 // admin/elections/results.php — إدارة النتائج العامة للتغطية (ملخص الأحزاب)
 

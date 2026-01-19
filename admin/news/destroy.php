@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 // حذف خبر نهائياً من قاعدة البيانات (من سلة المحذوفات)
 
@@ -23,7 +22,6 @@ if (in_array($role, ['writer','author'], true)) {
     header('Location: index.php?error=forbidden');
     exit;
 }
-
 
 Auth::requirePermission('posts.delete');
 

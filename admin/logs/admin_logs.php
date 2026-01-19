@@ -102,7 +102,6 @@ function format_details(?string $details): string {
       <form method="get" class="row g-3">
     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(generate_csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
 
-
         <div class="col-md-4">
           <label class="form-label">المستخدم</label>
           <select name="user_id" class="form-select">

@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 require_once __DIR__ . '/../../includes/bootstrap.php';
 require_once __DIR__ . '/../../includes/indexnow.php';
@@ -37,7 +36,6 @@ Auth::requirePermission('posts.delete');
         exit;
     }
 }
-
 
 // 🚫 الكاتب/المؤلف لا يملك صلاحية الحذف
 $role = (string)($_SESSION['user']['role'] ?? 'guest');

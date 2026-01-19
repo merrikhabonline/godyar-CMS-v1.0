@@ -6,7 +6,7 @@
 (function () {
   'use strict';
 
-  function clearChildren(el){ while(el && el.firstChild) el.removeChild(el.firstChild); }
+  function clearChildren(el){ while(el?.firstChild) el.removeChild(el.firstChild); }
   function safeSameOriginHref(href){
     try{ const u=new URL(String(href||''), window.location.origin); return (u.origin===window.location.origin) ? (u.pathname+u.search+u.hash) : '#'; }catch(e){ return '#'; }
   }
@@ -93,8 +93,8 @@
 
   function authInfo(){
     const b = document.body;
-    const auth = b && b.dataset ? (b.dataset.auth === '1') : false;
-    const uid = b && b.dataset ? parseInt(b.dataset.userId || '0', 10) : 0;
+    const auth = b.dataset?.auth === '1';
+    const uid = parseInt(b.dataset?.userId || '0', 10);
     return {auth, uid};
   }
 
@@ -134,7 +134,7 @@
         body: JSON.stringify({news_ids: ids})
       });
       const j = await r.json();
-      if(j && j.ok){
+      if(j?.ok){
         localStorage.setItem(lastKey, String(uid));
         toast('تمت مزامنة المحفوظات');
       }
@@ -227,7 +227,7 @@
     if(!btn) return;
 
     btn.addEventListener('click', async function(){
-      const url = (location && location.href) ? location.href : '';
+      const url = location?.href ? location.href : '';
       const titleEl = qs('h1') || qs('title');
       const title = titleEl ? (titleEl.textContent || document.title || '') : (document.title || '');
       if(navigator.share){
@@ -260,7 +260,7 @@
     const {auth} = authInfo();
     if(auth){
       getJson(api('/api/bookmarks/status?news_id=' + encodeURIComponent(newsId)))
-        .then(j => { if(j && j.ok) setBookmarkBtnState(btn, !!j.saved); })
+        .then(j => { if(j?.ok) setBookmarkBtnState(btn, !!j.saved); })
         .catch(()=>{ setBookmarkBtnState(btn, hasLocal(newsId)); });
     } else {
       setBookmarkBtnState(btn, hasLocal(newsId));
@@ -282,7 +282,7 @@
       if(auth){
         try{
           const res = await postForm(api('/api/bookmarks/toggle'), { news_id: String(newsId), action: 'toggle' });
-          if(res && res.ok){
+          if(res?.ok){
             const saved = (res.status === 'added');
             setBookmarkBtnState(btn, saved);
             if(saved) upsertLocal(item); else removeLocal(newsId);
@@ -412,9 +412,9 @@
 
   function findNewsIdFromPage(){
     const btn = qs('#gdyBookmark');
-    if(btn && btn.dataset.newsId) return parseInt(btn.dataset.newsId, 10) || 0;
+    if(btn?.dataset.newsId) return parseInt(btn.dataset.newsId, 10) || 0;
     const any = qs('[data-news-id]');
-    if(any && any.getAttribute('data-news-id')) return parseInt(any.getAttribute('data-news-id'), 10) || 0;
+    if(any?.getAttribute('data-news-id')) return parseInt(any.getAttribute('data-news-id'), 10) || 0;
     return 0;
   }
 

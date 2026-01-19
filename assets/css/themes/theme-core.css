@@ -64,7 +64,6 @@
   --newsletter-bg: rgba(255,255,255,.92);
   --newsletter-border: rgba(var(--primary-rgb), .35);
 
-
   /* Typography / surfaces (خفيف - consistent across pages) */
   --text-strong: #000000;
   --text: #111111;
@@ -419,7 +418,6 @@ a:hover{
   color: #0f172a !important;
 }
 
-
 /* -----------------------------------------------------
    Extra bindings to cover all frontend pages
 ----------------------------------------------------- */
@@ -509,8 +507,6 @@ a:hover{
   color: var(--badge-text);
   border-color: var(--badge-border);
 }
-
-
 
 /* ============================================================
    Pro UI System (Light identity)
@@ -626,7 +622,6 @@ a.title:hover, .post-title a:hover, .news-title a:hover, .article-title a:hover{
 .brand-title, .site-name, .logo-text{
   text-shadow: none !important;
 }
-
 
 /* ===== Force-color utilities to follow theme (works for Bootstrap 4/5 and custom inline classes) ===== */
 .text-primary, a.text-primary, .link-primary { color: var(--primary) !important; }

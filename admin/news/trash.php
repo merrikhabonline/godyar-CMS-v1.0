@@ -62,7 +62,6 @@ if ($search !== '') {
     }
 }
 
-
 if ($noImage) {
     $where .= " AND (image IS NULL OR image = '')";
 }

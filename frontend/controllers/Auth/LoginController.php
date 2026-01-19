@@ -94,30 +94,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $hashNew = (string)($u['password_hash'] ?? '');
         $hashOld = (string)($u['password'] ?? '');
-        $ok      = false;
 
-        // أولوية للحقل الحديث password_hash إن كان مستخدمًا
-        if ($hashNew !== '') {
-            if (strlen($hashNew) === 32 && preg_match('/^[0-9a-f]{32}$/i', $hashNew)) {
-                // دعم MD5 قديم
-                $ok = (md5($password) === strtolower($hashNew));
-            } else {
-                $ok = password_verify($password, $hashNew);
-            }
-        } elseif ($hashOld !== '') {
-            // توافق مع النسخ الأقدم التي تستخدم العمود password
-            if (password_verify($password, $hashOld)) {
-                $ok = true;
-            } elseif (strlen($hashOld) === 32 && preg_match('/^[0-9a-f]{32}$/i', $hashOld)) {
-                $ok = (md5($password) === strtolower($hashOld));
-            } else {
-                // تخزين نصّي مباشر (للتوافق مع نسخ قديمة)
-                $ok = hash_equals($hashOld, $password);
-            }
+        // سياسة الأمان: نقبل فقط password_hash (bcrypt/argon) عبر password_verify.
+        // إذا كان لديك مستخدمون على نسخ قديمة (MD5/نصّي) يُفضّل تشغيل مسار ترقية/استعادة كلمة المرور.
+        $hashCandidate = $hashNew !== '' ? $hashNew : $hashOld;
+        if ($hashCandidate === '') {
+            throw new Exception('بيانات الدخول غير صحيحة.');
         }
 
+        $ok = password_verify($password, $hashCandidate);
         if (!$ok) {
             throw new Exception('بيانات الدخول غير صحيحة.');
+        }
+
+        // ترقية التجزئة إلى password_hash في حال لزم (وخاصة إذا كان المستخدم قادماً من عمود password القديم)
+        if (password_needs_rehash($hashCandidate, PASSWORD_DEFAULT)) {
+            $newHash = password_hash($password, PASSWORD_DEFAULT);
+            try {
+                $upd = $pdo->prepare("UPDATE users SET password_hash = :h WHERE id = :id");
+                $upd->execute([':h' => $newHash, ':id' => (int)$u['id']]);
+            } catch (Throwable $e) {
+                // لا نكسر تسجيل الدخول إذا فشلت الترقية
+            }
         }
 
         // نجاح الدخول → حفظ المستخدم في الجلسة (مع role حتى يتعرّف الهيدر على حالة الدخول)
@@ -133,16 +131,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
 
         // تذكّر البريد إن اختار المستخدم ذلك
+        // Cookie تذكر البريد: اجعلها آمنة (Secure/HttpOnly) + Path صحيح حتى عند التثبيت داخل مجلد.
+        $cookiePath = '/';
+        $parsedPath = parse_url((string)$baseUrl, PHP_URL_PATH);
+        if (is_string($parsedPath) && $parsedPath !== '') {
+            $cookiePath = rtrim($parsedPath, '/');
+            if ($cookiePath === '') {
+                $cookiePath = '/';
+            }
+        }
+        $secureCookie = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+
         if ($remember) {
-            setcookie('front_remember_email', $email, [
-                'expires'  => time() + (30 * 24 * 60 * 60),
-                'path'     => '/godyar',
-                'secure'   => !empty($_SERVER['HTTPS']),
-                'httponly' => false,
-                'samesite' => 'Lax',
-            ]);
+            if (PHP_VERSION_ID >= 70300) {
+                setcookie('front_remember_email', $email, [
+                    'expires'  => time() + (30 * 24 * 60 * 60),
+                    'path'     => $cookiePath,
+                    'secure'   => $secureCookie,
+                    'httponly' => true,
+                    'samesite' => 'Lax',
+                ]);
+            } else {
+                // Fallback signature (بدون SameSite)
+                setcookie('front_remember_email', $email, time() + (30 * 24 * 60 * 60), $cookiePath, '', $secureCookie, true);
+            }
         } else {
-            setcookie('front_remember_email', '', time() - 3600, '/godyar');
+            if (PHP_VERSION_ID >= 70300) {
+                setcookie('front_remember_email', '', [
+                    'expires'  => time() - 3600,
+                    'path'     => $cookiePath,
+                    'secure'   => $secureCookie,
+                    'httponly' => true,
+                    'samesite' => 'Lax',
+                ]);
+            } else {
+                setcookie('front_remember_email', '', time() - 3600, $cookiePath, '', $secureCookie, true);
+            }
         }
 
         // تنظيف CSRF بعد الاستخدام

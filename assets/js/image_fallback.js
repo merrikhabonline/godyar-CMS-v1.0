@@ -72,14 +72,12 @@
     var obs = new MutationObserver(function(muts){
       for(var i=0;i<muts.length;i++){
         var m = muts[i];
-        if(m.addedNodes && m.addedNodes.length){
+        if(m.addedNodes?.length){
           for(var j=0;j<m.addedNodes.length;j++){
             var n = m.addedNodes[j];
             if(!n || n.nodeType !== 1) continue;
             if(n.tagName === 'IMG') applyToImg(n);
-            if(n.querySelectorAll){
-              n.querySelectorAll('img[data-gdy-fallback-src], img[data-gdy-hide-onerror], img[data-gdy-show-onload]').forEach(applyToImg);
-            }
+            n.querySelectorAll?.('img[data-gdy-fallback-src], img[data-gdy-hide-onerror], img[data-gdy-show-onload]')?.forEach(applyToImg);
           }
         }
       }

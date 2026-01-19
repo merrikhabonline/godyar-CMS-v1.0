@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 // admin/opinion_authors/create_table.php
 // صفحة إنشاء جدول كُتّاب الرأي opinion_authors

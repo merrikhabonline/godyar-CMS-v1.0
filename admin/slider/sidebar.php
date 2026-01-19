@@ -2,7 +2,6 @@
 // admin/layout/sidebar.php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 if (!function_exists('h')) {
     function h($v): string
@@ -226,7 +225,6 @@ $userAvatar = $_SESSION['user']['avatar'] ?? null;
     </a>
   </div>
 </li>
-
 
           <li class="admin-sidebar__item">
             <div class="admin-sidebar__link-card <?= $currentPage === 'pages' ? 'is-active' : '' ?>"
@@ -664,7 +662,6 @@ $userAvatar = $_SESSION['user']['avatar'] ?? null;
   --gdy-sidebar-success: #22c55e;
   --gdy-sidebar-danger: #ef4444;
 }
-
 
 .admin-sidebar__section--quick .admin-sidebar__link-card {
   background: radial-gradient(circle at top left, rgba(45,212,191,.12), rgba(15,23,42,.98));

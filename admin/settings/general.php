@@ -232,7 +232,6 @@ $media_watermark_opacity = (int)settings_get('media.watermark.opacity', 35);
               <div class="form-text">يتم استخدام شعار الموقع المرفوع أعلاه كعلامة مائية. يفضل أن يكون PNG بخلفية شفافة.</div>
             </div>
           </div>
-          </div>
 </div>
 
           <div class="row">

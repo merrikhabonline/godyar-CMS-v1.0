@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 // admin/elections/index.php — إدارة الانتخابات (قائمة + إظهار/إخفاء/أرشفة)
 
@@ -95,7 +94,6 @@ try {
 } catch (Throwable $e) {
     // تجاهل إن فشل الاستعلام (لا يؤثر على الصفحة)
 }
-
 
 // فلاتر
 $statusFilter = isset($_GET['status']) ? (string)$_GET['status'] : '';
@@ -257,7 +255,6 @@ if (!function_exists('h')) {
 }
 
 $currentPageSlug = 'elections';
-
 
 // Professional unified admin shell
 $currentPage = 'elections';

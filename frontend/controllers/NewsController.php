@@ -114,7 +114,6 @@ if ($isPreviewRequested && !$isAdmin) {
     exit;
 }
 
-
 // ============= تحميل أقسام الهيدر من جدول categories ==========
 $headerCategories = [];
 
@@ -223,17 +222,14 @@ try {
                 if ($isNumeric && $id > 0) {
                     $where = '(n.id = :id OR n.slug = :slug)';
 
-
                     if (!$isPreviewRequested && $newsHasStatusColumn) {
                         $where .= " AND n.status = 'published'";
                     }
                 } else {
                     $where = 'n.slug = :slug';
 
-
                 if (!$isPreviewRequested && $newsHasStatusColumn) {
                     $where .= " AND n.status = 'published'";
-                }
                 }
 
                 $sql = "
@@ -437,7 +433,6 @@ try {
                 }
 }
 
-
                 return [
                     'news'         => $newsRow,
                     'related'      => $related,
@@ -545,7 +540,6 @@ try {
             $mostReadNews = $result['mostReadNews'] ?? [];
         }
 }
-
 
         // حساب وقت القراءة
         if ($news && !empty($news['content'])) {

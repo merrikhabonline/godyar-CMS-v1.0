@@ -27,7 +27,6 @@ final class CategoryController
             $this->renderMessage(404, 'القسم غير موجود', 'لم يتم تحديد اسم القسم في الرابط.');
         }
 
-
         // GDY_PAGE_CACHE_V8 — cache full rendered HTML for guests (category/tag)
         if (session_status() !== PHP_SESSION_ACTIVE) {
             gdy_session_start();

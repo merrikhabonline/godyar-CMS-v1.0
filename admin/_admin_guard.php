@@ -21,7 +21,6 @@ if (is_file($bootstrap)) {
     require_once $bootstrap;
 }
 
-
 // Language / i18n (Admin)
 $__i18n = __DIR__ . '/i18n.php';
 if (is_file($__i18n)) {
@@ -135,7 +134,6 @@ try {
 } catch (Throwable $e) {
     error_log('[Admin Guard] session_version: ' . $e->getMessage());
 }
-
 
 // -----------------------------------------------------------------------------
 // CSRF helpers (global for admin)

@@ -244,7 +244,6 @@ try {
     error_log('[ajax_upload process] ' . $e->getMessage());
 }
 
-
 $url = rtrim((string)base_url(), '/') . '/assets/uploads/media/' . $fileName;
 $size = (int)(gdy_filesize($dest) ?: $size);
 

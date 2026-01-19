@@ -54,19 +54,17 @@ $isAdmin    = $isLoggedIn && (($user['role'] ?? '') === 'admin');
 $headerCategories = [];
 try {
     if ($pdo instanceof PDO) {
-        // Prevent undefined variable + ensure ORDER BY is always valid.
-        // Prefer explicit ordering columns if they exist, otherwise fallback to latest.
-        $orderBy = 'id DESC';
-        if (function_exists('gdy_has_column')) {
-            if (gdy_has_column($pdo, 'categories', 'sort_order')) {
-                $orderBy = 'sort_order ASC, id DESC';
-            } elseif (gdy_has_column($pdo, 'categories', 'position')) {
-                $orderBy = 'position ASC, id DESC';
-            } elseif (gdy_has_column($pdo, 'categories', 'created_at')) {
-                $orderBy = 'created_at DESC, id DESC';
-            }
+        // اختر استعلامًا ثابتًا لتجنب إدراج ORDER BY ديناميكي (تنبيه DeepSource).
+        if (function_exists('gdy_has_column') && gdy_has_column($pdo, 'categories', 'sort_order')) {
+            $stmt = $pdo->query("SELECT id, name, slug FROM categories ORDER BY sort_order ASC, id DESC LIMIT 8");
+        } elseif (function_exists('gdy_has_column') && gdy_has_column($pdo, 'categories', 'position')) {
+            $stmt = $pdo->query("SELECT id, name, slug FROM categories ORDER BY position ASC, id DESC LIMIT 8");
+        } elseif (function_exists('gdy_has_column') && gdy_has_column($pdo, 'categories', 'created_at')) {
+            $stmt = $pdo->query("SELECT id, name, slug FROM categories ORDER BY created_at DESC, id DESC LIMIT 8");
+        } else {
+            $stmt = $pdo->query("SELECT id, name, slug FROM categories ORDER BY id DESC LIMIT 8");
         }
-        $stmt = $pdo->query("SELECT id, name, slug FROM categories ORDER BY {$orderBy} LIMIT 8");
+
         $headerCategories = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 } catch (Throwable $e) {

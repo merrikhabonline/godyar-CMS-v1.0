@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 // admin/elections/parties.php — إدارة الأحزاب الخاصة بتغطية انتخابية معينة
 

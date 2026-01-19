@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 require_once __DIR__ . '/_news_helpers.php';
 // admin/news/view.php
@@ -18,7 +17,6 @@ if (!Auth::isLoggedIn()) {
     header('Location: ../login.php');
     exit;
 }
-
 
 // صلاحية عرض المقالات
 Auth::requirePermission('posts.view');
@@ -53,8 +51,6 @@ if ($isWriter && (int)($row['author_id'] ?? 0) !== $userId) {
     die(__('t_dfcf6b976c', 'غير مسموح لك عرض هذا المقال.'));
 }
 
-
-
 // تجهيز حقول العرض بشكل متوافق مع اختلاف أسماء الأعمدة
 $statusLabels = [
     'published' => __('t_ecfb62b400', 'منشور'),
@@ -70,7 +66,6 @@ $displayDate = (string)($row['published_at'] ?? ($row['created_at'] ?? ''));
 
 // المرفقات
 $attachments = gdy_get_news_attachments($pdo, $id);
-
 
 require_once __DIR__ . '/../layout/header.php';
 require_once __DIR__ . '/../layout/sidebar.php';
@@ -166,7 +161,6 @@ html, body {
     </div>
   </div>
 
-
   <?php if (!empty($attachments)): ?>
     <div class="card glass-card mb-3" style="background:rgba(15,23,42,.95);color:#e5e7eb;">
       <div class="card-header" style="background:#020617;border-bottom:1px solid #1f2937;">
@@ -230,7 +224,6 @@ html, body {
       </div>
     </div>
   <?php endif; ?>
-
 
   <div class="card glass-card gdy-card" style="background:rgba(15,23,42,.95);color:#e5e7eb;">
     <div class="card-header" style="background:#020617;border-bottom:1px solid #1f2937;">

@@ -164,7 +164,6 @@ if ($tags_input === '' && isset($news['tags'])) $tags_input = (string)$news['tag
 $relatedNews = [];
 try { $relatedNews = gdy_get_related_news($pdo, $id, 6); } catch (Throwable) { $relatedNews = []; }
 
-
 $publish_at   = isset($news['publish_at']) ? substr(str_replace(' ', 'T', (string)$news['publish_at']), 0, 16) : '';
 $unpublish_at = isset($news['unpublish_at']) ? substr(str_replace(' ', 'T', (string)$news['unpublish_at']), 0, 16) : '';
 
@@ -320,7 +319,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($slug === '') {
         $slug = 'news-' . date('YmdHis') . '-' . random_int(100, 999);
     }
-
 
     if ($category_id <= 0) $errors['category_id'] = __('t_96bde08b29', 'يرجى اختيار التصنيف.');
 
@@ -502,7 +500,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 error_log('[IndexNow] edit ping failed: ' . $e->getMessage());
             }
 
-
             
 
 // SEO cache invalidation (sitemap/rss)
@@ -544,7 +541,8 @@ gdy_unlink($root . '/cache/rss.xml');
             $errors['general'] = __('t_6f622496c6', 'حدث خطأ أثناء حفظ التعديلات. يرجى المحاولة مرة أخرى.');
         }
     }
-    }
+}
+
 }
 
 // -----------------------------------------------------------------------------
@@ -597,7 +595,6 @@ html, body { overflow-x: hidden; }
 .gdy-dropzone-inner i { font-size: 1.6rem; color: #38bdf8; }
 .gdy-image-preview img { max-height: 220px; object-fit: contain; }
 
-
 /* --- Professional additions: Pre-publish checklist + OpenGraph preview + Internal links suggestions --- */
 .gdy-checklist { display: grid; gap: .45rem; }
 .gdy-checklist li { display:flex; align-items:center; gap:.5rem; font-size:.92rem; color: rgba(226,232,240,.92); }
@@ -620,7 +617,6 @@ html, body { overflow-x: hidden; }
 .gdy-internal-links .results a { display:block; padding:.45rem .55rem; border-radius: 10px; border:1px solid rgba(148,163,184,.18); margin-top:.4rem; color: rgba(226,232,240,.95); text-decoration:none; }
 .gdy-internal-links .results a:hover { background: rgba(148,163,184,.12); }
 .gdy-internal-links .results .meta { font-size:.78rem; color: rgba(148,163,184,.95); margin-top:.15rem; direction:ltr; text-align:left; }
-
 
 </style>
 
@@ -707,7 +703,6 @@ html, body { overflow-x: hidden; }
                   </div>
                   <div class="results mt-2" id="internal-links-results"></div>
                 </div>
-
 
                 <div class="form-text"><?= h(__('t_cdab1836ce', 'يمكنك ربط هذا الحقل بمحرر WYSIWYG لاحقاً.')) ?></div>
               </div>
@@ -964,8 +959,6 @@ html, body { overflow-x: hidden; }
             </div>
           </div>
 
-
-
               <div class="gdy-options-box mb-3" id="editorial-notes">
                 <h3><svg class="gdy-icon me-1" aria-hidden="true" focusable="false"><use href="#more-h"></use></svg><?= h(__('t_6d5f18f157', 'ملاحظات فريق التحرير')) ?></h3>
 
@@ -1148,7 +1141,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-
   const attachmentsInput = document.getElementById('attachments-input');
   const attachmentsPreview = document.getElementById('attachments-preview');
 
@@ -1315,7 +1307,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </script>
 
-
 <!-- GDY Admin Enhancements: WYSIWYG + Safe Preview + Media Picker (v9.6) -->
 <style>
 .gdy-wysiwyg{border:1px solid rgba(255,255,255,.12); border-radius:14px; overflow:hidden; background:rgba(0,0,0,.08)}
@@ -1345,7 +1336,5 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
   <iframe id="gdy-media-frame" src="../media/picker.php?target=content" style="width:100%;height:calc(90vh - 54px);border:0;"></iframe>
 </div>
-
-
 
 <?php require_once __DIR__ . '/../layout/footer.php'; ?>

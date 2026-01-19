@@ -7,7 +7,7 @@
     const parser = new DOMParser();
   // nosemgrep
     const doc = parser.parseFromString('<div>' + String(html || '') + '</div>', 'text/html');
-    const wrap = doc.body && doc.body.firstElementChild ? doc.body.firstElementChild : null;
+    const wrap = doc.body?.firstElementChild;
     if (!wrap) return frag;
 
     // Drop dangerous nodes
@@ -26,7 +26,6 @@
     while (wrap.firstChild) frag.appendChild(wrap.firstChild);
     return frag;
   }
-
 
   function fadeInImages(scope) {
     const images = (scope || document).querySelectorAll('#gdy-category-page .news-thumb img');
@@ -109,7 +108,7 @@
       if (!res.ok) throw new Error('HTTP ' + res.status);
 
       const data = await res.json();
-      const html = (data && data.html) ? String(data.html) : '';
+      const html = data?.html ? String(data.html) : '';
 
       if (html.trim()) {
         newsGrid.appendChild(safeFragmentFromHTML(html));

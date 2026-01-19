@@ -134,7 +134,6 @@ function gdy_db_columns(PDO $pdo, string $table): array {
     return $cache[$key];
 }
 
-
 if (!function_exists('gdy_db_column_exists')) {
 function gdy_db_column_exists(PDO $pdo, string $table, string $column): bool {
     // Prefer shared helper (supports MySQL/PostgreSQL)
@@ -153,9 +152,8 @@ function gdy_db_column_exists(PDO $pdo, string $table, string $column): bool {
     $st->execute([':t' => $table, ':c' => $column]);
     return (bool)$st->fetchColumn();
 }
+
 }
-
-
 
 if (!function_exists('gdy_db_table_exists')) {
 function gdy_db_table_exists(PDO $pdo, string $table): bool {
@@ -167,8 +165,8 @@ function gdy_db_table_exists(PDO $pdo, string $table): bool {
         return false;
     }
 }
-}
 
+}
 
 function gdy_ensure_news_attachments_table(PDO $pdo): void {
     if (gdy_db_table_exists($pdo, 'news_attachments')) return;
@@ -364,7 +362,6 @@ function gdy_delete_news_attachment(PDO $pdo, int $attachmentId, int $newsId): b
         return false;
     }
 }
-
 
 // -----------------------------------------------------------------------------
 
@@ -628,7 +625,6 @@ function gdy_restore_news_from_revision(PDO $pdo, int $newsId, int $revisionId, 
         return false;
     }
 }
-
 
 /**
  * Smart Suggestions: related news based on shared tags.

@@ -32,7 +32,6 @@ foreach ($feeds as $feed) {
             throw $e;
         }
     }
-    }
     $upd = $pdo->prepare("UPDATE feeds SET last_fetched_at = NOW() WHERE id = :id");
     $upd->execute([':id' => $feed['id']]);
 }

@@ -80,7 +80,6 @@ require_once ROOT_PATH . '/includes/env.php';
 // DB helpers (PDO source of truth)
 require_once ROOT_PATH . '/includes/db.php';
 
-
 if (!function_exists('normalize_display_name')) {
     /**
      * Normalize display name input (Unicode-safe):

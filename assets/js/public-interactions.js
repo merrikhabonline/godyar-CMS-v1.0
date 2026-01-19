@@ -5,15 +5,15 @@
   // Auto-submit selects
   document.addEventListener('change', function (e) {
     var el = e.target;
-    if (el && el.matches && el.matches('select.js-auto-submit')) {
+    if (el?.matches?.('select.js-auto-submit')) {
       var form = el.form;
-      if (form) form.submit();
+      form?.submit();
     }
   });
 
   // Copy buttons (generic)
   document.addEventListener('click', function (e) {
-    var btn = e.target && e.target.closest ? e.target.closest('[data-copy-url]') : null;
+    var btn = e.target?.closest?.('[data-copy-url]') || null;
     if (!btn) return;
 
     var url = btn.getAttribute('data-copy-url') || '';
@@ -27,7 +27,7 @@
 
   // Password toggle buttons
   document.addEventListener('click', function (e) {
-    var btn = e.target && e.target.closest ? e.target.closest('.password-toggle-btn') : null;
+    var btn = e.target?.closest('.password-toggle-btn');
     if (!btn) return;
 
     var inputId = btn.getAttribute('data-target') || 'password';
@@ -46,9 +46,9 @@
   });
 
   function copyToClipboard(text, onSuccess) {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
+    if (navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(text).then(function () {
-        if (typeof onSuccess === 'function') onSuccess();
+        onSuccess?.();
       }).catch(function () {
         fallbackCopy(text, onSuccess);
       });
@@ -68,7 +68,7 @@
       ta.select();
       document.execCommand('copy');
       document.body.removeChild(ta);
-      if (typeof onSuccess === 'function') onSuccess();
+      onSuccess?.();
     } catch (err) {
       // ignore
     }

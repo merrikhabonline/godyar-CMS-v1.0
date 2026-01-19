@@ -95,8 +95,6 @@
   .gdy-install-btn, .gdy-ios-a2hs{ display:none; }
 }
 
-
-
 /* ===========================
    Safe-area + touch UX tweaks
    =========================== */
@@ -156,7 +154,6 @@ button, a, input, select, textarea{
 
 .gdy-splash.is-visible{ display:flex; }
 .gdy-splash.is-hiding{ opacity: 0; transition: opacity .25s ease; }
-
 
 /* Install banner (nicer UX than a floating button) */
 .gdy-install-banner,

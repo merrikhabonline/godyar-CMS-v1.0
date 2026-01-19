@@ -17,7 +17,7 @@
 
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
-      var email = (input && input.value) ? input.value.trim() : '';
+      var email = (input?.value) ? input.value.trim() : '';
       if (!email) { setMsg('أدخل بريدك الإلكتروني', false); return; }
 
       // Basic email validation
@@ -37,7 +37,7 @@
         try { data = await res.json(); } catch (_) {}
 
         if (!res.ok || !data || !data.ok) {
-          setMsg((data && data.message) ? data.message : 'تعذر الاشتراك الآن، حاول لاحقًا.', false);
+          setMsg((data?.message) ? data.message : 'تعذر الاشتراك الآن، حاول لاحقًا.', false);
           return;
         }
 

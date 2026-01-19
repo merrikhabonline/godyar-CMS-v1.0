@@ -582,7 +582,6 @@ function render_page(string $title, string $activeHref, callable $contentCb): vo
 })();
 </script>
 
-
 <script src="/assets/js/image_fallback.js" defer></script>
 <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <?php if (function_exists('do_action')) { do_action('admin_footer'); } ?>

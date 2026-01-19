@@ -16,7 +16,7 @@
                  document.querySelector('.post-body') ||
                  document.querySelector('main') ||
                  document.body;
-    return (root && root.textContent) ? String(root.textContent) : '';
+    return root?.textContent ? String(root.textContent) : '';
   }
 
   function setPlayButton(btn, state){
@@ -26,7 +26,6 @@
     btn.setAttribute('aria-pressed', s === 'pause' ? 'true' : 'false');
     btn.setAttribute('aria-label', s === 'pause' ? 'Pause' : 'Play');
   }
-
 
   const BASE = (window.GDY_BASE || '');
   function api(path){
@@ -85,8 +84,8 @@
     };
 
     function render(state){
-      const counts = (state && state.counts) || {};
-      const mine = new Set((state && state.mine) || []);
+      const counts = state?.counts || {};
+      const mine = new Set(state?.mine || []);
       clearChildren(wrap);
       const row = document.createElement('div');
       row.className = 'gdy-react-row';
@@ -111,7 +110,7 @@
           btn.disabled = true;
           try{
             const res = await postForm(api('/api/news/react'), {news_id: newsId, reaction: key});
-            if(res && res.ok){
+            if(res?.ok){
               render({counts: res.counts, mine: res.mine});
             }
           }catch(e){}
@@ -124,7 +123,7 @@
 
     try{
       const res = await getJson(api(`/api/news/reactions?news_id=${encodeURIComponent(newsId)}`));
-      if(res && res.ok) render(res);
+      if(res?.ok) render(res);
     }catch(e){}
   }
 
@@ -136,9 +135,9 @@
     function renderPoll(payload){
       clearChildren(el);
 
-      const poll = payload && payload.poll ? payload.poll : null;
-      const counts = payload && payload.counts ? payload.counts : {};
-      const votedFor = payload ? payload.votedFor : null;
+      const poll = payload?.poll || null;
+      const counts = payload?.counts || {};
+      const votedFor = payload?.votedFor || null;
 
       if(!poll){
         el.style.display='none';
@@ -159,10 +158,10 @@
 
       const options = Array.isArray(poll.options) ? poll.options : [];
       options.forEach((opt) => {
-        const oid = opt && (opt.id ?? opt.value ?? opt.option_id);
-        const label = opt && (opt.label ?? opt.text ?? opt.title ?? '');
-        const pct = opt && (opt.pct ?? opt.percent ?? 0);
-        const votes = opt && (opt.votes ?? counts[oid] ?? 0);
+        const oid = opt?.id ?? opt?.value ?? opt?.option_id;
+        const label = opt?.label ?? opt?.text ?? opt?.title ?? '';
+        const pct = opt?.pct ?? opt?.percent ?? 0;
+        const votes = opt?.votes ?? counts[oid] ?? 0;
 
         const btn = document.createElement('button');
         btn.type = 'button';
@@ -211,7 +210,7 @@
           // Use the shared API helper and ensure the correct news id is sent.
           postJson(api('/api/news-poll/vote'), { news_id: newsId, option: opt })
             .then(renderPoll)
-            .catch(()=>{});
+            .catch(() => { /* intentionally ignore errors */ });
         });
       });
     }
@@ -219,7 +218,7 @@
     try{
 
       const res = await getJson(api(`/api/news/poll?news_id=${encodeURIComponent(newsId)}`));
-      if(res && res.ok) renderPoll(res);
+      if(res?.ok) renderPoll(res);
     }catch(e){}
   }
 
@@ -305,7 +304,7 @@
         }
         try{
           const res = await postForm(api('/api/news/ask'), {news_id: newsId, name, email, question});
-          if(res && res.ok){
+          if(res?.ok){
             form.reset();
             if(msg) msg.textContent = res.message || 'تم الإرسال.';
             await load();
@@ -323,7 +322,6 @@
 
     await load();
   }
-
 
   function initTts(){
   const playBtn = document.getElementById('gdy-tts-play');
@@ -354,10 +352,10 @@
   };
 
   const normalizeText = (t) => {
-    t = (t||'').replace(/\u00A0/g,' ').replace(/\s+/g,' ').trim();
+    t = (t||'').replace(/\u00A0/gu,' ').replace(/\s+/gu,' ').trim();
     t = mergeSpelledArabic(t);
     // إزالة الرموز المتكررة التي تربك TTS
-    t = t.replace(/[•·•]+/g,' ').replace(/\s+/g,' ').trim();
+    t = t.replace(/[•·•]+/gu,' ').replace(/\s+/gu,' ').trim();
     return t;
   };
 
@@ -385,7 +383,7 @@
     };
 
     paras.forEach(p=>{
-      const parts = p.split(/(?<=[\.\!\؟\?])\s+/);
+      const parts = p.split(/(?<=[.!؟?])\s+/u);
       parts.forEach(pushChunk);
     });
 
@@ -393,7 +391,7 @@
   };
 
   const getLang = () => {
-    const v = (langEl && langEl.value) ? langEl.value : (document.documentElement.lang || 'ar');
+    const v = langEl?.value ? langEl.value : (document.documentElement.lang || 'ar');
     // تحويل قيم بسيطة إلى قيم مناسبة للـ Speech API
     if(v === 'ar') return 'ar-SA';
     if(v === 'en') return 'en-US';
@@ -491,8 +489,6 @@
   // إيقاف TTS عند تغيير الصفحة/المسار
   window.addEventListener('beforeunload', stopAll);
 }
-
-
 
   function escapeHtml(s){
     return String(s||'').replace(/[&<>"']/g, function(c){

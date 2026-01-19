@@ -63,7 +63,6 @@ if ($pdo instanceof \PDO) {
     }
 }
 
-
 /**
  * هل يملك المستخدم صلاحية محددة؟
  * - إن كانت الصلاحية فارغة => متاح
@@ -128,13 +127,11 @@ if ($dbMenuItemCount < 5) {
     $dbMenu = [];
 }
 
-
 // عناصر القائمة (إزالة الروابط المكررة: إضافة خبر جديد/إدارة الأقسام/رفع وسائط/الإضافات)
 // - "إضافة خبر جديد": نترك "الأخبار" حيث توجد إضافة داخلها
 // - "إدارة الأقسام": نكتفي بـ "التصنيفات" و/أو "الأقسام" (بدون تكرار)
 // - "رفع وسائط": نكتفي بـ "مكتبة الوسائط" (تحتوي رفع)
 // - "الإضافات": نترك رابط واحد فقط
-
 
 // ملاحظة مهمة:
 // بعض العملاء لديهم جدول admin_menu غير مكتمل (مثلاً عنصر واحد فقط)،
@@ -149,7 +146,6 @@ if ($menuCount < 5) {
 }
 
 ?>
-
 
 <aside class="admin-sidebar" id="adminSidebar" role="navigation" aria-label="<?= h(__("admin_sidebar")) ?>">
   <div class="admin-sidebar__card">
@@ -228,7 +224,6 @@ if ($menuCount < 5) {
     </div>
   <?php endforeach; ?>
 <?php else: ?>
-
 
       <div class="admin-sidebar__section" aria-label="<?= h(__('نظرة عامة')) ?>">
         <div class="admin-sidebar__section-title"><?= h(__('نظرة عامة')) ?></div>
@@ -379,8 +374,6 @@ if ($menuCount < 5) {
                 <svg class="gdy-icon admin-sidebar__link-arrow" aria-hidden="true" focusable="false"><use href="#chevron-left"></use></svg>
               </a>
             </div>
-
-
 
             <?php if ($can('posts.view')): ?>
               <div class="admin-sidebar__link-card admin-sidebar__link-card--sub <?= ($currentPage==='translations') ? 'is-active' : '' ?>" data-search="ترجمة ترجميات translations language">
@@ -564,8 +557,6 @@ if ($menuCount < 5) {
         </div>
         <?php endif; ?>
 
-
-
         
         <?php if ($can('opinion_authors.manage')): ?>
         <div class="admin-sidebar__link-card <?= $currentPage === 'opinion_authors' ? 'is-active' : '' ?>" data-search="كتاب الرأي opinion authors">
@@ -656,8 +647,6 @@ if ($menuCount < 5) {
           </a>
         </div>
         <?php endif; ?>
-
-
 
         <div class="admin-sidebar__link-card <?= $currentPage === 'settings' ? 'is-active' : '' ?>" data-search="الإعدادات settings">
           <a class="admin-sidebar__link" href="<?= h($adminBase) ?>/settings/index.php">
@@ -759,7 +748,6 @@ if ($menuCount < 5) {
   z-index: 1040;
 }
 
-
 /* LTR support: move sidebar to the left */
 html[dir="ltr"] .admin-sidebar{
   left: 0;
@@ -801,7 +789,6 @@ html[dir="ltr"] .admin-sidebar{
 @media (max-width: 991.98px) {
   .admin-content, .gdy-admin-page { margin: 0 !important; }
 }
-
 
 .admin-sidebar__header{
   display:flex;align-items:center;justify-content:space-between;
@@ -955,7 +942,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
-
 
   const searchInput = document.getElementById('sidebarSearch');
   const searchResults = document.getElementById('sidebarSearchResults');

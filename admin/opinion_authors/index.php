@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 require_once __DIR__ . '/../../includes/bootstrap.php';
 require_once __DIR__ . '/../../includes/auth.php';
@@ -56,7 +55,6 @@ $csrf = generate_csrf_token();
 html, body{ overflow-x:hidden; }
 .gdy-admin-shell{ max-width: 1200px; margin: 0 auto; }
 .gdy-page-header{ margin-bottom: .75rem; }
-
 
 .gdy-authors-grid {
     background: rgba(15, 23, 42, 0.8);

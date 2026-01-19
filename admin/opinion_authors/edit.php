@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 require_once __DIR__ . '/../../includes/bootstrap.php';
 require_once __DIR__ . '/../../includes/auth.php';
@@ -295,7 +294,6 @@ html, body{
 .gdy-page-header{
     margin-bottom:0.75rem;
 }
-
 
 .gdy-form-card {
     background: rgba(15, 23, 42, 0.8);

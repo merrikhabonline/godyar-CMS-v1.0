@@ -52,7 +52,6 @@ if (!is_array($gdySiteSettings)) { $gdySiteSettings = []; }
 $gdySiteSettings['layout_sidebar_mode'] = 'visible';
 $GLOBALS['site_settings'] = $gdySiteSettings;
 
-
 // دالة لبناء رابط الخبر
 $buildNewsUrl = function (array $row) use ($baseUrl): string {
     $id   = isset($row['id']) ? (int)$row['id'] : 0;

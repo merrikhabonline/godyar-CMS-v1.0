@@ -21,7 +21,7 @@
     overlay.hidden = false;
     document.documentElement.classList.add('gdy-search-open');
     document.body.classList.add('gdy-search-open');
-    setTimeout(function(){ try{ input && input.focus(); }catch(e){} }, 60);
+    setTimeout(function(){ try{ input?.focus(); }catch(e){} }, 60);
     if(!list || list.childElementCount === 0){
       loadLatest();
     }
@@ -46,8 +46,8 @@
     while (list.firstChild) list.removeChild(list.firstChild);
 
     (items || []).forEach(it => {
-      const title = (it && it.title) ? String(it.title) : '';
-      const url = (it && it.url) ? String(it.url) : '#';
+      const title = (it?.title) ? String(it.title) : '';
+      const url = (it?.url) ? String(it.url) : '#';
 
       // enforce same-origin / relative links
       let href = '#';
@@ -82,14 +82,16 @@
   function loadLatest(){
     if(!base) return;
     fetchJson(base.replace(/\/+$/,'') + '/api/latest')
-      .then(function(j){ if(j && j.ok) renderItems(j.items || []); })
-      .catch(function(){});
+      .then(function(j){ if(j?.ok) renderItems(j?.items || []); })
+      .catch(function() {
+        // Intentionally ignore errors to prevent unhandled promise rejections
+      });
   }
 
   var tmr = null;
   function onInput(){
     if(!base) return;
-    var q = (input && input.value || '').trim();
+    var q = (input?.value || '').trim();
     if(tmr) clearTimeout(tmr);
     tmr = setTimeout(function(){
       if(q === ''){
@@ -98,11 +100,13 @@
       }
       fetchJson(base.replace(/\/+$/,'') + '/api/search/suggest?q=' + encodeURIComponent(q))
         .then(function(j){
-          if(j && j.ok){
+          if(j?.ok){
             renderItems(j.suggestions || []);
           }
         })
-        .catch(function(){});
+        .catch(function() {
+        // Intentionally ignore errors to prevent unhandled promise rejections
+      });
     }, 220);
   }
 

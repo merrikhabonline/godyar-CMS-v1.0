@@ -150,7 +150,6 @@ html,body{
 /* Utilities */
 .gdy-muted{color: var(--gdy-muted) !important;}
 
-
 /* Prevent nested .admin-content wrappers (some pages wrap content twice) */
 .admin-content .admin-content{
   margin: 0 !important;
@@ -197,7 +196,6 @@ html,body{
 /* When sidebar is open on mobile */
 body.admin-sidebar-open .gdy-admin-backdrop{ display:block !important; }
 
-
 /* Notifications dropdown */
 .gdy-notif-menu{
   background: rgba(15,23,42,.98);
@@ -209,7 +207,6 @@ body.admin-sidebar-open .gdy-admin-backdrop{ display:block !important; }
 }
 .gdy-notif-menu .btn{border-radius:12px;}
 .gdy-notif-item:hover{background: rgba(148,163,184,.08)!important;}
-
 
 /* -----------------------------------------
    SVG icon sizing (NoCDN / SVG sprite)

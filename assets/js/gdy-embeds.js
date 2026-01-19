@@ -6,8 +6,8 @@
     var b = (window.GDY_BASE_URL || "").trim();
     if (b) return b.replace(/\/+$/, "");
     var body = document.body;
-    if (body && body.dataset && body.dataset.baseUrl) {
-      b = (body.dataset.baseUrl || "").trim();
+    if (body?.dataset?.baseUrl) {
+      b = (body?.dataset?.baseUrl || "").trim();
       if (b) return b.replace(/\/+$/, "");
     }
     return "";
@@ -46,7 +46,7 @@
         else node.setAttribute(k, attrs[k]);
       });
     }
-    if (children && children.length) children.forEach(function (c) { node.appendChild(c); });
+    children?.forEach(function (c) { node.appendChild(c); });
     return node;
   }
 

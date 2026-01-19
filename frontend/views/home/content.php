@@ -27,8 +27,6 @@ if (!function_exists('gdy_img_src')) {
     }
 }
 
-
-
 // حساب الأخبار الرئيسية
 $mainNews = $latestNews[0] ?? null;
 

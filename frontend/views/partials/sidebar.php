@@ -47,7 +47,6 @@ if ($forceSidebar) {
     $sidebarMode = 'visible';
 }
 
-
 $sidebarAds     = [];
 $mostReadNews   = [];
 $sidebarAuthors = [];

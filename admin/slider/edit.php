@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 // admin/slider/edit.php
 
@@ -176,7 +175,6 @@ require_once __DIR__ . '/../layout/sidebar.php';
             <svg class="gdy-icon me-1" aria-hidden="true" focusable="false"><use href="#more-h"></use></svg> <?= h(__('t_443b526a45', 'اختيار من الوسائط')) ?>
           </button>
         </div>
-        </div>
         <div class="col-md-6">
           <label class="form-label"><?= h(__('t_72ce2dd33e', 'الرابط عند الضغط')) ?></label>
           <input type="text" name="link_url" class="form-control"
@@ -249,6 +247,5 @@ require_once __DIR__ . '/../layout/sidebar.php';
     </div>
   </div>
 </div>
-
 
 <?php require_once __DIR__ . '/../layout/footer.php'; ?>

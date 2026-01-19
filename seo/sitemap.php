@@ -26,7 +26,6 @@ if (!$nocache && is_file($cacheFile) && (time() - filemtime($cacheFile) < $cache
     exit;
 }
 
-
 $scheme  = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 $host    = (string)($_SERVER['HTTP_HOST'] ?? 'localhost');
 $baseUrl = function_exists('base_url') ? rtrim((string)base_url(), '/') : ($scheme . '://' . $host);

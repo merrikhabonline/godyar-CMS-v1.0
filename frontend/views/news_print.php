@@ -101,7 +101,6 @@ function gdy_strip_print_highlights(string $html): string
   return (string)$html;
 }
 
-
 $contentClean = gdy_strip_print_highlights($content);
 
 // Normalize images for print (no callbacks; avoids Closure-in-preg_replace issues on some deployments)

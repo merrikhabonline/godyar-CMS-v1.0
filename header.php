@@ -28,7 +28,6 @@ if (!is_array($currentUser) && !empty($_SESSION['user_id'])) {
     $_SESSION['user'] = $currentUser;
 }
 
-
 if (!isset($isLoggedIn)) {
     $isLoggedIn = is_array($currentUser) && !empty($currentUser['id']);
 }
@@ -52,7 +51,6 @@ if (class_exists('HomeController')) {
         $siteSettings = [];
     }
 }
-
 
 // Fallback: بعض الصفحات (مثل elections.php / صفحات قديمة) لا تمر عبر HomeController.
 // لضمان أن الثيم/الشعار/الأسماء تعمل في كل الصفحات، نحاول تحميل settings مباشرة من DB بشكل آمن.
@@ -122,7 +120,6 @@ try {
 }
 
 $themeClass   = $themeClass   ?? 'theme-default';
-
 
 // Header background image (from settings)
 $headerBgEnabled = (($siteSettings['theme_header_bg_enabled'] ?? '0') === '1');
@@ -328,7 +325,6 @@ if (empty($headerCategories)) {
       echo '<link rel="preload" as="image" href="' . h($imgHref) . '" fetchpriority="' . $fp . '">' . "\n";
     }
   ?>
-
 
   <?php
     // OpenGraph / Twitter (يظهر عند مشاركة الرابط)
@@ -616,7 +612,6 @@ html[dir="rtl"] .site-header .brand-text{ text-align: right; }
       :root{ --logo-size: 54px; }
     }
 
-
     .brand-text { text-align: end; min-width: 0; }
     .brand-title {
       font-size: 1.06rem;
@@ -730,7 +725,6 @@ html[dir="rtl"] .site-header .brand-text{ text-align: right; }
       background: rgba(var(--primary-rgb),0.14);
       margin: 6px 6px;
     }
-
 
     /* ===== شريط التصنيفات + البحث (استعادة تنسيق احترافي) ===== */
     .header-secondary{
@@ -902,7 +896,6 @@ html[dir="rtl"] .site-header .brand-text{ text-align: right; }
       .header-search{ width:100%; max-width: none; margin-inline-start: 0; }
     }
 
-
       /* ===== Theme force overrides (keeps site coherent even when some pages have inline CSS) ===== */
       body[class*="theme-"] .section-title,
       body[class*="theme-"] .godyar-home-section-title,
@@ -950,7 +943,6 @@ html[dir="rtl"] .site-header .brand-text{ text-align: right; }
         border-color: var(--primary) !important;
         color: #ffffff !important;
       }
-
 
   </style>
 
@@ -1192,7 +1184,6 @@ $__gdySwUrl       = ($__gdyBasePath === '' ? '' : $__gdyBasePath) . '/sw.js';
               $gdyHeaderPath = rtrim($gdyHeaderPath, '/');
               if ($gdyHeaderPath === '') { $gdyHeaderPath = '/'; }
 
-
               $renderHeaderCat = function (array $cat) use (&$renderHeaderCat, &$renderedHeaderCats, $navBaseUrl, $rootUrl, $specialCatStyles, $excludeHeaderCategoryIds, $gdyHeaderPath) {
                   $catId = (int)($cat['id'] ?? 0);
                   if ($catId > 0 && in_array($catId, $excludeHeaderCategoryIds, true)) {
@@ -1316,7 +1307,6 @@ $__gdySwUrl       = ($__gdyBasePath === '' ? '' : $__gdyBasePath) . '/sw.js';
   <script>
     // منطق إخفاء/إظهار زر الانتخابات + ضبط ارتفاع الهيدر تلقائياً
     document.addEventListener('DOMContentLoaded', function () {
-
 
       // ✅ ضبط --header-h لمنع دخول المحتوى/السكرول تحت الهيدر
       function setHeaderH(){

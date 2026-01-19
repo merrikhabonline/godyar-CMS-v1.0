@@ -45,7 +45,7 @@
   async function init(){
     if(!isMobile()) return;
     if(recentlyDismissed()) return;
-    if(Notification && Notification.permission === 'denied') return;
+    if(Notification?.permission === 'denied') return;
     try{
       if(await hasSubscription()) return;
     }catch(e){ /* ignore */ }
@@ -54,11 +54,11 @@
     setTimeout(show, 1200);
   }
 
-  btnLater && btnLater.addEventListener('click', function(){
+  btnLater?.addEventListener('click', function(){
     setDismiss(); hide();
   });
 
-  btnEnable && btnEnable.addEventListener('click', async function(){
+  btnEnable?.addEventListener('click', async function(){
     btnEnable.disabled = true;
     try{
       if(!window.GodyarPush || !window.GodyarPush.subscribe) throw new Error('push-api-missing');

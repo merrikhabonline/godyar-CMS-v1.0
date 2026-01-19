@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../../_admin_guard.php';
 $currentPage = 'system_maintenance';
 $pageTitle   = __('t_f96c99c4d8', 'وضع الصيانة');

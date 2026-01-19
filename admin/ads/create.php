@@ -390,8 +390,6 @@ require_once __DIR__ . '/../layout/app_start.php';
 }
 </style>
 
-
-
     <?php if (!$tableExists): ?>
         <div class="alert alert-warning">
             <?= h(__('t_64b2ab32d2', 'جدول')) ?> <code>ads</code> <?= h(__('t_6a688805de', 'غير موجود. الرجاء إنشاء الجدول أولاً.')) ?>

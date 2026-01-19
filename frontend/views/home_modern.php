@@ -873,7 +873,6 @@ $nowTime   = date('H:i');
     border-color: rgba(var(--primary-rgb), .9);
   }
 
-
   /* ===== Slot: home_under_featured_video (تحت الفيديو المميز) ===== */
   .hm-under-featured-ad{
     margin-top: 12px;
@@ -907,7 +906,6 @@ $nowTime   = date('H:i');
   }
   @media (max-width: 991.98px){
     .hm-under-featured-ad{ max-width: 100%; }
-  }
   }
 
   /* ===== إعلانات الواجهة الرئيسية ===== */
@@ -1058,7 +1056,6 @@ $nowTime   = date('H:i');
     color: #9ca3af;
   }
 
-
   /* ===== Featured Videos Slider (222) ===== */
   .hm-featured-video--slider .hm-featured-video-body { padding: 0; }
   .hm-video-slider{ position:relative; }
@@ -1160,7 +1157,6 @@ $nowTime   = date('H:i');
     display:block;
     border:0;
   }
-
 
   /* ===== (222) Featured video like screenshot ===== */
   .hm-section-header--split{ display:none; }
@@ -1313,7 +1309,6 @@ $nowTime   = date('H:i');
   }
   .hm-latest-right-title{ margin:0; font-size:1.05rem; font-weight:900; color:#0f172a; display:flex; gap:.45rem; align-items:center;}
 
-
   /* ================================
      PRO newsroom spacing & rhythm
      (final polish)
@@ -1392,7 +1387,6 @@ $nowTime   = date('H:i');
     font-size: .74rem;
     margin-top: .25rem;
   }
-
 
 </style>
 
@@ -1981,10 +1975,7 @@ $nowTime   = date('H:i');
   </div>
 <?php endif; ?>
 
-
                 </div>
-
-
 
                 <!-- آخر الأخبار -->
 	                <div class="hm-latest-right">
@@ -2299,7 +2290,6 @@ $nowTime   = date('H:i');
             </div>
           </section>
 
-
           
 
         </div><!-- /.hm-main-col -->
@@ -2318,7 +2308,6 @@ $nowTime   = date('H:i');
     </div>
   </div>
 </section>
-
 
 <script>
 (function(){

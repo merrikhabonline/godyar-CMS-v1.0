@@ -39,7 +39,6 @@
     }
   }
 
-
   function esc(s) {
     return String(s || '')
       .replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -275,8 +274,8 @@
       try {
         var t = ev.target;
         var img = null;
-        if (t && t.tagName === 'IMG') img = t;
-        else if (t && t.closest) img = t.closest('img');
+        if (t?.tagName === 'IMG') img = t;
+        else img = t.closest?.('img');
         if (img && wrapper.contains(img)) {
           setSelectedImage(img);
           // Make sure editor is focused
@@ -327,16 +326,16 @@ editor.addEventListener('mouseup', saveRange);
         var sel = window.getSelection();
         if (!sel || sel.rangeCount === 0) return null;
         var node = sel.anchorNode;
-        var el = (node && node.nodeType === 1) ? node : (node ? node.parentElement : null);
+        var el = (node?.nodeType === 1) ? node : node?.parentElement;
         if (!el) return null;
         var img = null;
         if (el.tagName === 'IMG') img = el;
-        else img = el.closest ? el.closest('img') : null;
+        else img = el.closest?.('img');
         if (img && wrapper.contains(img)) return img;
 
         // Sometimes selection is a range that directly selects an IMG node
         var r = sel.getRangeAt(0);
-        if (r && r.startContainer && r.startContainer.nodeType === 1) {
+        if (r?.startContainer?.nodeType === 1) {
           var sc = r.startContainer;
           if (sc.tagName === 'IMG') return sc;
         }
@@ -364,7 +363,6 @@ editor.addEventListener('mouseup', saveRange);
         img.style.background = 'rgba(2,6,23,.08)';
       }
     }
-
 
     function getHighlightColor() {
       return wrapper.dataset.hlColor || '#fde047';
@@ -437,8 +435,8 @@ editor.addEventListener('mouseup', saveRange);
     function resizeImage(img) {
       if (!img) return;
       // Ask for width/height (supports px or %). Leave empty to keep current.
-      var curW = (img.style && img.style.width) ? img.style.width : '';
-      var curH = (img.style && img.style.height) ? img.style.height : '';
+      var curW = img.style?.width ? img.style.width : '';
+      var curH = img.style?.height ? img.style.height : '';
       var w = prompt('العرض (مثال: 600px أو 80%) — اتركه فارغًا للإبقاء كما هو، واكتب 0 لإزالة العرض:', curW);
       if (w === null) return;
       var h = prompt('الارتفاع (مثال: 320px) — اتركه فارغًا للإبقاء كما هو، واكتب 0 لإزالة الارتفاع:', curH);
@@ -499,8 +497,6 @@ editor.addEventListener('mouseup', saveRange);
       }
       cap.textContent = txt;
     }
-
-
 
 function syncToTextarea() {
       if (!htmlArea.classList.contains('d-none')) {
@@ -677,7 +673,6 @@ if (action === 'h2') { exec('formatBlock', '<h2>'); return; }
         saveRange();
         return;
       }
-
 
       if (action === 'link') {
         var url = prompt('أدخل الرابط:');

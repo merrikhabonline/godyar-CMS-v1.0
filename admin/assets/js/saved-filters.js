@@ -42,7 +42,7 @@
       return fetch(apiUrl('list', pageKey))
         .then(function (r) { return r.json(); })
         .then(function (json) {
-          if (json && json.ok) return normalizeListResponse(json);
+          if (json?.ok) return normalizeListResponse(json);
           return { filters: [], supports_default: false, default_id: null };
         });
     },

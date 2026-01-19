@@ -80,7 +80,6 @@ if (!function_exists('gdy_image_url')) {
     }
 }
 
-
 if (!function_exists('gdy_plaintext')) {
     function gdy_plaintext(string $html): string
     {
@@ -280,7 +279,6 @@ if (!function_exists('gdy_wrap_tables')) {
 $post = $news ?? $article ?? [];
 $postId = (int)($post['id'] ?? 0);
 
-
 // URL of this article (used for sharing + QR)
 $newsUrl = '';
 if ($postId > 0) {
@@ -383,7 +381,6 @@ if ($aiSummaryDb === '' && $aiSummary === '') {
 $aiBtnLabel = ($aiSummaryMode === 'db') ? 'ملخص بالذكاء الاصطناعي' : 'ملخص سريع';
 $aiBtnNote  = ($aiSummaryMode === 'auto') ? 'تم توليده تلقائياً' : '';
 
-
 // (already defined earlier) $newsUrl is available here.
 $coverUrl = gdy_image_url($baseUrl, $cover) ?: null;
 
@@ -420,7 +417,6 @@ try {
 if ($isPrintMode) {
     $themeClass = trim(((string)($themeClass ?? 'theme-default')) . ' gdy-print-mode');
 }
-
 
 // === Metered/Members Paywall logic moved BEFORE header include (fix headers already sent) ===
 $membersOnly = isset($membersOnly)
@@ -478,7 +474,6 @@ if ($isGuest && !$membersOnly && $postId > 0) {
         $gdyMeterCookieMaxAge = 30 * 24 * 60 * 60; // 30 days
     }
 }
-
 
 // === End moved block ===
 
@@ -600,9 +595,7 @@ if ($isPaywalled) {
         '</div>';
 }
 
-
     // الخيار 2: اعرض المعاينة داخل المقال ثم ضع صندوق الـ Paywall في نهاية المعاينة.
-
 
     // TTS يعتمد على نص المعاينة فقط
     $gdyBodyForTts = $previewHtml;
@@ -878,7 +871,6 @@ html.theme-dark .gdy-paywall-fade{
   flex-wrap: wrap;
   gap: 10px;
 }
-
 
 .gdy-actions.sticky{
   position: sticky;
@@ -1482,9 +1474,7 @@ body.gdy-reading-mode .gdy-article-body{ font-size: 1.12rem; line-height: 2.05; 
   <div class="gdy-opinion-article-badge"><svg class="gdy-icon" aria-hidden="true" focusable="false"><use href="#more-h"></use></svg> <?php echo  h(__('مقال مميز')) ?></div>
 <?php endif; ?>
 
-
 <h1 class="gdy-report-title"><?php echo  h($title) ?></h1>
-
 
       <div class="gdy-meta-row">
         <?php if ($date !== ''): ?>
@@ -1601,7 +1591,6 @@ body.gdy-reading-mode .gdy-article-body{ font-size: 1.12rem; line-height: 2.05; 
           </div>
         </article>
 
-
 <?php
   $newsId = (int)($post['id'] ?? 0);
   $ttsSource = ($gdyBodyForTts !== null) ? $gdyBodyForTts : $body;
@@ -1663,8 +1652,6 @@ body.gdy-reading-mode .gdy-article-body{ font-size: 1.12rem; line-height: 2.05; 
     </div>
   </div>
 </section>
-
-
 
         <?php
           // Comments section (internal + optional GitHub giscus)
@@ -1951,7 +1938,6 @@ body.gdy-reading-mode .gdy-article-body{ font-size: 1.12rem; line-height: 2.05; 
             </script>
           </div>
         </article>
-
 
       </section>
 

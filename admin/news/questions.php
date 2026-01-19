@@ -86,8 +86,6 @@ if (!empty($GLOBALS['__gdy_questions_table_missing'])) {
     ];
 }
 
-
-
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
     $csrf = (string)($_POST['csrf_token'] ?? '');
     if (!$checkCsrf($csrf)) {

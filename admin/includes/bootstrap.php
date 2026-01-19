@@ -266,5 +266,4 @@ if (!headers_sent()) {
     header('X-XSS-Protection: 1; mode=block');
 }
 
-
 date_default_timezone_set((defined('TIMEZONE') && TIMEZONE) ? TIMEZONE : 'Asia/Riyadh');

@@ -9,8 +9,6 @@ $error  = '';
 
 $pdo = function_exists('gdy_pdo_safe') ? gdy_pdo_safe() : null;
 
-
-
 // Download audit log
 if (isset($_GET['action']) && $_GET['action'] === 'download_audit') {
     $file = ROOT_PATH . '/storage/logs/audit.log';

@@ -312,7 +312,6 @@ try {
             </div>
           </div>
 
-
 <div class="alert alert-warning mt-3 mb-0">
             <div class="fw-semibold mb-1"><?= h(__('t_push_note', 'ملاحظة')) ?></div>
             <div class="small text-muted">

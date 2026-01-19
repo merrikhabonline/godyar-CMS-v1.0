@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 // admin/media/upload.php - نسخة مصححة
 require_once __DIR__ . '/../../includes/bootstrap.php';
@@ -192,7 +191,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } catch (Throwable $e) {
                     // ignore
                 }
-
 
                 // إنشاء نسخة WebP للصور (اختياري - يحسن الأداء)
                 $webpUrl = '';

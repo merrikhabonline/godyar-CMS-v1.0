@@ -82,7 +82,6 @@ require_once __DIR__ . '/../layout/sidebar.php';
         <form method="post">
     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(generate_csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
 
-
           <div class="mb-3">
             <label class="form-label"><?= h(__('t_43fdee9c45', 'تفعيل الإضافة في الواجهة')) ?></label>
             <div class="form-check form-switch">

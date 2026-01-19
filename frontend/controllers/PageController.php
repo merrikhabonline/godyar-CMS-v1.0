@@ -60,9 +60,15 @@ $isAdmin    = $isLoggedIn && ($_SESSION['user']['role'] === 'admin');
 // ============= تحميل تصنيفات الهيدر =============
 $headerCategories = [];
 try {
-    $orderBy = gdy_has_column($pdo, 'categories', 'sort_order') ? 'sort_order ASC, id ASC' : (gdy_has_column($pdo, 'categories', 'name') ? 'name ASC, id ASC' : 'id ASC');
-    $stmt = $pdo->query("SELECT id, name, slug FROM categories WHERE is_active = 1 ORDER BY {$orderBy} LIMIT 8");
-$headerCategories = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+    // اختر استعلامًا ثابتًا لتجنب إدراج ORDER BY ديناميكي (تنبيه DeepSource).
+    if (gdy_has_column($pdo, 'categories', 'sort_order')) {
+        $stmt = $pdo->query("SELECT id, name, slug FROM categories WHERE is_active = 1 ORDER BY sort_order ASC, id ASC LIMIT 8");
+    } elseif (gdy_has_column($pdo, 'categories', 'name')) {
+        $stmt = $pdo->query("SELECT id, name, slug FROM categories WHERE is_active = 1 ORDER BY name ASC, id ASC LIMIT 8");
+    } else {
+        $stmt = $pdo->query("SELECT id, name, slug FROM categories WHERE is_active = 1 ORDER BY id ASC LIMIT 8");
+    }
+    $headerCategories = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 } catch (Throwable $e) {
     error_log('[PageController] categories load error: ' . $e->getMessage());
     $headerCategories = [];
@@ -92,7 +98,6 @@ if ($slug === '') {
         $stmt = $pdo->prepare($sql);
         $stmt->execute([':slug' => $slug]);
         $page = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
-
 
         // Fallback static pages (about/privacy) if not in DB
         if (!$page && in_array($slug, ['about', 'privacy'], true)) {

@@ -179,7 +179,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         $hash = password_hash($pass, PASSWORD_DEFAULT);
 
-
                         // display_name (اسم الظهور) افتراضيًا = username أو الجزء قبل @ من البريد
                         $displayName = $username !== '' ? $username : (string)preg_replace('/@.*/', '', $email);
 if (function_exists('sanitize_display_name')) {                            $displayName = sanitize_display_name($displayName, 2, 50);                        }                        if ($displayName === '') $displayName = ($username !== '' ? $username : 'User');
@@ -199,7 +198,6 @@ if (function_exists('sanitize_display_name')) {                            $disp
                             $insertVals[] = ':username';
                             $bind[':username'] = $username;
                         }
-
 
                         // display_name (اسم الظهور)
                         // ملاحظة: بعض قواعد البيانات لا تحتوي عمود display_name وتستخدم name/full_name بدلاً منه.
@@ -480,7 +478,6 @@ if (function_exists('sanitize_display_name')) {                            $disp
     
 .spin{animation:spin 1s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-
 
         /* SVG icon sizing (fix huge icons) */
         .gdy-icon{ width:18px; height:18px; display:inline-block; vertical-align:middle; color: currentColor; }

@@ -138,7 +138,6 @@ $_SESSION['user_email'] = $email;
 $_SESSION['user_role'] = $user['role'] ?? 'user';
 $_SESSION['is_member_logged'] = true;
 
-
 // Ensure legacy session keys exist (used by some templates/widgets)
 if (!empty($_SESSION['user']) && is_array($_SESSION['user'])) {
     $_SESSION['user_id']    = (int)($_SESSION['user_id'] ?? $_SESSION['user']['id'] ?? 0);

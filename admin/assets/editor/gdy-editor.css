@@ -100,7 +100,6 @@
   font-size:.78rem;
 }
 
-
 /* Single-content box: show either WYSIWYG OR HTML source (not both) */
 .gdy-wysiwyg-html{ display:none; }
 .gdy-wysiwyg.is-html .gdy-wysiwyg-editor{ display:none; }
@@ -113,7 +112,6 @@
 .gdy-wysiwyg-html{
   min-height: 320px;
 }
-
 
 /* Color picker button */
 .gdy-wysiwyg-btn.gdy-wysiwyg-color{
@@ -217,7 +215,6 @@
   color: rgba(100,116,139,1);
   margin-top: 6px;
 }
-
 
 /* Selected image outline (for editor tools) */
 .gdy-wysiwyg-editor img.gdy-img-selected{outline:2px solid rgba(59,130,246,.85);outline-offset:2px;}

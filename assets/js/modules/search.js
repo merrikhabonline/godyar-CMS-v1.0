@@ -43,9 +43,9 @@
     list.className = 'gdy-suggest-list';
 
     items.slice(0,10).forEach(it => {
-      const title = it && it.title ? String(it.title) : '';
-      const type = it && it.type ? String(it.type) : '';
-      const url = it && it.url ? String(it.url) : '#';
+      const title = it?.title ? String(it.title) : '';
+      const type = it?.type ? String(it.type) : '';
+      const url = it?.url ? String(it.url) : '#';
 
       let href = '#';
       try{
@@ -73,7 +73,6 @@
     box.appendChild(list);
     show();
   }
-
 
   function escapeHtml(s){
     return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

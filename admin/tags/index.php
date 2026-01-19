@@ -373,7 +373,6 @@ $pageActionsHtml .= '<a class="btn btn-gdy btn-gdy-ghost" href="index.php?' . h(
 
 require_once __DIR__ . '/../layout/app_start.php';
 
-
 require_once __DIR__ . '/../includes/saved_filters_ui.php';
 echo gdy_saved_filters_ui('tags');
 $csrf = csrf_token();

@@ -2231,7 +2231,6 @@ class PHPMailer
                 $cb['issent'],
                 [[$cb['to'], $cb['name']]],
                 [],
-                [],
                 $this->Subject,
                 $body,
                 $this->From,
@@ -4479,7 +4478,6 @@ class PHPMailer
     {
         return $this->UseSMTPUTF8;
     }
-
 
     /**
      * Get an error message in the current language.

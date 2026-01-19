@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 require_once __DIR__ . '/../_admin_guard.php';
 require_once __DIR__ . '/../../includes/bootstrap.php';
 
@@ -156,8 +155,6 @@ require_once __DIR__ . '/../layout/app_start.php';
     :root{ --gdy-shell-max:100vw; }
 }
 </style>
-
-
 
   <?php if ($errors): ?>
     <div class="alert alert-danger">
